@@ -296,3 +296,11 @@
  .static-hero>.scene-tools>.hero-current-media{scale:1.2;transform-origin:center bottom}
  .static-hero>.scene-tools>.tool{scale:1.2;transform-origin:top left}
 }
+
+/* Restore the original overlapping portrait only for the 1920px desktop layout. */
+@media(min-width:1920px){
+ .intro-pin .intro-hero.static-hero{z-index:0}
+ .intro-pin .intro-video-slot{z-index:1}
+ .intro-video-slot .hero-current-media{transform:scale(var(--intro-portrait-scale,1.24))}
+ .static-hero>.scene-tools>.hero-current-media{scale:1.24;transform-origin:center bottom}
+}
