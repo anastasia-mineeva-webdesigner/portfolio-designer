@@ -242,3 +242,16 @@
  .intro-about .about-copy .lead{font-size:16px;line-height:24px}
 }
 @media(max-width:599px){.intro-video-slot .hero-current-media{object-fit:cover}}
+/* Fade the actual 16:9 frame on every edge, including its moving lower edge. */
+.intro-video-slot .hero-current-media{
+ inset:auto 0 0;width:100%;height:auto;aspect-ratio:16/9;
+ mask-image:linear-gradient(to bottom,transparent,#000 12%,#000 82%,transparent),linear-gradient(to right,transparent,#000 12%,#000 88%,transparent);
+ mask-composite:intersect;
+ -webkit-mask-image:linear-gradient(to bottom,transparent,#000 12%,#000 82%,transparent),linear-gradient(to right,transparent,#000 12%,#000 88%,transparent);
+ -webkit-mask-composite:source-in;
+}
+.intro-scroll{padding-bottom:80px;box-sizing:content-box}
+.intro-static-about{padding-bottom:80px}
+@media(max-width:599px){
+ .intro-video-slot .hero-current-media{height:100%;aspect-ratio:auto;object-fit:cover}
+}

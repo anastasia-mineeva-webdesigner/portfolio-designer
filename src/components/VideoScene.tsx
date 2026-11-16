@@ -39,7 +39,7 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
   const measure=()=>{
    if(disposed)return;
    const mobile=innerWidth<600,header=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
-   const gap=mobile?16:24,bottom=mobile?16:24,minMedia=mobile?180:220;
+   const gap=mobile?16:24,bottom=80,minMedia=mobile?180:220;
    const titleHeight=title.offsetHeight,aboutHeight=about.offsetHeight,metricHeight=metrics.offsetHeight;
    const heroReserve=mobile?metricHeight+48:0;
    const height=Math.max(innerHeight-header,aboutHeight+minMedia+finalTop+gap+bottom,titleHeight+24+heroReserve+220);
