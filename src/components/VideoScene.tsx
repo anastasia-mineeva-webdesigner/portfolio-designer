@@ -46,7 +46,7 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
    initialTop=titleHeight+24;initialHeight=height-initialTop-heroReserve;
    finalHeight=height-aboutHeight-finalTop-gap-bottom;aboutTop=finalTop+finalHeight+gap;
    distance=innerHeight*(mobile?settings.mobileScrollScreens:settings.desktopScrollScreens);
-   const decorHeight=Math.max(100,initialHeight-(mobile?0:metricHeight+24));
+   const decorHeight=Math.max(100,initialHeight-(mobile?0:metricHeight+88));
    el.style.setProperty('--intro-pin-height',`${height}px`);el.style.setProperty('--intro-scroll-distance',`${distance}px`);
    box.style.setProperty('--intro-decor-top',`${initialTop}px`);box.style.setProperty('--intro-decor-height',`${decorHeight}px`);
    box.style.setProperty('--intro-tool-scale',String(Math.min(1,decorHeight/layout.artHeight)));
