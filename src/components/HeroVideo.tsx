@@ -1,6 +1,7 @@
 import {useEffect,useRef,useState} from 'react';
 import {animation} from '../config/animation';
 import {media} from '../config/media';
+import {introCues,introSceneProgress} from '../config/intro-scene.mjs';
 import {demoTime,heroVideoProgress} from '../config/demo-motion.mjs';
 
 export function HeroVideo(){
@@ -12,7 +13,8 @@ export function HeroVideo(){
   const render=()=>{raf=0;if(!v||!ready||preference.matches||document.hidden)return;
    const hero=v.closest('section');if(!hero)return;
    const header=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
-   const progress=heroVideoProgress(hero.getBoundingClientRect().top,hero.offsetHeight,innerHeight,header);
+   const shared=v.closest<HTMLElement>('.intro-scroll');
+   const progress=shared?introCues(introSceneProgress(shared.getBoundingClientRect().top,header,parseFloat(getComputedStyle(shared).getPropertyValue('--intro-scroll-distance'))),animation.introScene).video:heroVideoProgress(hero.getBoundingClientRect().top,hero.offsetHeight,innerHeight,header);
    target=demoTime(progress,v.duration);
    if(!v.seeking&&Math.abs(v.currentTime-target)>.025)v.currentTime=target;
   };

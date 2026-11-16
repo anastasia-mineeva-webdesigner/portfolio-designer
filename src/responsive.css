@@ -219,3 +219,26 @@
  mask-image:linear-gradient(to bottom,transparent,#000 24px),linear-gradient(to right,transparent,#000 24px,#000 calc(100% - 24px),transparent);mask-composite:intersect}
 @media(max-width:599px){.hero-current-media{object-fit:cover;mask-image:linear-gradient(to bottom,transparent,#000 16px),linear-gradient(to right,transparent,#000 12px,#000 calc(100% - 12px),transparent)}}
 @media(min-width:600px){.hero-current-media{left:50%;right:auto;width:min(100%,calc((var(--hero-height) - var(--hero-art-top))*16/9));transform:translateX(-50%)}}
+
+/* One longer pinned scene: Hero fades, the same video rises, About slides below. */
+.intro-scroll{position:relative;height:calc(var(--intro-pin-height,100svh - var(--header-height)) + var(--intro-scroll-distance));background:var(--hero)}
+.intro-pin{position:sticky;top:min(var(--header-height),calc(100svh - var(--intro-pin-height)));height:var(--intro-pin-height,calc(100svh - var(--header-height)));overflow:clip;isolation:isolate;--intro-hero-opacity:1;--intro-hero-y:0px;--intro-about-opacity:0}
+.intro-video-slot{position:absolute;z-index:0;top:var(--intro-media-top,288px);left:50%;width:min(100%,calc(var(--intro-media-height,50vh)*16/9));height:var(--intro-media-height,50vh);transform:translateX(-50%)}
+.intro-video-slot .hero-current-media{inset:0;width:100%;height:100%;transform:none;object-fit:contain;object-position:center bottom}
+.intro-hero.static-hero{position:absolute;inset:0;width:100%;height:100%;overflow:visible;background:transparent;z-index:1;opacity:var(--intro-hero-opacity);transform:translateY(var(--intro-hero-y));pointer-events:none}
+.intro-decorations{position:absolute;inset:var(--intro-decor-top) 0 auto;height:var(--intro-decor-height)}
+.intro-pin .metrics.metrics--paired{top:auto;bottom:32px}
+.intro-about{position:absolute;inset:0 0 auto;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;padding-block:0;opacity:var(--intro-about-opacity);transform:translateY(var(--intro-about-y,100svh))}
+.intro-about .about-copy{position:static;top:auto;width:100%;gap:16px}
+.intro-about .about-copy .lead{max-width:800px;width:100%}
+.intro-about .tags{width:100%;max-width:560px}
+.intro-about>.button{width:224px;height:48px;padding-inline:16px}
+.intro-about-anchor{position:absolute;top:calc(var(--intro-scroll-distance)*.88);scroll-margin-top:var(--header-height)}
+.intro-static-about>.label{margin-top:0}
+@media(max-width:599px){
+ .intro-pin .metrics.metrics--paired{bottom:24px}
+ .intro-about{gap:12px}.intro-about .about-copy{gap:16px}
+ .intro-about .about-copy h2{font-size:32px;line-height:40px}
+ .intro-about .about-copy .lead{font-size:16px;line-height:24px}
+}
+@media(max-width:599px){.intro-video-slot .hero-current-media{object-fit:cover}}
