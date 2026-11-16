@@ -24,12 +24,13 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
   if(reduced||demo||!root.current||!pin.current||!panel.current||!heading.current)return;
   const el=root.current,box=pin.current,title=heading.current,about=panel.current,settings=animation.introScene;
   const metrics=box.querySelector<HTMLElement>('.metrics')!;
-  let raf=0,disposed=false,initialTop=0,initialHeight=0,finalTop=16,finalHeight=0,aboutTop=0,distance=1;
+  let raf=0,disposed=false,initialTop=0,initialHeight=0,finalTop=16,finalHeight=0,aboutTop=0,distance=1,portraitScale=1.24;
   const render=()=>{
    raf=0;if(disposed||document.hidden)return;
    const header=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
    const c=introCues(introSceneProgress(el.getBoundingClientRect().top,header,distance),settings);
    box.style.setProperty('--intro-hero-opacity',String(c.hero));box.style.setProperty('--intro-hero-y',`${(1-c.hero)*-settings.heroTravelPx}px`);
+   box.style.setProperty('--intro-portrait-scale',String(1+(portraitScale-1)*(1-c.lift)));
    box.style.setProperty('--intro-media-top',`${initialTop+(finalTop-initialTop)*c.lift}px`);
    box.style.setProperty('--intro-media-height',`${initialHeight+(finalHeight-initialHeight)*c.lift}px`);
    box.style.setProperty('--intro-about-opacity',String(c.about));box.style.setProperty('--intro-about-y',`${aboutTop+(1-c.about)*settings.aboutTravelPx}px`);
@@ -41,6 +42,7 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
    const mobile=innerWidth<600,header=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
    const gap=mobile?16:24,bottom=80,minMedia=mobile?180:220;
    const titleHeight=title.offsetHeight,aboutHeight=about.offsetHeight,metricHeight=metrics.offsetHeight;
+   portraitScale=mobile?1.12:1.24;
    const heroReserve=mobile?metricHeight+48:0;
    const height=Math.max(innerHeight-header,aboutHeight+minMedia+finalTop+gap+bottom,titleHeight+24+heroReserve+220);
    initialTop=titleHeight+24;initialHeight=height-initialTop-heroReserve;

@@ -257,3 +257,6 @@
 }
 /* Real alpha keeps hair and shoulders intact; only soften the source crop at the waist. */
 .hero-current-media,.intro-video-slot .hero-current-media{mask-image:linear-gradient(to bottom,#000 92%,transparent);-webkit-mask-image:linear-gradient(to bottom,#000 92%,transparent)}
+/* A larger opening portrait grows upward into the title area, then settles for About. */
+.intro-video-slot .hero-current-media{transform:scale(var(--intro-portrait-scale,1.24));transform-origin:center bottom}
+@media(max-width:599px){.intro-video-slot .hero-current-media{transform:scale(var(--intro-portrait-scale,1.12))}}
