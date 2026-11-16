@@ -11,31 +11,33 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
  useEffect(()=>{
   const root=scene.current!,box=stage.current!,v=video.current;
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+  const shortScreen=matchMedia('(max-height: 740px)');
+  const staticLayout=()=>reduced.matches||shortScreen.matches;
   let raf=0,last=performance.now(),target=0,current=0,seeking=false,ready=false,active=true;
   let settings=motionSettings();
   const measure=()=>{settings=motionSettings();root.style.setProperty('--scene-scroll',`${innerHeight*settings.video.scrollScreens}px`);root.style.setProperty('--video-position',settings.video.objectPosition);update()};
-  const update=()=>{const distance=Math.max(1,root.offsetHeight-box.offsetHeight);target=clamp(-root.getBoundingClientRect().top/distance);if(!raf&&active)raf=requestAnimationFrame(tick)};
+  const update=()=>{const distance=Math.max(1,root.offsetHeight-box.offsetHeight);target=clamp(((parseFloat(getComputedStyle(box).top)||0)-root.getBoundingClientRect().top)/distance);if(!raf&&active)raf=requestAnimationFrame(tick)};
   const tick=(now:number)=>{raf=0;const dt=Math.min(64,now-last);last=now;
    current=settings.video.smoothingMs?current+(target-current)*(1-Math.exp(-dt/settings.video.smoothingMs)):target;
    if(Math.abs(current-target)<.0001)current=target;
    // Text follows raw progress, video follows a short deterministic easing to it.
    const hero=1-range(target,settings.heroOut[0],settings.heroOut[1]),about=range(target,settings.aboutIn[0],settings.aboutIn[1]);
    box.style.setProperty('--hero-opacity',String(hero));box.style.setProperty('--about-opacity',String(about));
-   root.dataset.about=String(about>.5);setAboutActive(reduced.matches||about>.5);
-   if(v&&ready&&!seeking&&!reduced.matches&&animation.enabled.video&&Number.isFinite(v.duration)){
+   root.dataset.about=String(about>.5);setAboutActive(staticLayout()||about>.5);
+   if(v&&ready&&!seeking&&!staticLayout()&&animation.enabled.video&&Number.isFinite(v.duration)){
     const t=videoTime(current,v.duration,settings.video);
     if(Math.abs(v.currentTime-t)>1/120){seeking=true;v.currentTime=t;}
    }
    if(current!==target)raf=requestAnimationFrame(tick);
   };
   const loaded=()=>{ready=true;seeking=false;update()};const seeked=()=>{seeking=false;update()};
-  const change=()=>{setReducedMotion(reduced.matches);root.dataset.reduced=String(reduced.matches);measure()};
+  const change=()=>{setReducedMotion(staticLayout());root.dataset.reduced=String(staticLayout());measure()};
   const visibility=()=>{active=!document.hidden;if(active){last=performance.now();update()}else{cancelAnimationFrame(raf);raf=0}};
   v?.addEventListener('loadedmetadata',loaded);v?.addEventListener('loadeddata',loaded);v?.addEventListener('seeked',seeked);
   if(v&&v.readyState>=1)ready=true;
   const observer=new ResizeObserver(measure);observer.observe(box);
-  window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',measure);reduced.addEventListener('change',change);document.addEventListener('visibilitychange',visibility);change();
-  return()=>{active=false;cancelAnimationFrame(raf);observer.disconnect();window.removeEventListener('scroll',update);window.removeEventListener('resize',measure);reduced.removeEventListener('change',change);document.removeEventListener('visibilitychange',visibility);v?.removeEventListener('loadedmetadata',loaded);v?.removeEventListener('loadeddata',loaded);v?.removeEventListener('seeked',seeked)};
+  window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',measure);reduced.addEventListener('change',change);shortScreen.addEventListener('change',change);document.addEventListener('visibilitychange',visibility);change();
+  return()=>{active=false;cancelAnimationFrame(raf);observer.disconnect();window.removeEventListener('scroll',update);window.removeEventListener('resize',measure);reduced.removeEventListener('change',change);shortScreen.removeEventListener('change',change);document.removeEventListener('visibilitychange',visibility);v?.removeEventListener('loadedmetadata',loaded);v?.removeEventListener('loadeddata',loaded);v?.removeEventListener('seeked',seeked)};
  },[]);
  const s=motionSettings();
  const tools=['utopia','figma','vscode','chatgpt','claude'];
