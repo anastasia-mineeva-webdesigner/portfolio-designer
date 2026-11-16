@@ -14,3 +14,30 @@
 @media(prefers-reduced-motion:reduce){.contact-plane{transform:none!important}.project-card:hover img,.project-card:focus-visible img{transform:none}}
 @media(min-width:600px){.hero-title{letter-spacing:0}}
 @media(min-width:1700px){h2{letter-spacing:-2px}h3{letter-spacing:-1px}.hero-title{letter-spacing:-3px}}
+
+/* Keep the navigation usable on small screens and with enlarged text. */
+.header-row > *{flex-shrink:0}
+.mobile-nav{max-height:calc(100svh - var(--header-height));overflow-y:auto}
+.mobile-nav.is-open{height:auto;min-height:96px;padding-block:24px}
+.project-card{overflow:clip;overflow-clip-margin:6px}
+.stage-title h4{min-width:0}
+.contact-card h2{overflow-wrap:anywhere}
+.notice{width:max-content}
+.notice button{flex-shrink:0;min-width:32px;min-height:32px}
+@media(max-width:599px){
+ .header-row{flex-wrap:wrap;align-content:center;gap:4px 8px}
+ .header-status{white-space:normal;max-width:calc(100% - 192px);padding:6px 8px}
+ .header-status .dot{flex-shrink:0}
+ .logo{gap:6px}
+ .menu-toggle{padding:0;flex-shrink:0}
+ .stage-title{flex-wrap:wrap}
+ .project-grid{gap:16px 12px}
+ .footer a,.footer button{overflow-wrap:anywhere;max-width:100%}
+ .footer>div:last-child{flex-wrap:wrap;gap:12px}
+}
+/* A sequential layout keeps both texts reachable on short viewports. */
+@media(max-height:740px){
+ .video-scene[data-reduced=true] .hero-layer{height:680px}
+ .video-scene[data-reduced=true] .scene-media{height:680px}
+ .video-scene[data-reduced=true] .about-anchor{top:680px}
+}
