@@ -1,7 +1,7 @@
 export const media = {
-  // Temporary 854×480 trial. Replace this URL with the final desktop video later.
-  videoSrc: '/media/hero-test.mp4',
-  poster: '/media/hero-test-poster.jpg',
-  // Sampled from the neutral background of the supplied trial video.
-  background: '#c7c2be',
+  // Retained in public/media for a future video iteration; not mounted or loaded.
+  videoSrc: '',
+  poster: '/assets/poster.png',
+  aboutPoster: '/assets/about-static.png',
+  background: '#f8f8f8',
 };
