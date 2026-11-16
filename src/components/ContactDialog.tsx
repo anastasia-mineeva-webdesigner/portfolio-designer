@@ -9,7 +9,7 @@ export const useContact=()=>useContext(ContactContext);
 export function ContactProvider({children}:{children:ReactNode}) {
  const [open,setOpen]=useState(false),[status,setStatus]=useState(''),[brief,setBrief]=useState('');
  const dialog=useRef<HTMLDialogElement>(null),trigger=useRef<HTMLElement|null>(null);
- const openContact=()=>{const active=document.activeElement as HTMLElement;trigger.current=active.closest('.mobile-nav')?document.querySelector<HTMLElement>('.menu-toggle'):active;setOpen(true)};
+ const openContact=()=>{const active=document.activeElement as HTMLElement;trigger.current=active.closest('.mobile-nav,.mobile-menu')?document.querySelector<HTMLElement>('.menu-toggle'):active;setOpen(true)};
  useEffect(()=>{
   if(!open)return;
   const el=dialog.current!,previousOverflow=document.body.style.overflow;
