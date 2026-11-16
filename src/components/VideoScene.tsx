@@ -24,7 +24,7 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
   if(reduced||demo||!root.current||!pin.current||!panel.current||!heading.current)return;
   const el=root.current,box=pin.current,title=heading.current,about=panel.current,settings=animation.introScene;
   const metrics=box.querySelector<HTMLElement>('.metrics')!;
-  let raf=0,disposed=false,initialTop=0,initialHeight=0,finalTop=16,finalHeight=0,aboutTop=0,distance=1,portraitScale=1.24;
+  let raf=0,disposed=false,initialTop=0,initialHeight=0,finalTop=16,finalHeight=0,aboutTop=0,distance=1,portraitScale=1.04;
   const render=()=>{
    raf=0;if(disposed||document.hidden)return;
    const header=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
@@ -42,7 +42,7 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
    const mobile=innerWidth<600,tablet=innerWidth>=600&&innerWidth<900,header=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
    const gap=mobile?16:24,bottom=80,minMedia=mobile?180:220;
    const titleHeight=title.offsetHeight,aboutHeight=about.offsetHeight,metricHeight=metrics.offsetHeight;
-   portraitScale=mobile?1.12:tablet?1.48:1.24;
+   portraitScale=mobile?1.12:tablet?1.48:1.04;
    const heroReserve=mobile?metricHeight+48:0;
    const height=Math.max(innerHeight-header,aboutHeight+minMedia+finalTop+gap+bottom,titleHeight+24+heroReserve+220);
    const decorTop=titleHeight+24;
