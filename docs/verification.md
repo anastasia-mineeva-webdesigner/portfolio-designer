@@ -103,3 +103,9 @@
 Пределы проверки: новых браузерных скриншотов нет из-за отсутствующего инструмента `cua_repl.js`; это сверка кода и геометрии, а не подтверждённое попиксельное сравнение рендера. Тесты старого браузерного прогона выше относятся к прежней версии и не подтверждают новый layout.
 
 Метка CTA дополнительно сверена с обновлённым узлом 354:8916: белая подложка #fff, текст #000, лаймовая точка; единое правило применяется на всех ширинах.
+
+### Background removal from the supplied Hero clip
+
+The supplied 97-frame clip was segmented frame by frame with U2Net human segmentation and alpha matting, then exported at 1280×720 / 24 fps with its original timing. `hero-transparent.webm` uses VP9 with an alpha plane and short GOPs for scroll seeking. The PNG poster uses the same cutout. Safari/iOS use `hero-background-matched.mp4`: the exact same cutout composited onto the section's `#f8f8f8` colour, because WebM alpha support varies on Apple browsers. Other browsers fall back to that MP4 on a decoding error. The existing scroll timeline is unchanged. Only the lower source crop retains a short CSS fade; the background no longer relies on a rectangular perimeter mask.
+
+Cutout frames were inspected on light and dark backgrounds, including the raised hand. Browser playback remains unverified in this environment. Very fine hair and motion-blurred edges can retain small segmentation artifacts.

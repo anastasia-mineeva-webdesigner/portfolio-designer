@@ -255,3 +255,5 @@
 @media(max-width:599px){
  .intro-video-slot .hero-current-media{height:100%;aspect-ratio:auto;object-fit:cover}
 }
+/* Real alpha keeps hair and shoulders intact; only soften the source crop at the waist. */
+.hero-current-media,.intro-video-slot .hero-current-media{mask-image:linear-gradient(to bottom,#000 92%,transparent);-webkit-mask-image:linear-gradient(to bottom,#000 92%,transparent)}
