@@ -129,7 +129,7 @@
  .experience{gap:0}
  .experience>.label,.experience>h2{margin-bottom:16px}
  .experience>.lead,.experience>.statement{margin-bottom:24px}
- .experience>h4{font-size:16px;line-height:24px}
+ .experience>h3{font-size:16px;line-height:24px}
  .experience>.awards{gap:0;margin-bottom:24px}
  .work,.process{gap:24px}
  .work>.project-grid,.process>.process-grid{margin-top:40px}
