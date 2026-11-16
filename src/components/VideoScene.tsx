@@ -39,10 +39,10 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
   const schedule=()=>{if(!disposed&&!raf&&!document.hidden)raf=requestAnimationFrame(render)};
   const measure=()=>{
    if(disposed)return;
-   const mobile=innerWidth<600,header=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
+   const mobile=innerWidth<600,tablet=innerWidth>=600&&innerWidth<900,header=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
    const gap=mobile?16:24,bottom=80,minMedia=mobile?180:220;
    const titleHeight=title.offsetHeight,aboutHeight=about.offsetHeight,metricHeight=metrics.offsetHeight;
-   portraitScale=mobile?1.12:1.24;
+   portraitScale=mobile?1.12:tablet?1.48:1.24;
    const heroReserve=mobile?metricHeight+48:0;
    const height=Math.max(innerHeight-header,aboutHeight+minMedia+finalTop+gap+bottom,titleHeight+24+heroReserve+220);
    const decorTop=titleHeight+24;
@@ -51,10 +51,12 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
    initialHeight=height-initialTop-heroReserve;
    finalHeight=height-aboutHeight-finalTop-gap-bottom;aboutTop=finalTop+finalHeight+gap;
    distance=innerHeight*(mobile?settings.mobileScrollScreens:settings.desktopScrollScreens);
-   const decorHeight=Math.max(100,initialHeight-(mobile?0:metricHeight+88));
+   // Keep the icon stage stable while the tablet portrait grows independently.
+   const decorMediaHeight=tablet?(height-heroReserve-decorTop)/1.24:initialHeight;
+   const decorHeight=Math.max(100,decorMediaHeight-(mobile?0:metricHeight+88));
    el.style.setProperty('--intro-pin-height',`${height}px`);el.style.setProperty('--intro-scroll-distance',`${distance}px`);
    box.style.setProperty('--intro-decor-top',`${decorTop}px`);box.style.setProperty('--intro-decor-height',`${decorHeight}px`);
-   box.style.setProperty('--intro-tool-scale',String(Math.min(1,decorHeight/layout.artHeight)));
+   box.style.setProperty('--intro-tool-scale',String(Math.min(1,decorHeight/layout.artHeight)*(tablet?1.2:1)));
    render();
   };
   const visibility=()=>{if(document.hidden){cancelAnimationFrame(raf);raf=0}else measure()};
