@@ -28,3 +28,9 @@ export function sceneProgress(rootTop,stageHeight,viewportHeight,headerHeight,sc
  const pinnedTop=Math.min(headerHeight,viewportHeight-stageHeight);
  return Math.max(0,Math.min(1,(pinnedTop-rootTop)/Math.max(1,scrollDistance)));
 }
+
+// Static two-line desktop heading: remove the former third line and its gap.
+export function staticHeroLayout(width){
+ const l=heroLayout(width),removed=width>=1700||width<600?0:width>=1400?104:width>=1200?88:width>=900?80:72;
+ return {...l,top:l.top-removed,metricsTop:l.metricsTop-removed,height:l.height-removed,stickers:width>=1400&&width<1700?[[80,20,180],[1175,165,170]]:l.stickers};
+}

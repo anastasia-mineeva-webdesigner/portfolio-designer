@@ -136,3 +136,34 @@
 }
 /* Figma 354:8916: CTA label on its coloured surface, at every breakpoint. */
 .contact-card>.label{background:#fff;color:var(--ink)}
+
+/* Static, light Hero and About: video and scroll pinning are intentionally absent. */
+.static-hero{position:relative;height:var(--hero-height);background:var(--hero);isolation:isolate}
+.static-hero .hero-title{position:relative;z-index:2}
+.static-hero .scene-tools{position:absolute;z-index:0}
+.static-hero-image{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:contain;object-position:50% 100%;pointer-events:none}
+.static-hero .tool{aspect-ratio:1;rotate:0deg}
+.static-hero .tool img{width:100%;height:100%;object-fit:contain}
+.static-hero .hero-sticker{background:none}
+.static-hero .hero-title .hero-desktop-lines{display:flex;flex-direction:column;gap:8px}
+.static-hero .hero-title .hero-desktop-lines>span{white-space:nowrap}
+.static-hero .metrics{z-index:1}
+.static-about{position:relative;display:flex;flex-direction:column;align-items:center;gap:40px;padding-block:var(--section-space);text-align:center;background:var(--canvas);scroll-margin-top:var(--header-height)}
+.static-about-image{display:block;width:100%;height:var(--about-art-height);object-fit:cover;object-position:center;flex:none}
+.static-about .about-copy{position:static;width:100%;gap:16px}
+.static-about .tags{width:100%;max-width:560px}
+.static-about>.button{width:224px;height:48px;padding-inline:16px}
+@media(min-width:1700px){
+ .static-hero .hero-title .hero-desktop-lines{display:none}
+ .static-about{gap:24px;padding-top:120px;padding-bottom:0;margin-bottom:120px}
+ .static-about-image{order:0;width:calc(100% + var(--gutter)*2);max-width:none}
+ .static-about>.label{order:1;margin-top:32px}
+ .static-about .about-copy{order:2;gap:24px}.static-about .tags{order:3}.static-about>.button{order:4}
+}
+@media(min-width:600px) and (max-width:899px){.static-hero .hero-title{font-size:clamp(40px,7.292vw,56px)}}
+@media(max-width:599px){
+ .static-hero .hero-title .hero-desktop-lines{display:none}
+ .static-hero-image{object-fit:cover}
+ .static-about{gap:24px;padding-block:48px}.static-about .about-copy{gap:16px}
+}
+@media(min-width:1700px){.static-hero .hero-title{font-size:clamp(112px,7.1vw,136px)}}
