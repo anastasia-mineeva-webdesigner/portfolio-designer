@@ -258,7 +258,7 @@
 /* Real alpha keeps hair and shoulders intact; only soften the source crop at the waist. */
 .hero-current-media,.intro-video-slot .hero-current-media{mask-image:linear-gradient(to bottom,#000 92%,transparent);-webkit-mask-image:linear-gradient(to bottom,#000 92%,transparent)}
 /* A larger opening portrait grows upward into the title area, then settles for About. */
-.intro-video-slot .hero-current-media{transform:scale(var(--intro-portrait-scale,1.24));transform-origin:center bottom}
+.intro-video-slot .hero-current-media{transform:scale(var(--intro-portrait-scale,1.04));transform-origin:center bottom}
 @media(max-width:599px){.intro-video-slot .hero-current-media{transform:scale(var(--intro-portrait-scale,1.12))}}
 /* Put the transparent portrait in front of the desktop headline. */
 .intro-hero.static-hero{z-index:0}
@@ -290,3 +290,9 @@
 
 /* Logo mark and name form one compact lockup at every breakpoint. */
 .logo{gap:4px}
+
+/* Tablet opening frame: match the larger portrait and tool icons in the live scene. */
+@media(min-width:600px) and (max-width:899px){
+ .static-hero>.scene-tools>.hero-current-media{scale:1.2;transform-origin:center bottom}
+ .static-hero>.scene-tools>.tool{scale:1.2;transform-origin:top left}
+}

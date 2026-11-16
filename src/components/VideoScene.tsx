@@ -24,7 +24,7 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
   if(reduced||demo||!root.current||!pin.current||!panel.current||!heading.current)return;
   const el=root.current,box=pin.current,title=heading.current,about=panel.current,settings=animation.introScene;
   const metrics=box.querySelector<HTMLElement>('.metrics')!;
-  let raf=0,disposed=false,initialTop=0,initialHeight=0,finalTop=16,finalHeight=0,aboutTop=0,distance=1,portraitScale=1.24;
+  let raf=0,disposed=false,initialTop=0,initialHeight=0,finalTop=16,finalHeight=0,aboutTop=0,distance=1,portraitScale=1.04;
   const render=()=>{
    raf=0;if(disposed||document.hidden)return;
    const header=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
@@ -39,10 +39,10 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
   const schedule=()=>{if(!disposed&&!raf&&!document.hidden)raf=requestAnimationFrame(render)};
   const measure=()=>{
    if(disposed)return;
-   const mobile=innerWidth<600,header=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
+   const mobile=innerWidth<600,tablet=innerWidth>=600&&innerWidth<900,header=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
    const gap=mobile?16:24,bottom=80,minMedia=mobile?180:220;
    const titleHeight=title.offsetHeight,aboutHeight=about.offsetHeight,metricHeight=metrics.offsetHeight;
-   portraitScale=mobile?1.12:1.24;
+   portraitScale=mobile?1.12:tablet?1.48:1.04;
    const heroReserve=mobile?metricHeight+48:0;
    const height=Math.max(innerHeight-header,aboutHeight+minMedia+finalTop+gap+bottom,titleHeight+24+heroReserve+220);
    const decorTop=titleHeight+24;
@@ -51,10 +51,12 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
    initialHeight=height-initialTop-heroReserve;
    finalHeight=height-aboutHeight-finalTop-gap-bottom;aboutTop=finalTop+finalHeight+gap;
    distance=innerHeight*(mobile?settings.mobileScrollScreens:settings.desktopScrollScreens);
-   const decorHeight=Math.max(100,initialHeight-(mobile?0:metricHeight+88));
+   // Keep the icon stage stable while the tablet portrait grows independently.
+   const decorMediaHeight=tablet?(height-heroReserve-decorTop)/1.24:initialHeight;
+   const decorHeight=Math.max(100,decorMediaHeight-(mobile?0:metricHeight+88));
    el.style.setProperty('--intro-pin-height',`${height}px`);el.style.setProperty('--intro-scroll-distance',`${distance}px`);
    box.style.setProperty('--intro-decor-top',`${decorTop}px`);box.style.setProperty('--intro-decor-height',`${decorHeight}px`);
-   box.style.setProperty('--intro-tool-scale',String(Math.min(1,decorHeight/layout.artHeight)));
+   box.style.setProperty('--intro-tool-scale',String(Math.min(1,decorHeight/layout.artHeight)*(tablet?1.2:1)));
    render();
   };
   const visibility=()=>{if(document.hidden){cancelAnimationFrame(raf);raf=0}else measure()};
@@ -68,7 +70,7 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
  const sceneStyle={'--hero-height':`${layout.height}px`,'--hero-art-top':`${layout.top}px`,'--hero-art-height':`${layout.artHeight}px`,'--hero-metrics-top':`${layout.metricsTop}px`,'--intro-scroll-distance':`${innerHeight*(layout.width<600?animation.introScene.mobileScrollScreens:animation.introScene.desktopScrollScreens)}px`} as CSSProperties;
  const title=<h1 ref={heading} className={animation.enabled.hero?'hero-title enter-title':'hero-title'} style={{'--duration':`${s.title.durationMs}ms`,'--delay':`${s.title.delayMs}ms`} as CSSProperties}><span className="hero-wide-lines">I design and build websites<br/>with <span className="accent">AI agents</span></span><span className="hero-desktop-lines"><span>I design and build</span><span>websites with <span className="accent">AI agents</span></span></span><span className="hero-mobile-lines">I design and<br/>build websites<br/>with<br/><span className="accent">AI agents</span></span></h1>;
  const decorations=(fluid:boolean)=><>{tools.map((name,i)=><div key={name} className={`tool tool-${i} ${animation.enabled.stickers?'enter-item':''}`} style={{...itemStyle(layout.tools[i],fluid),'--delay':`${s.stickers.delaysMs[i]}ms`,'--duration':`${s.stickers.durationMs}ms`,'--offset':`${s.stickers.offsetPx}px`,'--scale':s.stickers.scale} as CSSProperties}><img src={`/assets/tool-${name}.svg`} alt=""/></div>)}{['ui','ai','motion'].map((name,i)=>layout.stickers[i]&&<div key={name} className={`hero-sticker sticker-${name} ${animation.enabled.stickers?'enter-item':''}`} style={{...itemStyle(layout.stickers[i]!,fluid),'--delay':`${s.stickers.delaysMs[i+5]}ms`,'--duration':`${s.stickers.durationMs}ms`,'--offset':`${s.stickers.offsetPx}px`,'--scale':s.stickers.scale} as CSSProperties}><img src={`/assets/sticker-${name}.svg`} alt=""/></div>)}</>;
- const aboutContent=<><Label>About</Label><div className="about-copy"><h2 id="intro-about-title">Hi, I'm <span className="accent highlight">Mira</span></h2><p className="lead">AI Full Stack designer. 7 years in studios and agencies — now I run projects end to end with AI agents, from structure to 3D, video and launch.</p></div><div className="tags">{['Veter agency · 4 years','UPROCK · AI Fullstack Designer','Utopia AI','Teaching web design','Figma','Claude Code','Codex','Blender','Spline'].map(tag=><Tag key={tag}>{tag}</Tag>)}</div><Button variant="secondary" href="/cv/"><img src="/assets/download.svg" width="16" height="16" alt=""/>View CV ↗</Button></>;
+ const aboutContent=<><Label>About</Label><div className="about-copy"><h2 id="intro-about-title">Hi, I'm <span className="accent highlight">Mira</span></h2><p className="lead">AI Full Stack designer. 7 years in studios and agencies — now I run projects end to end with AI agents, from structure to 3D, video and launch.</p></div><div className="tags">{['Veter agency · 4 years','UPROCK · AI Fullstack Designer','Utopia AI','Teaching web design','Figma','Claude Code','Codex','Blender','Spline'].map(tag=><Tag key={tag}>{tag}</Tag>)}</div><Button variant="secondary" href="/cv/">View CV ↗</Button></>;
  if(demo)return <DesktopMotionDemo missing={missing}/>;
  if(reduced)return <><section className="static-hero" style={sceneStyle} aria-label="Introduction">{title}<div className="scene-tools" aria-hidden="true"><HeroVideo/>{decorations(false)}</div><HeroMetrics/></section><section id="about" className="static-about intro-static-about container" aria-labelledby="intro-about-title">{aboutContent}</section></>;
  return <section ref={root} className="intro-scroll" style={sceneStyle} aria-label="Introduction and About"><span id="about" className="intro-about-anchor" aria-hidden="true"/><div ref={pin} className="intro-pin">
