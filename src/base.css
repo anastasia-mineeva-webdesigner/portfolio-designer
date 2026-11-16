@@ -3,3 +3,17 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.001ms!important;animation-delay:0ms!important;transition-duration:.001ms!important}}
 
 .section-subheading{font-size:var(--h4);line-height:var(--h4-leading)}
+
+/* Keep native scrolling with the portfolio's accent and a soft gray track. */
+*{scrollbar-color:var(--lime) var(--surface);scrollbar-width:thin}
+@supports selector(::-webkit-scrollbar){
+ *{scrollbar-color:auto;scrollbar-width:auto}
+ ::-webkit-scrollbar{width:12px;height:12px}
+ ::-webkit-scrollbar-track,::-webkit-scrollbar-corner{background:var(--surface)}
+ ::-webkit-scrollbar-thumb{background:var(--lime);border:2px solid var(--surface);border-radius:8px;min-height:40px}
+}
+@media(forced-colors:active){
+ *{scrollbar-color:auto;scrollbar-width:auto}
+ ::-webkit-scrollbar-track,::-webkit-scrollbar-corner{background:Canvas}
+ ::-webkit-scrollbar-thumb{background:ButtonText;border-color:Canvas}
+}
