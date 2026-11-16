@@ -1,8 +1,10 @@
+import {introScene} from './intro-scene.mjs';
 /** All scroll ranges use normalized progress 0…1. Durations are milliseconds.
  * Increase scrollScreens for a slower scene. Smoothing never changes the final
  * scroll→time mapping: it only eases toward that exact target after a seek.
  */
 export const animation = {
+  introScene,
   underline: { mode: 'auto' as 'auto'|'on'|'off', desktopMin: 1200, drawMs: 320, fadeMs: 180, color: '#c6ff34', width: 2, offsetPx: 3 },
   textHighlight: { enabled: true, from: '#ffffff', to: '#000000', startViewport: .8, endViewport: .4, reversible: true, feather: .12 },
   buttonRoll: { enabled: true, durationMs: 400, staggerMs: 20, maxTotalMs: 650 },
