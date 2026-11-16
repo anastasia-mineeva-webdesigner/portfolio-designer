@@ -5,4 +5,5 @@ import './fonts.css';
 import './tokens.css';
 import './base.css';
 import './styles.css';
+import './responsive.css';
 createRoot(document.getElementById('root')!).render(<StrictMode><App/></StrictMode>);
