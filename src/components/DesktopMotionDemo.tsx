@@ -28,6 +28,6 @@ export function DesktopMotionDemo({missing}:{missing:(label:string)=>void}){
  return <section ref={root} className="motion-demo" aria-label="Desktop motion preview"><div ref={stage} className="motion-demo-stage">
   {!failed?<video ref={video} src="/media/pose-demo-16x9.mp4" poster="/media/pose-demo-first.jpg" muted playsInline preload="auto" onError={()=>setFailed(true)} aria-hidden="true"/>:<img className="motion-demo-fallback" src="/media/pose-demo-first.jpg" alt=""/>}
   <div className="motion-demo-hero" inert={about}><h1>I design and build websites<br/>with <span className="accent">AI agents</span></h1><HeroMetrics/></div>
-  <div id="about" className="motion-demo-about" inert={!about}><Label>About</Label><h2>Hi, I'm <span className="accent highlight">Mira</span></h2><p>AI Full Stack designer. 7 years in studios and agencies — now I run projects end to end with AI agents, from structure to 3D, video and launch.</p><Button variant="secondary" onClick={()=>missing('CV PDF')}>Download CV (PDF)</Button></div>
+  <div id="about" className="motion-demo-about" inert={!about}><Label>About</Label><h2>Hi, I'm <span className="accent highlight">Mira</span></h2><p>AI Full Stack designer. 7 years in studios and agencies — now I run projects end to end with AI agents, from structure to 3D, video and launch.</p><Button variant="secondary" href="/cv/">View CV ↗</Button></div>
  </div></section>;
 }
