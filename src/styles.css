@@ -34,3 +34,6 @@
 .odometer-static{display:inline!important}
 .cursor-trail{position:fixed;inset:0;width:100%;height:100%;z-index:150;pointer-events:none}
 @media(prefers-reduced-motion:reduce){.cursor-trail,.menu-underline{display:none}.roll-char{transform:none!important}}
+
+/* Keep the loading/error frame aligned with the trial video. */
+.scene-poster.scene-poster--video{inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--video-position,50% 50%)}
