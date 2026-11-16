@@ -1,8 +1,8 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {heroLayouts,heroLayout,staticHeroLayout,sceneProgress} from '../src/config/hero-layout.mjs';
-test('all eight Hero media areas finish before the metrics with a reading gap',()=>{
- for(const design of heroLayouts){const l=staticHeroLayout(design.width);assert.ok(l.top+l.artHeight+24<=l.metricsTop,`media/metrics at ${l.width}`);
+test('decorative tools stay above the metric pairs and side columns on all eight widths',()=>{
+ for(const design of heroLayouts){const l=staticHeroLayout(design.width);if(l.width<600)assert.ok(l.top+l.artHeight+24<=l.metricsTop,`mobile media/metrics at ${l.width}`);
   for(const [x,y,w] of l.tools){const rotated=w*(Math.sin(Math.PI/10)+Math.cos(Math.PI/10));assert.ok(l.top+y+(rotated+w)/2+12<l.metricsTop,`tool/metrics at ${l.width}`);assert.ok(x>=0&&x+w<=l.width,`tool bounds ${l.width}`)}
  }
 });
