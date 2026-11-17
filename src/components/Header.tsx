@@ -3,7 +3,7 @@ import {createPortal} from 'react-dom';
 import {Button} from './UI';
 import {links} from '../config/links';
 const home=window.location.pathname==='/'?'':'/';
-const navigation=[['Work','/work/'],['About(CV)','/cv/'],['Process',`${home}#process`],['Get in touch',`${home}#contact`]];
+const navigation=[['Work','/work/'],['CV','/cv/'],['Process',`${home}#process`],['Get in touch',`${home}#contact`]];
 export default function Header(){
  const [open,setOpen]=useState(false),[time,setTime]=useState('');
  const toggle=useRef<HTMLButtonElement>(null),panel=useRef<HTMLDivElement>(null);
