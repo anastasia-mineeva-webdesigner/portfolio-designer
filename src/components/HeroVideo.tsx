@@ -41,6 +41,6 @@ export function HeroVideo(){
   v?.addEventListener('loadeddata',mediaReady);v?.addEventListener('seeked',seeked);if(v&&v.readyState>=2)loaded();schedule();
   return()=>{gate.disconnect();disposed=true;cancelAnimationFrame(raf);window.removeEventListener('scroll',schedule);window.removeEventListener('resize',schedule);preference.removeEventListener('change',change);document.removeEventListener('visibilitychange',visibility);primer?.dispose();for(const event of ['pointerdown','touchstart','touchend'])window.removeEventListener(event,prime);v?.removeEventListener('loadedmetadata',loaded);v?.removeEventListener('canplay',mediaReady);v?.removeEventListener('loadeddata',mediaReady);v?.removeEventListener('seeked',seeked)};
  },[failed,reduced,source]);
- if(failed||reduced||!animation.enabled.video||!media.videoSrc)return <img className="hero-current-media" src={media.poster} width="1920" height="1080" alt="" fetchPriority="high"/>;
+ if(failed||reduced||!animation.enabled.video||!media.videoSrc)return <img className="hero-current-media" src={media.poster} srcSet="/media/hero-poster-640.webp 640w, /media/hero-poster-960.webp 960w, /media/hero-poster-1280.webp 1280w" sizes="(max-width: 599px) 100vw, 90vw" width="1920" height="1080" alt="" fetchPriority="high"/>;
  return <video ref={ref} className="hero-current-media" src={source} poster={media.poster} width="1920" height="1080" muted playsInline preload="auto" aria-hidden="true" onError={()=>{if(source!==media.fallbackVideoSrc)setSource(media.fallbackVideoSrc);else setFailed(true)}}/>;
 }
