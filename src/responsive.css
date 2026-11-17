@@ -365,3 +365,6 @@
 .process-label-content{display:inline-flex;align-items:center;gap:8px;max-width:100%}
 .process-label[data-immediate=true]::before{transition:none}
 @media(prefers-reduced-motion:reduce){.process-label::before{width:100%;transition:none}}
+
+/* Keep the wide CTA copy on two balanced lines, without a one-word tail. */
+@media(min-width:1700px){.contact-card p{max-width:460px;text-wrap:balance}}
