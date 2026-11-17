@@ -2,6 +2,7 @@ import {useEffect} from 'react';
 import {cases,caseChapters} from '../data/cases';
 import type {CaseStudy} from '../data/cases';
 import {Label} from './UI';
+import {RelatedProjects} from './RelatedProjects';
 import '../case.css';
 function ImageHolder({label}:{label:string}){return <div className="case-image-holder" role="img" aria-label={`Image holder: ${label}`}><svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="3" y="5" width="26" height="22" rx="3" stroke="currentColor" strokeWidth="1.5"/><circle cx="11" cy="12" r="2.5" stroke="currentColor" strokeWidth="1.5"/><path d="m4 24 8-8 5 5 5-7 7 9" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/></svg><span>Image holder</span><small>{label}</small></div>}
 export default function CasePage({project}:{project:CaseStudy}) {
@@ -13,6 +14,6 @@ export default function CasePage({project}:{project:CaseStudy}) {
   <dl className="case-facts">{[['Project',project.category],['Scope','Add project scope'],['Role','Add responsibilities'],['Timeline','To be confirmed']].map(([label,value])=><div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
   <div className="case-body"><aside className="case-index"><p>Inside the case</p><nav aria-label="Case chapters">{caseChapters.map((chapter,i)=><a key={chapter.id} href={`#${chapter.id}`}><span>0{i+1}</span>{chapter.title}</a>)}</nav><a className="case-back" href="/#work">← All selected work</a></aside>
   <div className="case-chapters">{caseChapters.map((chapter,i)=><section className="case-chapter" id={chapter.id} key={chapter.id} aria-labelledby={`${chapter.id}-title`}><div className="case-chapter-copy"><span className="case-step">0{i+1} / {chapter.title}</span><h2 id={`${chapter.id}-title`}>{chapter.heading}</h2><p>{chapter.text}</p></div><figure className="case-figure"><div className="case-media-slot"><ImageHolder label={chapter.caption}/></div><figcaption>{chapter.caption} · replace with project photography or screens</figcaption></figure>{chapter.id==='design'&&<div className="case-image-pair">{['Desktop screen','Mobile screen'].map(label=><div key={label} className="case-screen-slot"><ImageHolder label={label}/></div>)}</div>}</section>)}</div></div>
-  <section className="related-projects" aria-labelledby="related-title"><div className="related-heading"><div><Label>Selected work</Label><h2 id="related-title">Explore more projects</h2><p>Scroll through the cards to discover another project.</p></div><a className="case-back" href="/#work">All projects ↗</a></div><div className="related-track" tabIndex={0} role="region" aria-label="More projects — scroll horizontally">{cases.filter(item=>item.slug!==project.slug).map(item=><a className="related-card" key={item.slug} href={`/cases/${item.slug}/`}><img src={`/assets/${item.image??'all-projects.png'}`} width="560" height="880" alt={`${item.title} website preview`} loading="lazy"/><div><span>{item.category}</span><h3>{item.title} ↗</h3><p>View project</p></div></a>)}</div></section>
+  <RelatedProjects current={project.slug}/>
  </article>
 }
