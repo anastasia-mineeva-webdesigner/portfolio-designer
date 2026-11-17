@@ -1,10 +1,10 @@
 export const cases = [
- {slug:'volta',title:'Volta Studio',category:'Creative studio',image:'volta',summary:'A space for ideas, sound and a distinctive digital presence.'},
- {slug:'finly',title:'Finly',category:'Fintech',image:'finly',summary:'A clear, approachable way to explore a financial product.'},
- {slug:'northern-bread',title:'Northern Bread',category:'Food & retail',image:'northern-bread',summary:'An editorial approach to a bakery’s digital presence.'},
- {slug:'aura',title:'Aura',category:'Beauty & lifestyle',image:'aura',summary:'A visual story built around a beauty brand.'},
- {slug:'studio9',title:'Studio 9',category:'Studio website',image:'studio9',summary:'A focused presentation of a studio and its work.'},
- {slug:'next-project',title:'Next project',category:'Case template',image:null,summary:'A space for the sixth project. Content and photography will be added here.'},
+ {slug:'volta',title:'Volta Studio',category:'Creative studio',image:'volta.png',coverImage:null as string|null,summary:'A space for ideas, sound and a distinctive digital presence.'},
+ {slug:'finly',title:'Finly',category:'Fintech',image:'finly-preview.jpg',coverImage:null as string|null,summary:'A clear, approachable way to explore a financial product.'},
+ {slug:'northern-bread',title:'Northern Bread',category:'Food & retail',image:'northern-bread.png',coverImage:null as string|null,summary:'An editorial approach to a bakery’s digital presence.'},
+ {slug:'aura',title:'Aura',category:'Beauty & lifestyle',image:'aura.png',coverImage:null as string|null,summary:'A visual story built around a beauty brand.'},
+ {slug:'studio9',title:'Studio 9',category:'Studio website',image:'studio9.png',coverImage:null as string|null,summary:'A focused presentation of a studio and its work.'},
+ {slug:'next-project',title:'Next project',category:'Case template',image:null,coverImage:null as string|null,summary:'A space for the sixth project. Content and photography will be added here.'},
 ];
 export type CaseStudy = typeof cases[number];
 // Draft structure: replace the copy and media with evidence from each project.

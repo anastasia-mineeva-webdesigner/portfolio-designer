@@ -3,3 +3,10 @@
 @media(max-width:599px){.case-page{padding-top:24px}.case-intro>p{font-size:20px}.case-eyebrow{gap:16px;flex-wrap:wrap}.case-cover{min-height:0;height:480px;max-height:110vw;padding:16px}.case-media-slot{min-height:240px;padding:24px}.case-media-slot img{width:120px;height:120px}.case-image-pair{gap:12px;grid-template-columns:1fr}.case-screen-slot{min-height:220px}.case-next{align-items:flex-start;flex-direction:column}.case-next>a:last-child{text-align:left}.case-breadcrumbs ol{font-size:12px}.case-facts{font-size:14px}}
 
 .case-screen-slot{align-items:center;justify-content:center}.case-media-slot>.case-project-logo,.case-screen-slot>.case-project-logo{font-size:clamp(24px,4vw,48px);font-weight:500;line-height:1.15;letter-spacing:-.04em;color:var(--ink);text-align:center}
+
+/* Case media is independent from the Selected work thumbnail. */
+.case-cover{align-items:center}
+.case-image-holder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;color:var(--muted);width:100%}
+.case-image-holder>span{font-size:14px;font-weight:500;line-height:24px}
+.case-image-holder>small{font-size:12px;line-height:24px;font-weight:400}
+.case-image-holder>svg{flex-shrink:0}
