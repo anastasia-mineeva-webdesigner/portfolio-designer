@@ -11,3 +11,6 @@ export function introSceneProgress(top,header,distance){return clamp((header-top
 export function introCues(progress,settings=introScene){
  return {hero:1-smooth(range(progress,settings.heroOut)),lift:smooth(range(progress,settings.mediaLift)),about:smooth(range(progress,settings.aboutIn)),video:range(progress,settings.videoRange)};
 }
+export function introAboutGroups(progress){
+ return [[.4,.52],[.46,.58],[.52,.64],[.58,.72],[.68,.82]].map(interval=>smooth(range(progress,interval)));
+}

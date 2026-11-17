@@ -5,3 +5,8 @@ export function videoTime(progress,duration,settings){
  const end=Math.max(start,Math.min(duration,settings.endSeconds??duration));
  return start+range(progress,settings.start,settings.end)*(end-start);
 }
+// Opacity is a pure function of viewport position, in either scroll direction.
+export function contentFade(top,viewportHeight){
+ const p=range(viewportHeight*.94-top,0,Math.max(80,viewportHeight*.24));
+ return p*p*(3-2*p);
+}

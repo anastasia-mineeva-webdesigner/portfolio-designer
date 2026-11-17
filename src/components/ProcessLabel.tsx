@@ -5,13 +5,11 @@ export function ProcessLabel({children,index}:{children:ReactNode;index:number})
  const ref=useRef<HTMLSpanElement>(null),content=useRef<HTMLSpanElement>(null);
  useLayoutEffect(()=>{
   const el=ref.current!,text=content.current!,reduced=matchMedia('(prefers-reduced-motion: reduce)');
-  let frame=0,shown=false;
+  let frame=0;
   const measure=()=>el.style.setProperty('--badge-start',`${Math.ceil(text.getBoundingClientRect().width)+32}px`);
-  const show=()=>{frame=0;if(shown)return;const rect=el.getBoundingClientRect();
-   if(reduced.matches||rect.top<innerHeight*.94){shown=true;
-    if(reduced.matches||rect.bottom<=0)el.dataset.immediate='true';
-    el.dataset.expanded='true';window.removeEventListener('scroll',schedule);
-   }
+  const show=()=>{frame=0;const rect=el.getBoundingClientRect();
+   if(reduced.matches||rect.bottom<=0)el.dataset.immediate='true';else delete el.dataset.immediate;
+   el.dataset.expanded=String(reduced.matches||rect.top<innerHeight*.94);
   };
   const schedule=()=>{if(!frame)frame=requestAnimationFrame(show)};
   measure();const resize=new ResizeObserver(measure);resize.observe(text);

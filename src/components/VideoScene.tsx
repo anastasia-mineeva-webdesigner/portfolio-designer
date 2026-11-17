@@ -2,7 +2,7 @@ import {useEffect,useLayoutEffect,useRef,useState} from 'react';
 import type {CSSProperties} from 'react';
 import {animation,motionSettings} from '../config/animation';
 import {staticHeroLayout} from '../config/hero-layout.mjs';
-import {introCues,introSceneProgress} from '../config/intro-scene.mjs';
+import {introCues,introSceneProgress,introAboutGroups} from '../config/intro-scene.mjs';
 
 import {HeroVideo} from './HeroVideo';
 import {HeroMetrics} from './HeroMetrics';
@@ -24,16 +24,20 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
   if(reduced||demo||!root.current||!pin.current||!panel.current||!heading.current)return;
   const el=root.current,box=pin.current,title=heading.current,about=panel.current,settings=animation.introScene;
   const metrics=box.querySelector<HTMLElement>('.metrics')!;
+  const aboutGroups=Array.from(about.querySelectorAll<HTMLElement>(':scope > .label, .about-copy > h2, .about-copy > .lead, :scope > .tags, :scope > .button'));
   let raf=0,disposed=false,initialTop=0,initialHeight=0,finalTop=16,finalHeight=0,aboutTop=0,distance=1,portraitScale=1.04;
   const render=()=>{
    raf=0;if(disposed||document.hidden)return;
    const header=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
-   const c=introCues(introSceneProgress(el.getBoundingClientRect().top,Math.min(header,innerHeight-box.offsetHeight),distance),settings);
+   const progress=introSceneProgress(el.getBoundingClientRect().top,Math.min(header,innerHeight-box.offsetHeight),distance);
+   const c=introCues(progress,settings);
+   const opacities=introAboutGroups(progress);
+   aboutGroups.forEach((group,index)=>{group.style.opacity=String(opacities[index]);group.inert=opacities[index]===0});
    box.style.setProperty('--intro-hero-opacity',String(c.hero));box.style.setProperty('--intro-hero-y',`${(1-c.hero)*-settings.heroTravelPx}px`);
    box.style.setProperty('--intro-portrait-scale',String(1+(portraitScale-1)*(1-c.lift)));
    box.style.setProperty('--intro-media-top',`${initialTop+(finalTop-initialTop)*c.lift}px`);
    box.style.setProperty('--intro-media-height',`${initialHeight+(finalHeight-initialHeight)*c.lift}px`);
-   box.style.setProperty('--intro-about-opacity',String(c.about));box.style.setProperty('--intro-about-y',`${aboutTop+(1-c.about)*settings.aboutTravelPx}px`);
+   box.style.setProperty('--intro-about-opacity','1');box.style.setProperty('--intro-about-y',`${aboutTop+(1-c.about)*settings.aboutTravelPx}px`);
    setAboutActive(c.about>.15);
   };
   let active=true;
