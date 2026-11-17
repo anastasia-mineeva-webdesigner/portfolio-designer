@@ -36,7 +36,7 @@ export function ContactProvider({children}:{children:ReactNode}) {
      <div className="enquiry-row"><label htmlFor="enquiry-company"><span>06.</span> Company</label><input id="enquiry-company" name="company" autoComplete="organization" placeholder="Company or brand name" maxLength={160}/></div>
      <div className="enquiry-row"><label htmlFor="enquiry-timeline"><span>07.</span> Timeline</label><input id="enquiry-timeline" name="timeline" placeholder="Start date and deadline" maxLength={200}/></div>
      <div className="enquiry-row"><label htmlFor="enquiry-note"><span>08.</span> Your project</label><textarea id="enquiry-note" name="note" placeholder="A few words about your idea, goals or a link to your current website" rows={4} maxLength={2000}/></div>
-     <div className="enquiry-submit"><p id="enquiry-send-note">This opens a draft in your email app. Nothing is sent until you send the email.</p><button className="enquiry-send" type="submit" aria-describedby="enquiry-send-note">Create email <span aria-hidden="true">↗</span></button></div>
+     <div className="enquiry-submit"><p id="enquiry-send-note">This opens a draft in your email app. Nothing is sent until you send the email.</p><button className="enquiry-send" type="submit" aria-describedby="enquiry-send-note">Send <span aria-hidden="true">↗</span></button></div>
      <div role="status" aria-live="polite" className="enquiry-status">{status}</div>
      {brief&&<div className="enquiry-fallback"><Button variant="secondary" onClick={copy}>Copy project brief</Button><details><summary>View your brief</summary><pre>{brief}</pre></details></div>}
     </form>
