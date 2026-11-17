@@ -318,3 +318,18 @@
  .footer nav .text-link{transition:color var(--hover-duration,180ms),translate 220ms ease}
  .footer nav .text-link:is(:hover,:focus-visible){translate:0 -2px}
 }
+
+/* CTA artwork follows the handoff positions and keeps clear of the card edge. */
+@media(min-width:1700px){
+ .contact-envelope{width:176px;left:6.03%;top:48.6%}
+ .contact-plane{width:246px;right:12.5%;top:26%}
+}
+@media(min-width:1400px) and (max-width:1699px){
+ .contact-envelope{width:123px;left:6.25%;top:42.8%}
+ .contact-plane{width:172px;right:7.8%;top:54.5%}
+}
+@media(min-width:1200px) and (max-width:1399px){
+ .contact-envelope{width:97px;left:7.54%;top:59.8%}
+ .contact-plane{width:135px;right:8.01%;top:52.9%}
+}
+@media(max-width:1199px){.contact-envelope,.contact-plane{display:none}}
