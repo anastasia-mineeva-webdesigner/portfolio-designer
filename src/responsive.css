@@ -355,3 +355,10 @@
 .work-page>.case-breadcrumbs{margin-bottom:64px}
 .work-page>h1{font-size:var(--display);line-height:var(--display-leading);letter-spacing:-.04em;font-weight:500;margin:24px 0}
 @media(max-width:599px){.work-page{padding-top:24px}.work-page>.case-breadcrumbs{margin-bottom:40px}}
+
+/* Leave a full section interval after the new work-index action. */
+.work:not(.work-page){padding-bottom:0;margin-bottom:0}
+.work>.work-more{margin-top:16px;min-width:224px}
+.work:not(.work-page)+.process{margin-top:0;padding-top:120px}
+@media(max-width:899px){.work:not(.work-page)+.process{padding-top:96px}}
+@media(max-width:599px){.work>.work-more{margin-top:8px}.work:not(.work-page)+.process{padding-top:80px}}
