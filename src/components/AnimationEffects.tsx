@@ -27,25 +27,8 @@ export function Odometer({value,hero=false}:{value:string;hero?:boolean}) {
  })}</span></span>;
 }
 
-export function HighlightText({text,numbers=[]}:{text:string;numbers?:string[]}) {
- const ref=useRef<HTMLHeadingElement>(null);
- useEffect(()=>{
-  const el=ref.current!,settings=animation.textHighlight,reduced=matchMedia('(prefers-reduced-motion: reduce)');let raf=0,max=0;
-  const chars=Array.from(el.querySelectorAll<HTMLElement>('[data-highlight-char]'));
-  const rgb=(hex:string)=>[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16));
-  const from=rgb(settings.from),to=rgb(settings.to);
-  const render=()=>{raf=0;const rect=el.getBoundingClientRect();const distance=Math.max(innerHeight*(settings.startViewport-settings.endViewport),rect.height);
-   let p=Math.max(0,Math.min(1,(innerHeight*settings.startViewport-rect.top)/distance));
-   if(!settings.reversible){max=Math.max(max,p);p=max}
-   if(reduced.matches||!settings.enabled)p=1;
-   chars.forEach((c,i)=>{const t=Math.max(0,Math.min(1,(p*(1+settings.feather)-i/Math.max(1,chars.length-1))/settings.feather));c.style.color=`rgb(${from.map((v,j)=>Math.round(v+(to[j]-v)*t)).join(',')})`});
-  };
-  const schedule=()=>{if(!raf)raf=requestAnimationFrame(render)};
-  const observer=new ResizeObserver(schedule);observer.observe(el);
-  window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);reduced.addEventListener('change',schedule);render();
-  return()=>{cancelAnimationFrame(raf);observer.disconnect();window.removeEventListener('scroll',schedule);window.removeEventListener('resize',schedule);reduced.removeEventListener('change',schedule)};
- },[]);
- return <h3 ref={ref} className="highlight-text"><span className="sr-only">{text}</span><span aria-hidden="true">{text.split(/(\s+)/).map((word,i)=>/^\s+$/.test(word)?word:numbers.includes(word)?<span data-highlight-char key={i}><Odometer value={word}/></span>:<span className="highlight-word" key={i}>{Array.from(word).map((c,j)=><span data-highlight-char key={j}>{c}</span>)}</span>)}</span></h3>;
+export function HighlightText({text}:{text:string;numbers?:string[]}) {
+ return <h3 className="highlight-text">{text}</h3>;
 }
 
 export function CursorTrail(){

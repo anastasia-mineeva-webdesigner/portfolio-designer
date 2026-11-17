@@ -37,4 +37,4 @@ export function Button({children, href, download, variant='primary', onClick, di
 }
 export function Label({children,dark=false}:{children:ReactNode;dark?:boolean}){return <span className={`label ${dark?'label--dark':''}`}><span className="dot"/>{children}</span>}
 export function Tag({children}:{children:ReactNode}){return <span className="tag">{children}</span>}
-export function Decoration({name,className='',style}:{name:string;className?:string;style?:CSSProperties}){return <img className={`decoration ${className}`} style={style} src={`/assets/${name}.png`} alt="" aria-hidden="true" loading="lazy"/>}
+export function Decoration({name,className='',style}:{name:string;className?:string;style?:CSSProperties}){return <img className={`decoration ${className}`} style={style} src={`/assets/${name}.svg`} alt="" aria-hidden="true" loading="lazy"/>}

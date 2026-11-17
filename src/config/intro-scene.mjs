@@ -1,8 +1,8 @@
 // The unified Hero → About timeline. All ranges use normalized scene progress.
 export const introScene={
- desktopScrollScreens:4.5,mobileScrollScreens:4.2,
- heroOut:[.04,.25],mediaLift:[.2,.68],aboutIn:[.55,.86],videoRange:[0,.72],
- aboutTravelPx:72,heroTravelPx:40,
+ desktopScrollScreens:2.1,mobileScrollScreens:1.9,
+ heroOut:[.02,.3],mediaLift:[.12,.72],aboutIn:[.4,.82],videoRange:[0,.82],
+ aboutTravelPx:0,heroTravelPx:0,
 };
 const clamp=n=>Math.max(0,Math.min(1,n));
 const range=(p,[start,end])=>clamp((p-start)/Math.max(.0001,end-start));

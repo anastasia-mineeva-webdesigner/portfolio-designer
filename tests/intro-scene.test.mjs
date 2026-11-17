@@ -1,10 +1,10 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {introScene,introCues,introSceneProgress} from '../src/config/intro-scene.mjs';
-test('the unified scene gives video several screens of scrolling and keeps reading time after it ends',()=>{
- assert.ok(introScene.desktopScrollScreens>=4);
- assert.ok(introScene.mobileScrollScreens>=4);
- assert.ok(introScene.videoRange[1]<introScene.aboutIn[1]);
+test('the unified scene has a bounded pin distance and a reading interval',()=>{
+ assert.ok(introScene.desktopScrollScreens>=1.5 && introScene.desktopScrollScreens<=2.5);
+ assert.ok(introScene.mobileScrollScreens>=1.5 && introScene.mobileScrollScreens<=2.5);
+ assert.ok(introScene.videoRange[1]<=introScene.aboutIn[1]);
  assert.ok(introScene.aboutIn[1]<1);
 });
 test('Hero content is gone before About becomes visible and media finishes lifting before About settles',()=>{
