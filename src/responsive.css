@@ -296,3 +296,25 @@
  .static-hero>.scene-tools>.hero-current-media{scale:1.2;transform-origin:center bottom}
  .static-hero>.scene-tools>.tool{scale:1.2;transform-origin:top left}
 }
+
+/* Restore the original overlapping portrait only for the 1920px desktop layout. */
+@media(min-width:1920px){
+ .intro-pin .intro-hero.static-hero{z-index:0}
+ .intro-pin .intro-video-slot{z-index:1}
+ .intro-video-slot .hero-current-media{transform:scale(var(--intro-portrait-scale,1.24))}
+ .static-hero>.scene-tools>.hero-current-media{scale:1.24;transform-origin:center bottom}
+}
+
+/* Small, reversible hover reactions. Individual translate preserves scene transforms. */
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+ .tool,.hero-sticker{pointer-events:auto;--doodle-x:3px;--doodle-y:-2px}
+ .tool>img,.hero-sticker>img{pointer-events:none;transition:translate 240ms cubic-bezier(.2,.7,.25,1)}
+ .tool-1,.tool-4,.sticker-ai{--doodle-x:-3px;--doodle-y:2px}
+ .tool-2,.sticker-motion{--doodle-x:2px;--doodle-y:3px}
+ .tool:hover>img,.hero-sticker:hover>img{translate:var(--doodle-x) var(--doodle-y)}
+ .experience .decoration,.process .decoration,.faq .decoration,.contact .decoration{pointer-events:auto;--doodle-x:3px;--doodle-y:-2px;transition:translate 240ms cubic-bezier(.2,.7,.25,1),transform var(--hover-duration,180ms) ease}
+ .experience .experience-component,.process .process-workflow,.faq .faq-answer,.contact .contact-plane{--doodle-x:-3px;--doodle-y:2px}
+ .experience .decoration:hover,.process .decoration:hover,.faq .decoration:hover,.contact .decoration:hover{translate:var(--doodle-x) var(--doodle-y)}
+ .footer nav .text-link{transition:color var(--hover-duration,180ms),translate 220ms ease}
+ .footer nav .text-link:is(:hover,:focus-visible){translate:0 -2px}
+}
