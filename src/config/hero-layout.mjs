@@ -32,6 +32,8 @@ export function sceneProgress(rootTop,stageHeight,viewportHeight,headerHeight,sc
 // Static two-line desktop heading: remove the former third line and its gap.
 export function staticHeroLayout(width){
  const l=heroLayout(width),removed=width>=1700||width<600?0:width>=1400?104:width>=1200?88:width>=900?80:72;
- const height=l.height-removed,tools=l.tools;
- return {...l,tools,top:l.top-removed,metricsTop:width>=600&&width<1400?height-64-168:l.metricsTop-removed,height,stickers:width>=1400&&width<1700?[[80,20,180],[1175,165,170]]:l.stickers};
+ const height=l.height-removed;
+ const metricsTop=width>=600&&width<1400?height-64-168:l.metricsTop-removed;
+ const tools=l.tools.map(([x,y,w])=>[x,Math.min(y,metricsTop-(l.top-removed)-w*(1+Math.sin(Math.PI/10)+Math.cos(Math.PI/10))/2-16),w]);
+ return {...l,tools,top:l.top-removed,metricsTop,height,stickers:width>=1400&&width<1700?[[80,20,180],[1175,165,170]]:l.stickers};
 }

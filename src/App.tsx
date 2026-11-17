@@ -14,9 +14,21 @@ export default function App(){
  const project=cases.find(item=>item.slug===caseMatch?.[1]);
  const isCV=/^\/cv\/?$/.test(window.location.pathname);
  const isCase=Boolean(caseMatch);
- const isNotFound=window.location.pathname!=='/'&&!isCV&&!(isCase&&project);
+ const isWork=/^\/work\/?$/.test(window.location.pathname);
+ const isNotFound=window.location.pathname!=='/'&&!isCV&&!isWork&&!(isCase&&project);
  const [notice,setNotice]=useState(''),timer=useRef<ReturnType<typeof setTimeout>|undefined>(undefined);
  const missing=(label:string)=>{setNotice(`${label}: details will be available soon.`);clearTimeout(timer.current);timer.current=setTimeout(()=>setNotice(''),5000)};
  useEffect(()=>{const update=()=>document.documentElement.style.setProperty('--hover-duration',`${motionSettings().hoverMs}ms`);update();window.addEventListener('resize',update);return()=>{window.removeEventListener('resize',update);clearTimeout(timer.current)}},[]);
- return <ContactProvider><div className={`site-shell ${isNotFound?'is-not-found':''}`}><CursorTrail/><a className="skip-link" href="#content">Skip to content</a><Header/><main id="top"><div id="content" tabIndex={-1}>{isNotFound ? <NotFoundPage/> : isCV ? <CVPage/> : isCase&&project ? <CasePage project={project}/> : <><VideoScene missing={missing}/><Experience/><Work/><Process/></>}{!isNotFound&&<><FAQ/><Contact/></>}</div></main><Footer/><div className="notice" role="status" aria-live="polite">{notice&&<>{notice}<button onClick={()=>setNotice('')} aria-label="Dismiss notification">×</button></>}</div></div></ContactProvider>
+ // React mounts after the browser's first fragment lookup. Resolve direct links
+ // once fonts are ready, while leaving back/forward restoration to the browser.
+ useEffect(()=>{
+  const navigation=performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming|undefined;
+  if(!location.hash||navigation?.type==='back_forward')return;
+  let cancelled=false;
+  const cancel=()=>{cancelled=true};
+  window.addEventListener('wheel',cancel,{passive:true});window.addEventListener('touchstart',cancel,{passive:true});window.addEventListener('keydown',cancel);
+  document.fonts.ready.then(()=>{if(!cancelled)document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView({behavior:'instant'})});
+  return()=>{cancelled=true;window.removeEventListener('wheel',cancel);window.removeEventListener('touchstart',cancel);window.removeEventListener('keydown',cancel)};
+ },[]);
+ return <ContactProvider><div className={`site-shell ${isNotFound?'is-not-found':''}`}><CursorTrail/><a className="skip-link" href="#content">Skip to content</a><Header/><main id="top"><div id="content" tabIndex={-1}>{isNotFound ? <NotFoundPage/> : isWork ? <Work standalone/> : isCV ? <CVPage/> : isCase&&project ? <CasePage project={project}/> : <><VideoScene missing={missing}/><Experience/><Work/><Process/></>}{!isNotFound&&<><FAQ/><Contact/></>}</div></main><Footer/><div className="notice" role="status" aria-live="polite">{notice&&<>{notice}<button onClick={()=>setNotice('')} aria-label="Dismiss notification">×</button></>}</div></div></ContactProvider>
 }

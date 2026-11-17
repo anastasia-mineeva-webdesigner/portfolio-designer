@@ -8,6 +8,7 @@ const projects=[...source.matchAll(/slug:'([^']+)',title:'([^']+)'/g)].map(([,sl
 const homeTitle='Mira Smirnova — AI Full Stack Designer';
 const homeDescription='Portfolio of Mira Smirnova, AI Full Stack Designer. Explore web design, UX/UI, 3D and motion, with websites built from first brief to launch.';
 const routes=[
+ {path:'/work/',title:'Work — Mira Smirnova',description:'Selected web design projects by Mira Smirnova.',index:true},
  {path:'/',title:homeTitle,description:homeDescription,index:true},
  {path:'/cv/',title:'CV — Mira Smirnova, AI Full Stack Designer',description:'Explore Mira Smirnova’s experience, approach and toolkit across UX/UI, web design, AI, 3D, motion and frontend implementation.',index:true},
  ...projects.map(p=>({path:`/cases/${p.slug}/`,title:`${p.title} — Mira Smirnova`,description:`${p.title}: a draft portfolio case study by Mira Smirnova, AI Full Stack Designer. Project content is being prepared.`,index:false})),
