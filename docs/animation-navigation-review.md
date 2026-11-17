@@ -17,3 +17,11 @@
 
 ## Review references
 No review video was attached. The user's written follow-up identifies the lower block as other projects on case pages; that block is implemented. At 0:31–1:09 the exact gestured groups remain unknown; fade order follows the explicit written sequence, without inventing a different gesture mapping. At 2:16–2:28, any lower block other than the case recommendations still needs a specific element reference.
+
+## Published browser verification (Chrome)
+- Completed Home → scroll down/back → Work → Volta case → All projects → CV → Process → contacts.
+- Work survived reload, case breadcrumb and recommendation links target /work/, and Back/Forward returned between the case and list.
+- Menu open/close preserved scrollY=3432 exactly. Video was paused, reached 4.002s at scrollY=1838 and rewound to 3.273404s at scrollY=1103.
+- Process reload settled at section top=128.375px below the 81px header; contacts likewise at 128.375px. Direct anchor landing now explicitly resolves after React and fonts, without changing back_forward navigation or unfragmented page positions. CV's secondary project links also use /work/.
+- Five other-project cards are present on Volta, visible with previews/category/title, in a horizontal track. Screenshot captured from published page.
+- Mobile drawer interaction was checked at the browser's 1156px content width. True phone viewport, touch seeking, Safari/iOS, and reduced-motion runtime remain unverified: this managed Chrome blocks DevTools/device and media emulation (“Your organization has blocked the use of DevTools on this page”). Reduced-motion branches were reviewed in source, and eight layout widths are covered by the automated layout checks; these are not browser/device tests.
