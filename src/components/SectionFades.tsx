@@ -4,7 +4,7 @@ import {useLayoutEffect} from 'react';
 export function SectionFades(){
  useLayoutEffect(()=>{
   const preference=matchMedia('(prefers-reduced-motion: reduce)');
-  const elements=Array.from(document.querySelectorAll<HTMLElement>('.section > .label, .section > h2, .section > h1, .section > .lead, .section > .statement, .section > .section-subheading, .section > .awards, .section > .button, .section > .project-grid, .section > .process-grid, .section > .faq-list'));
+  const elements=Array.from(document.querySelectorAll<HTMLElement>('.section > .label, .section > h2, .section > h1, .section > .lead, .section > .statement, .section > .section-subheading, .section > .awards, .section > .button, .section > .project-grid, .section > .faq-list'));
   const pending=new Set<HTMLElement>();let frame=0;
   const render=()=>{frame=0;let order=0;
    for(const el of pending){const rect=el.getBoundingClientRect();if(preference.matches||rect.top<innerHeight*.94){

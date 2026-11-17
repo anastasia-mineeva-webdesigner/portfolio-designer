@@ -357,3 +357,11 @@
 @media(max-width:599px){.work+.process{padding-top:80px}}
 
 .highlight-text{color:var(--ink)}
+
+/* Extend only the background; text and the card geometry stay stable. */
+.process-grid .process-label{position:relative;isolation:isolate;width:100%;justify-content:flex-start;background:transparent;padding:8px 16px;border-radius:999px;min-width:0}
+.process-label::before{content:'';position:absolute;inset:0 auto 0 0;width:min(100%,var(--badge-start,100%));background:#000;border-radius:inherit;z-index:-1;transition:width 850ms cubic-bezier(.22,.61,.36,1) var(--badge-delay,0ms)}
+.process-label[data-expanded=true]::before{width:100%}
+.process-label-content{display:inline-flex;align-items:center;gap:8px;max-width:100%}
+.process-label[data-immediate=true]::before{transition:none}
+@media(prefers-reduced-motion:reduce){.process-label::before{width:100%;transition:none}}
