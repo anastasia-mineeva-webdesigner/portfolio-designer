@@ -1,10 +1,10 @@
-// Replace null with the real destination. No invented social profiles or case URLs.
+// Demonstration contacts: replace service homepages with the real public profiles.
 export const links = {
-  telegram: null as string | null,
-  behance: null as string | null,
-  dribbble: null as string | null,
-  linkedin: null as string | null,
-  email: 'a.mineeva.designer@yandex.ru' as string | null,
+  telegram: 'https://telegram.org/' as string | null,
+  behance: 'https://www.behance.net/' as string | null,
+  dribbble: 'https://dribbble.com/' as string | null,
+  linkedin: 'https://www.linkedin.com/' as string | null,
+  email: 'hello@example.com' as string | null,
   cv: '/cv/' as string | null,
   projects: [null, null, null, null, null, null] as (string | null)[],
 };
