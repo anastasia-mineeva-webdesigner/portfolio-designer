@@ -368,3 +368,19 @@
 
 /* Keep the wide CTA copy on two balanced lines, without a one-word tail. */
 @media(min-width:1700px){.contact-card p{max-width:460px;text-wrap:balance}}
+
+/* First selected-work card: reversible flip, with a readable full-size back. */
+.project-card--flip{perspective:1200px;overflow:visible;border-radius:var(--radius)}
+.project-flip-inner{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;transition:transform 700ms cubic-bezier(.22,.61,.36,1)}
+.project-flip-front,.project-flip-back{position:absolute;inset:0;display:block;border-radius:var(--radius);overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.project-flip-front img{width:100%;height:100%;object-fit:cover}
+.project-flip-back{transform:rotateY(180deg);background:var(--lime);color:#000;display:flex;align-items:flex-end;gap:24px;padding:32px;text-align:left}
+.project-flip-copy{display:flex;flex:1;min-width:0;flex-direction:column;align-items:flex-start;gap:20px}
+.project-flip-title{font-size:clamp(24px,2.5vw,44px);line-height:1.15;letter-spacing:-.035em;font-weight:500}
+.project-flip-back .tag{color:#000;font-size:14px;line-height:20px}
+.project-flip-arrow{flex-shrink:0}
+.project-card--flip.is-flipped .project-flip-inner,.project-card--flip:focus-visible .project-flip-inner{transform:rotateY(180deg)}
+@media(hover:hover) and (pointer:fine){.project-card--flip:hover .project-flip-inner{transform:rotateY(180deg)}}
+.project-card--flip:hover img,.project-card--flip:focus-visible img{transform:none;filter:none}
+@media(max-width:599px){.project-flip-back{padding:16px;gap:8px}.project-flip-copy{gap:12px}.project-flip-title{font-size:24px}.project-flip-back .tag{font-size:12px;line-height:16px;padding:6px 10px}.project-flip-arrow{width:24px;height:24px}}
+@media(prefers-reduced-motion:reduce){.project-flip-inner{transition:none}}

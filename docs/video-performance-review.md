@@ -1,0 +1,11 @@
+# Video and loading check — 2026-11-17
+
+The retained source hero-current.mp4 is 1920×1080, 24 fps, 4.04s, 4,166,317 bytes. The active desktop VP9 alpha export hero-transparent.webm is 1280×720, 2,075,212 bytes; the mobile source hero-scroll-mobile.mp4 is 960×540, 1,370,185 bytes. The Safari/decode fallback is 1280×720, 1,727,098 bytes. Thus the site is serving prepared lower-resolution variants, not the original 1080p source. Current Chrome actually decoded 1280×720 and displayed approximately 873×491 CSS pixels at the captured initial position. This is adequate for that 1× display but does not cover a 2× version of the same area.
+
+Downloaded the published WebM and compared SHA-256 against the repository asset: identical. Hosting is not adding a further lossy video transcode. Compared extracted one-second frames: the mobile derivative loses fine sweater and hair detail. Do not claim visually lossless original quality. A real improvement requires a new full-HD export of the composited/cutout source; merely upscaling the existing 720p file cannot recover source detail. That media re-export has not been performed in this check, to preserve the approved transparency and framing.
+
+Public HTML HTTP 200. One first request had TTFB 1.2305s. Three subsequent requests had TTFB 0.1013s, 0.1422s, 0.0786s (median 0.1013s). The WebM download took 0.1486s from this cloud environment. These are narrow network/server measurements, not a mobile loading score. Browser performance timeline APIs are not exposed by the read-only DOM evaluation tool. The PageSpeed Insights mobile API returned HTTP 429 RESOURCE_EXHAUSTED (shared API project daily quota zero), so no Lighthouse score, LCP, CLS or INP is available.
+
+Build reports main JS about 289kB raw / 89kB gzip and CSS about 68kB raw / 13.5kB gzip. Local TTF fonts total about 1MB; converting to WOFF2/subsetting is a potential performance improvement. Project preview images are lazy loaded. The full dist size is not equivalent to bytes downloaded on first view.
+
+For a representative external check, run PageSpeed Insights for the published homepage in Mobile and Desktop modes, and check on a physical Retina phone at 100% zoom with cold cache. The original 1080p source is already in the project; the user does not need to re-upload it for a future media re-export.
