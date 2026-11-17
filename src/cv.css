@@ -5,3 +5,5 @@
 
 .cv-actions>.button{height:48px;min-height:48px}
 .cv-actions>.button--secondary{border:1px solid var(--border)}
+
+.cv-intro-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
