@@ -356,4 +356,4 @@
 @media(max-width:899px){.work+.process{padding-top:96px}}
 @media(max-width:599px){.work+.process{padding-top:80px}}
 
-.work-page h1{font-size:var(--display);line-height:var(--display-leading);letter-spacing:-.04em}.work-page>.case-breadcrumbs{align-self:stretch;text-align:left}.highlight-text{color:var(--ink)}
+.highlight-text{color:var(--ink)}
