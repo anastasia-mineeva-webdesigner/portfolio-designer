@@ -349,3 +349,9 @@
 @media(min-width:900px) and (max-width:1399px){
  .static-hero>.scene-tools>.hero-current-media{scale:1.2;transform-origin:center bottom}
 }
+
+/* Dedicated project index reuses the home project grid. */
+.work-page{padding-top:32px}
+.work-page>.case-breadcrumbs{margin-bottom:64px}
+.work-page>h1{font-size:var(--display);line-height:var(--display-leading);letter-spacing:-.04em;font-weight:500;margin:24px 0}
+@media(max-width:599px){.work-page{padding-top:24px}.work-page>.case-breadcrumbs{margin-bottom:40px}}
