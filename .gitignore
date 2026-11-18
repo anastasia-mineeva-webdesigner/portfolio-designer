@@ -3,3 +3,6 @@ dist/
 *.tsbuildinfo
 .env*
 .DS_Store
+admin/.local-data/
+admin/.env
+admin/node_modules/

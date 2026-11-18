@@ -1,0 +1,16 @@
+{
+  "name": "portfolio-admin",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server.mjs",
+    "password": "node password.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "sharp": "^0.35.5"
+  }
+}
