@@ -9,6 +9,10 @@ const clamp=n=>Math.max(0,Math.min(1,n));
 const range=(p,[start,end])=>clamp((p-start)/Math.max(.0001,end-start));
 const smooth=n=>n*n*(3-2*n);
 export function introSceneProgress(top,header,distance){return clamp((header-top)/Math.max(1,distance));}
+export function introVideoProgress(top,header,pinTop,distance,[start,end]=introScene.videoRange){
+ const leadIn=Math.max(0,header-pinTop);
+ return range(header-top,[distance*start,leadIn+distance*end]);
+}
 export function introCues(progress,settings=introScene){
  return {hero:1-smooth(range(progress,settings.heroOut)),lift:smooth(range(progress,settings.mediaLift)),about:smooth(range(progress,settings.aboutIn)),video:range(progress,settings.videoRange)};
 }

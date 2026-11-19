@@ -152,15 +152,13 @@
 @media(min-width:1700px){
  .section{padding-block:0;margin-block:120px}
  .experience{gap:0}
- .experience>.label,.experience>h2{margin-bottom:16px}
+ .experience>.section-heading{margin-bottom:16px}
  .experience>.lead,.experience>.statement{margin-bottom:24px}
- .experience>h3{font-size:16px;line-height:24px}
- .experience>.awards{gap:0;margin-bottom:24px}
+ .experience .recognition h3{font-size:16px;line-height:24px}
+ .experience>.recognition{margin-bottom:24px}
  .work,.process{gap:24px}
  .work>.work-projects,.process>.process-grid{margin-top:40px}
 }
-/* Figma 354:8916: CTA label on its coloured surface, at every breakpoint. */
-.contact-card>.label{background:#fff;color:var(--ink)}
 
 /* Static, light Hero and About: video and scroll pinning are intentionally absent. */
 .static-hero{position:relative;height:var(--hero-height);background:var(--hero);isolation:isolate}
@@ -332,7 +330,7 @@
 }
 @media (prefers-reduced-motion: no-preference) {
   .header .logo-heart {
-    animation: logo-heart-pulse 8s ease-in-out 2s infinite;
+    animation: logo-heart-pulse 5s ease-in-out 2s infinite;
   }
 }
 
@@ -527,25 +525,45 @@
 }
 
 
-/* Content sections share one gap; the intro scene already includes its final space. */
+/* Content sections start one gap after the previous section background. */
 @media screen {
  .site-shell:not(.is-not-found) #content { padding-block-end: var(--footer-gap); }
  #content > :is(.experience, .work, .process, .faq, .contact) {
   margin-block: 0;
   padding-block: var(--block-gap) 0;
  }
- #content > .intro-scroll + .experience { padding-block-start: calc(var(--block-gap) - var(--intro-end-space)); }
  #content > .intro-static-about { padding-block-end: 0; margin-block-end: 0; }
 }
 
+
+.section-heading { display: grid; justify-items: center; gap: 6px; }
+.recognition { display: grid; gap: 6px; }
+.recognition > .awards { gap: 8px; }
+.intro-about > .label--plain { margin-bottom: -10px; }
+.intro-static-about > .label--plain { margin-bottom: -34px; }
+@media (min-width: 1700px), (max-width: 599px) {
+ .intro-static-about > .label--plain { margin-bottom: -18px; }
+}
+@media (min-width: 600px) and (max-width: 1199px) {
+ .experience-award, .experience-component, .faq-question, .faq-answer { top: 24px; }
+ .experience-award, .faq-question { width: clamp(64px, 11vw, 106px); }
+ .experience-component, .faq-answer { width: clamp(72px, 12.5vw, 120px); }
+}
 
 @media (max-width: 599px) {
  .hero-mobile-lines { white-space: nowrap; }
  .hero-title:has(.hero-mobile-lines) { font-size: clamp(32px, 10vw, 40px); line-height: 1.08; }
  #content > :is(.experience, .work, .process, .faq) { row-gap: 24px; }
- #content > .section > .label--plain + h2,
- #content > .section > h2 + .lead { margin-block-start: -12px; }
+ #content > .section > .section-heading + .lead { margin-block-start: -12px; }
  .intro-about .about-copy, .intro-static-about .about-copy { gap: 12px; }
- .intro-static-about > .label--plain + .about-copy { margin-block-start: -12px; }
- .experience > .awards { margin-block-start: -16px; gap: 8px; }
+ .intro-about > .label--plain { margin-bottom: -6px; }
+ .experience-award, .experience-component { display: none; }
+ #content > .faq { row-gap: 16px; }
+ #content > .faq > .section-heading + .lead { margin-block-start: -4px; }
+ .faq-item { gap: 4px; padding-block-start: 12px; }
+ .faq-divider { margin-top: 8px; }
+ .contact-card { padding: 16px; gap: 16px; }
+ .footer { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+ .footer .text-link { justify-self: end; }
+ .footer-copyright { grid-area: 2 / 1 / 3 / -1; text-align: center; }
 }
