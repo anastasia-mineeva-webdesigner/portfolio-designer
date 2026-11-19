@@ -17,3 +17,13 @@
  ::-webkit-scrollbar-track,::-webkit-scrollbar-corner{background:Canvas}
  ::-webkit-scrollbar-thumb{background:ButtonText;border-color:Canvas}
 }
+
+@media screen {
+ .site-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+ }
+ .site-shell > footer { margin-block-start: auto; }
+}
