@@ -1,32 +1,65 @@
 import {createContext,useContext,useEffect,useRef,useState} from 'react';
 import type {FormEvent,ReactNode} from 'react';
 import {Button} from './UI';
-import {links} from '../config/links';
-import {buildEnquiry,scopeOptions,formatOptions,budgetOptions} from '../contact-enquiry.mjs';
+import {scopeOptions,formatOptions,budgetOptions} from '../contact-enquiry.mjs';
 import '../contact-form.css';
 const ContactContext=createContext<()=>void>(()=>{});
 export const useContact=()=>useContext(ContactContext);
 export function ContactProvider({children}:{children:ReactNode}) {
- const [open,setOpen]=useState(false),[status,setStatus]=useState(''),[brief,setBrief]=useState('');
- const dialog=useRef<HTMLDialogElement>(null),trigger=useRef<HTMLElement|null>(null);
- const openContact=()=>{const active=document.activeElement as HTMLElement;trigger.current=active.closest('.mobile-nav,.mobile-menu')?document.querySelector<HTMLElement>('.menu-toggle'):active;setOpen(true)};
+ const [open,setOpen]=useState(false);
+ const [submitted,setSubmitted]=useState(false);
+ const dialog=useRef<HTMLDialogElement>(null);
+ const trigger=useRef<HTMLElement|null>(null);
+ const successTitle=useRef<HTMLHeadingElement>(null);
+
+ const openContact=()=>{
+  const active=document.activeElement as HTMLElement;
+  trigger.current=active.closest('.mobile-nav,.mobile-menu')?document.querySelector<HTMLElement>('.menu-toggle'):active;
+  setSubmitted(false);
+  setOpen(true);
+ };
+ const closeContact=()=>setOpen(false);
+
  useEffect(()=>{
   if(!open)return;
   const el=dialog.current!,previousOverflow=document.body.style.overflow;
-  el.showModal();document.body.style.overflow='hidden';
+  el.showModal();
+  el.scrollTop=0;
+  document.body.style.overflow='hidden';
   return()=>{el.close();document.body.style.overflow=previousOverflow;trigger.current?.focus({preventScroll:true})};
  },[open]);
- const submit=(event:FormEvent<HTMLFormElement>)=>{
+
+ useEffect(()=>{
+  if(open&&submitted)successTitle.current?.focus();
+ },[open,submitted]);
+
+ function submit(event:FormEvent<HTMLFormElement>){
   event.preventDefault();
-  const result=buildEnquiry(new FormData(event.currentTarget),links.email!);
-  setBrief(result.body);setStatus('Your email draft is ready. Send it from your email app. If it did not open, copy the brief below.');
-  window.location.href=result.url;
- };
- const copy=async()=>{try{await navigator.clipboard.writeText(brief);setStatus('Brief copied. Paste it into an email and send it when you are ready.')}catch{setStatus('Copy is unavailable here. Select and copy the brief below.')}};
- return <ContactContext.Provider value={openContact}>{children}<dialog ref={dialog} className="enquiry-dialog" aria-labelledby="enquiry-title" onCancel={()=>setOpen(false)} onClose={()=>setOpen(false)}>
-  <div className="enquiry-shell"><div className="enquiry-toolbar"><span className="enquiry-kicker"><span className="dot"/>Project enquiry</span><button type="button" className="enquiry-close" onClick={()=>setOpen(false)} autoFocus>Close <span aria-hidden="true">×</span></button></div>
+  setSubmitted(true);
+ }
+
+ return <ContactContext.Provider value={openContact}>{children}
+  <dialog ref={dialog} className={submitted?'enquiry-dialog enquiry-dialog--success':'enquiry-dialog'}
+   aria-labelledby="enquiry-title" aria-describedby={submitted?'enquiry-success-note':undefined}
+   onCancel={event=>{event.preventDefault();closeContact()}}>
+   {submitted?<div className="enquiry-success">
+    <span className="enquiry-success-mark" aria-hidden="true">
+     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+    </span>
+    <h2 ref={successTitle} id="enquiry-title" tabIndex={-1}>Your request was submitted</h2>
+    <p id="enquiry-success-note">Test mode. No email was sent.</p>
+    <Button onClick={closeContact}>Done</Button>
+   </div>:<div className="enquiry-shell">
+    <div className="enquiry-toolbar">
+     <button type="button" className="enquiry-close" onClick={closeContact} autoFocus>
+      <span className="enquiry-close-label">Close</span>
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+       <path d="m5 5 10 10M15 5 5 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      </svg>
+     </button>
+    </div>
    <div className="enquiry-intro"><h2 id="enquiry-title">Let's build<br/><span className="accent">together.</span></h2><div><p>Tell me what you have in mind.<br/>I'll help shape the next step.</p><span>Websites · Digital design · AI visuals</span></div></div>
-   <div className="enquiry-layout"><aside><p>From a first idea<br/>to a website that works.</p><span>A few details are enough to start.<br/>Fields marked * are required.</span><a href={`mailto:${links.email}`}>Prefer a direct email? ↗</a></aside>
+   <div className="enquiry-layout"><aside><p>From a first idea<br/>to a website that works.</p><span>A few details are enough to start.<br/>Fields marked * are required.</span></aside>
     <form onSubmit={submit} className="enquiry-form">
      <fieldset className="enquiry-row"><legend><span>01.</span> Scope</legend><div className="enquiry-choices">{scopeOptions.map(value=><label key={value}><input type="checkbox" name="scope" value={value}/><span>{value}</span></label>)}</div></fieldset>
      <fieldset className="enquiry-row"><legend><span>02.</span> Format</legend><div className="enquiry-choices">{formatOptions.map(value=><label key={value}><input type="radio" name="format" value={value}/><span>{value}</span></label>)}</div></fieldset>
@@ -36,11 +69,10 @@ export function ContactProvider({children}:{children:ReactNode}) {
      <div className="enquiry-row"><label htmlFor="enquiry-company"><span>06.</span> Company</label><input id="enquiry-company" name="company" autoComplete="organization" placeholder="Company or brand name" maxLength={160}/></div>
      <div className="enquiry-row"><label htmlFor="enquiry-timeline"><span>07.</span> Timeline</label><input id="enquiry-timeline" name="timeline" placeholder="Start date and deadline" maxLength={200}/></div>
      <div className="enquiry-row"><label htmlFor="enquiry-note"><span>08.</span> Your project</label><textarea id="enquiry-note" name="note" placeholder="A few words about your idea, goals or a link to your current website" rows={4} maxLength={2000}/></div>
-     <div className="enquiry-submit"><p id="enquiry-send-note">This opens a draft in your email app. Nothing is sent until you send the email.</p><button className="enquiry-send" type="submit" aria-describedby="enquiry-send-note">Send <span aria-hidden="true">↗</span></button></div>
-     <div role="status" aria-live="polite" className="enquiry-status">{status}</div>
-     {brief&&<div className="enquiry-fallback"><Button variant="secondary" onClick={copy}>Copy project brief</Button><details><summary>View your brief</summary><pre>{brief}</pre></details></div>}
+     <div className="enquiry-submit"><button className="enquiry-send" type="submit">Send <span aria-hidden="true">↗</span></button></div>
     </form>
    </div>
-  </div>
- </dialog></ContactContext.Provider>
+   </div>}
+  </dialog>
+ </ContactContext.Provider>
 }
