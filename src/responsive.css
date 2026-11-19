@@ -117,7 +117,7 @@
  .contact-card h2{font-size:48px}.contact-card p{max-width:280px}
  .contact-fold{width:24px;height:auto}
  .experience-award{top:48px;left:32px;width:39px}.experience-component{top:56px;right:32px;width:48px}
- .process-wireframe{top:62px;left:24px;width:94px}.process-workflow{top:34px;right:10px;width:108px;max-width:27%}
+ .process-wireframe{top:12px;left:24px;width:94px}.process-workflow{display:none}
  .faq-question{top:56px;left:32px;width:37px}.faq-answer{top:48px;right:26px;width:46px}
 }
 @media(max-width:400px){
@@ -535,4 +535,16 @@
  }
  #content > .intro-scroll + .experience { padding-block-start: calc(var(--block-gap) - var(--intro-end-space)); }
  #content > .intro-static-about { padding-block-end: 0; margin-block-end: 0; }
+}
+
+
+@media (max-width: 599px) {
+ .hero-mobile-lines { white-space: nowrap; }
+ .hero-title:has(.hero-mobile-lines) { font-size: clamp(32px, 10vw, 40px); line-height: 1.2; }
+ #content > :is(.experience, .work, .process, .faq) { row-gap: 24px; }
+ #content > .section > .label--plain + h2,
+ #content > .section > h2 + .lead { margin-block-start: -12px; }
+ .intro-about .about-copy, .intro-static-about .about-copy { gap: 12px; }
+ .intro-static-about > .label--plain + .about-copy { margin-block-start: -12px; }
+ .experience > .awards { margin-block-start: -16px; gap: 8px; }
 }
