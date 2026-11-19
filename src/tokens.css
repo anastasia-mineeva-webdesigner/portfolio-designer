@@ -5,3 +5,12 @@
 @media(max-width:899px){:root{--gutter:32px;--display:56px;--display-leading:64px;--h2:48px;--h2-leading:56px}}
 @media(max-width:599px){:root{--gutter:24px;--grid-gap:16px;--section-space:48px;--header-height:72px;--display:40px;--display-leading:48px;--h2:32px;--h2-leading:40px;--h3:16px;--h3-leading:24px;--h4:16px;--h4-leading:24px;--number:24px;--number-leading:32px}}
 @media(max-width:400px){:root{--gutter:16px}}
+
+
+:root { --block-gap: 120px; --footer-gap: 24px; --intro-end-space: 80px; }
+@media (max-width: 1199px) {
+ :root { --block-gap: 80px; --intro-end-space: 64px; }
+}
+@media (max-width: 599px) {
+ :root { --block-gap: 56px; --intro-end-space: 40px; }
+}

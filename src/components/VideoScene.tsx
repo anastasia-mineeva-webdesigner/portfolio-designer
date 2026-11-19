@@ -47,7 +47,8 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
   const measure=()=>{
    if(disposed)return;
    const mobile=innerWidth<600,tablet=innerWidth>=600&&innerWidth<900,header=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
-   const gap=mobile?16:24,bottom=80,minMedia=mobile?180:220;
+   const gap=mobile?16:24,minMedia=mobile?180:220;
+   const bottom=parseFloat(getComputedStyle(el).getPropertyValue('--intro-end-space'));
    const titleHeight=title.offsetHeight,aboutHeight=about.offsetHeight,metricHeight=metrics.offsetHeight;
    portraitScale=innerWidth>=1700?1.24:mobile?1.12:tablet?1.6:innerWidth>=900&&innerWidth<1700?1.2:1.04;
    const heroReserve=mobile?metricHeight+48:0;

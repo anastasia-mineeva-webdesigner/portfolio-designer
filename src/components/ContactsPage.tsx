@@ -7,8 +7,8 @@ import '../contacts.css';
 
 const showcase = [
  {profile:'Behance',title:'Selected case studies',slug:'vireon'},
- {profile:'Dribbble',title:'Design explorations',slug:'epoch'},
- {profile:'Telegram',title:'A little behind the scenes',slug:'art-scale'},
+ {profile:'Dribbble',title:'Design explorations',slug:'art-scale'},
+ {profile:'Telegram',title:'A little behind the scenes',slug:'epoch'},
  {profile:'Awwwards',title:'Awards & recognition',slug:'veya'},
 ] as const;
 

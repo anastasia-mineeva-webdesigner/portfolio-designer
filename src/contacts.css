@@ -1,10 +1,10 @@
 .contacts-page {
- padding-block: 64px 96px;
+ padding-block-start: 64px;
 }
 .contacts-intro {
  max-width: 1100px;
  margin-inline: auto;
- padding-bottom: 64px;
+ padding-bottom: var(--block-gap);
  text-align: center;
 }
 .contacts-intro h1 {
@@ -46,23 +46,15 @@
  transition: color 180ms ease;
 }
 .contacts-profile-link span {
- position: relative;
  display: inline-block;
-}
-.contacts-profile-link span::after {
- content: '';
- position: absolute;
- inset: auto 0 -4px;
- height: 2px;
- background: currentColor;
- transform: scaleX(0);
- transform-origin: left;
- transition: transform 200ms ease;
+ padding-inline: 4px;
+ margin-inline: -4px;
+ transition: background-color 200ms ease;
 }
 .contacts-profile-link:focus-visible,
 .contacts-profile:has(.contacts-project:focus-visible) .contacts-profile-link { color: var(--ink); }
-.contacts-profile-link:focus-visible span::after,
-.contacts-profile:has(.contacts-project:focus-visible) .contacts-profile-link span::after { transform: scaleX(1); }
+.contacts-profile-link:focus-visible span,
+.contacts-profile:has(.contacts-project:focus-visible) .contacts-profile-link span { background-color: var(--lime); }
 
 .contacts-project { display: block; }
 .contacts-project-image {
@@ -76,26 +68,27 @@
  width: 100%;
  height: 100%;
  object-fit: cover;
+ object-position: center top;
  transition: transform 300ms ease;
 }
+.contacts-project-image--round img { object-position: center; }
 .contacts-project p { margin-top: 12px; }
 
 @media (hover: hover) and (pointer: fine) {
  .contacts-profile-link:hover,
  .contacts-profile:has(.contacts-project:hover) .contacts-profile-link { color: var(--ink); }
- .contacts-profile-link:hover span::after,
- .contacts-profile:has(.contacts-project:hover) .contacts-profile-link span::after { transform: scaleX(1); }
+ .contacts-profile-link:hover span,
+ .contacts-profile:has(.contacts-project:hover) .contacts-profile-link span { background-color: var(--lime); }
  .contacts-project:hover img { transform: scale(1.025); }
 }
 @media (max-width: 719px) {
- .contacts-page { padding-block: 40px 64px; }
- .contacts-intro { padding-bottom: 40px; }
+ .contacts-page { padding-block-start: 40px; }
  .contacts-intro p { margin-top: 24px; font-size: 16px; }
  .contacts-showcase { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 16px; }
  .contacts-profile-heading { margin-bottom: 16px; padding-bottom: 12px; font-size: clamp(24px, 5.5vw, 40px); }
  .contacts-project p { margin-top: 10px; font-size: 14px; line-height: 20px; }
 }
 @media (prefers-reduced-motion: reduce) {
- .contacts-profile-link, .contacts-profile-link span::after, .contacts-project-image img { transition: none; }
+ .contacts-profile-link, .contacts-profile-link span, .contacts-project-image img { transition: none; }
  .contacts-project:hover img { transform: none; }
 }

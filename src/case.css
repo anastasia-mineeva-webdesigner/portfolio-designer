@@ -117,3 +117,11 @@ body:has(.enquiry-dialog[open], .mobile-menu.is-open) .compact-section-menu { vi
  .case-behance-action { margin: 0 0 48px; }
 }
 @media print { .compact-section-menu { display: none; } }
+
+
+@media screen {
+ .case-page .case-body { padding-block: var(--block-gap) 0; }
+ .case-page .case-chapter:not(:last-child) { padding-block-end: var(--block-gap); }
+ .case-page .case-behance-action { margin-block: 32px calc(var(--block-gap) - 24px); }
+ .case-page .related-projects { padding-block: 23px 0; }
+}

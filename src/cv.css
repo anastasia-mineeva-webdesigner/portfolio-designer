@@ -5,3 +5,9 @@
 
 .cv-actions>.button{height:48px;min-height:48px}
 .cv-actions>.button--secondary{border:1px solid var(--border)}
+
+
+@media screen {
+ .cv-page .cv-body { padding-block: var(--block-gap) 0; }
+ .cv-content > section:not(:last-of-type) { padding-block-end: var(--block-gap); }
+}

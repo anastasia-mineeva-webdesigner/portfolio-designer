@@ -395,12 +395,6 @@
  .static-hero>.scene-tools>.hero-current-media{scale:1.2;transform-origin:center bottom}
 }
 
-/* Keep generous separation between Selected work and Process. */
-.work{padding-bottom:0;margin-bottom:0}
-.work+.process{margin-top:0;padding-top:120px}
-@media(max-width:899px){.work+.process{padding-top:96px}}
-@media(max-width:599px){.work+.process{padding-top:80px}}
-
 .highlight-text{color:var(--ink)}
 
 /* Extend only the background; text and the card geometry stay stable. */
@@ -529,4 +523,16 @@
     transition: none;
   }
   .project-flip-front[inert], .project-flip-back[inert] { visibility: hidden; }
+}
+
+
+/* Content sections share one gap; the intro scene already includes its final space. */
+@media screen {
+ .site-shell:not(.is-not-found) #content { padding-block-end: var(--footer-gap); }
+ #content > :is(.experience, .work, .process, .faq, .contact) {
+  margin-block: 0;
+  padding-block: var(--block-gap) 0;
+ }
+ #content > .intro-scroll + .experience { padding-block-start: calc(var(--block-gap) - var(--intro-end-space)); }
+ #content > .intro-static-about { padding-block-end: 0; margin-block-end: 0; }
 }
