@@ -1,17 +1,18 @@
-import {useEffect,useRef,useState} from 'react';
+import {useEffect,useMemo} from 'react';
 import type {CaseStudy} from '../data/cases';
 import {Button,Tag} from './UI';
 import {RelatedProjects} from './RelatedProjects';
+import {CompactSectionNavigation,useSectionNavigation} from './SectionNavigation';
 import '../case.css';
 
 const shortChapterTitles=['Overview','Challenge','Direction','Design','Outcome'];
 
 export default function CasePage({project}:{project:CaseStudy}){
  const {chapters}=project;
- const [active,setActive]=useState(chapters[0].id);
- const [showMobileIndex,setShowMobileIndex]=useState(false);
- const mobileIndex=useRef<HTMLDetailsElement>(null);
- const activeIndex=Math.max(0,chapters.findIndex(chapter=>chapter.id===active));
+ const sectionLinks=useMemo(()=>chapters.map((chapter,i)=>({
+  id:chapter.id,title:chapter.title,shortTitle:shortChapterTitles[i],
+ })),[chapters]);
+ const {active,showCompact}=useSectionNavigation(sectionLinks);
  const facts=[
   ['Project',project.category],
   ['Scope',project.scope],
@@ -26,55 +27,8 @@ export default function CasePage({project}:{project:CaseStudy}){
   return()=>{document.title=previous};
  },[project]);
 
- useEffect(()=>{
-  const sections=chapters.map(chapter=>document.getElementById(chapter.id)!).filter(Boolean);
-  const narrow=matchMedia('(max-width: 1199px)');
-  let frame=0;
-  const update=()=>{
-   frame=0;
-   const header=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height'))||80;
-   const readingLine=Math.max(header+48,innerHeight*.3);
-   let current=chapters[0].id;
-   for(const section of sections){
-    if(section.getBoundingClientRect().top<=readingLine)current=section.id;
-   }
-   setActive(current);
-   const first=sections[0];
-   setShowMobileIndex(narrow.matches&&Boolean(first&&first.getBoundingClientRect().top<=innerHeight-24));
-  };
-  const schedule=()=>{if(!frame)frame=requestAnimationFrame(update)};
-  const observer=new ResizeObserver(schedule);
-  sections.forEach(section=>observer.observe(section));
-  window.addEventListener('scroll',schedule,{passive:true});
-  window.addEventListener('resize',schedule);
-  window.addEventListener('hashchange',schedule);
-  narrow.addEventListener('change',schedule);
-  update();
-  return()=>{
-   cancelAnimationFrame(frame);
-   observer.disconnect();
-   window.removeEventListener('scroll',schedule);
-   window.removeEventListener('resize',schedule);
-   window.removeEventListener('hashchange',schedule);
-   narrow.removeEventListener('change',schedule);
-  };
- },[chapters]);
-
- function closeMobileIndex(){
-  if(mobileIndex.current) mobileIndex.current.open=false;
- }
-
  return <article className="case-page container">
-  {showMobileIndex&&<details ref={mobileIndex} className="case-mobile-index"
-   onBlur={event=>{if(!event.currentTarget.contains(event.relatedTarget))closeMobileIndex()}}
-   onKeyDown={event=>{if(event.key==='Escape'&&event.currentTarget.open){event.preventDefault();closeMobileIndex();event.currentTarget.querySelector('summary')?.focus()}}}>
-   <summary>{String(activeIndex+1).padStart(2,'0')} <span>{shortChapterTitles[activeIndex]}</span></summary>
-   <nav aria-label="Jump to a chapter">
-    {chapters.map((chapter,i)=><a key={chapter.id} href={`#${chapter.id}`} aria-current={active===chapter.id?'location':undefined} onClick={closeMobileIndex}>
-     <span>{String(i+1).padStart(2,'0')}</span> {shortChapterTitles[i]}
-    </a>)}
-   </nav>
-  </details>}
+  {showCompact&&<CompactSectionNavigation links={sectionLinks} active={active} label="Case chapters"/>}
   <header className="case-intro">
    <h1>{project.title}</h1><p>{project.summary}</p><div className="case-tags"><Tag>{project.category}</Tag></div>
   </header>
