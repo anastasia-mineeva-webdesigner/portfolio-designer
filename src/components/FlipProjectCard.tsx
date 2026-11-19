@@ -30,7 +30,6 @@ export function FlipProjectCard({project}:{project:CaseStudy}){
  return <div className={`project-card project-card--flip${flipped?' is-flipped':''}`}
   onMouseEnter={()=>{if(matchMedia('(hover: hover) and (pointer: fine)').matches)setFlipped(true)}}
   onMouseLeave={event=>unflip(event.currentTarget.contains(document.activeElement))}
-  onBlur={event=>{if(!event.currentTarget.contains(event.relatedTarget)&&!event.currentTarget.matches(':hover'))unflip(false)}}
   onKeyDown={event=>{if(event.key==='Escape'&&flipped){event.preventDefault();unflip(true)}}}>
   <div className="project-flip-inner">
    <div className="project-flip-front" aria-hidden={flipped} inert={flipped}>
@@ -39,7 +38,8 @@ export function FlipProjectCard({project}:{project:CaseStudy}){
      <ProjectPreview project={project}/>
     </button>
    </div>
-   <a ref={back} className="project-flip-back" href={href} aria-label={`View ${project.title} case`} aria-hidden={!flipped} inert={!flipped}>
+   <a ref={back} className="project-flip-back" href={href} aria-label={`View ${project.title} case`} aria-hidden={!flipped} inert={!flipped}
+    onBlur={event=>{if(!event.currentTarget.closest('.project-card')?.matches(':hover'))unflip(false)}}>
     <div className="project-flip-copy">
      <span className="project-flip-category">{project.category}</span>
      <h3 className="project-flip-title section-subheading">{project.title}</h3>
