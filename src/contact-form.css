@@ -67,3 +67,23 @@
 .enquiry-success h2 { font-size: clamp(24px, 4vw, 32px); line-height: 1.15; }
 .enquiry-success p { color: var(--muted); font-size: 14px; }
 .enquiry-success .button { margin-top: 8px; }
+
+.enquiry-close svg { translate: 0 1px; }
+
+@media (min-width: 1200px) {
+ .enquiry-dialog:not(.enquiry-dialog--success) {
+  width: min(1120px, calc(100% - 96px));
+  height: min(860px, calc(100dvh - 88px));
+  margin: auto;
+  border-radius: 20px;
+ }
+ .enquiry-dialog:not(.enquiry-dialog--success) .enquiry-shell {
+  padding: 20px clamp(32px, 4vw, 56px) 48px;
+ }
+ .enquiry-dialog:not(.enquiry-dialog--success) .enquiry-intro {
+  padding-block: 40px 48px;
+ }
+ .enquiry-dialog:not(.enquiry-dialog--success) .enquiry-intro h2 {
+  font-size: clamp(56px, 6vw, 88px);
+ }
+}
