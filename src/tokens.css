@@ -12,5 +12,5 @@
  :root { --block-gap: 80px; --intro-end-space: 64px; }
 }
 @media (max-width: 599px) {
- :root { --block-gap: 56px; --intro-end-space: 40px; }
+ :root { --block-gap: 60px; --footer-gap: var(--block-gap); --intro-end-space: 40px; }
 }
