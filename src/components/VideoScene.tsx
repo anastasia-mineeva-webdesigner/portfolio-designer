@@ -34,6 +34,7 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
    const opacities=introAboutGroups(progress);
    aboutGroups.forEach((group,index)=>{group.style.opacity=String(opacities[index]);group.inert=opacities[index]===0});
    box.style.setProperty('--intro-hero-opacity',String(c.hero));box.style.setProperty('--intro-hero-y',`${(1-c.hero)*-settings.heroTravelPx}px`);
+   box.style.setProperty('--intro-portrait-offset',String(1-c.lift));
    box.style.setProperty('--intro-portrait-scale',String(1+(portraitScale-1)*(1-c.lift)));
    box.style.setProperty('--intro-media-top',`${initialTop+(finalTop-initialTop)*c.lift}px`);
    box.style.setProperty('--intro-media-height',`${initialHeight+(finalHeight-initialHeight)*c.lift}px`);
@@ -50,7 +51,7 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
    const gap=mobile?16:24,minMedia=mobile?180:220;
    const bottom=parseFloat(getComputedStyle(el).getPropertyValue('--intro-end-space'));
    const titleHeight=title.offsetHeight,aboutHeight=about.offsetHeight,metricHeight=metrics.offsetHeight;
-   portraitScale=innerWidth>=1700?1.24:mobile?1.12:tablet?1.6:innerWidth>=900&&innerWidth<1700?1.2:1.04;
+   portraitScale=innerWidth>=1700?1.3:mobile?1.16:tablet?1.66:1.25;
    const heroReserve=mobile?metricHeight+48:0;
    const height=Math.max(innerHeight-header,aboutHeight+minMedia+finalTop+gap+bottom,titleHeight+24+heroReserve+220);
    const decorTop=titleHeight+24;
