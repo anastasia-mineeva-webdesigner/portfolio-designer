@@ -8,3 +8,13 @@ export const links = {
   cv: '/cv/' as string | null,
   projects: [null, null, null, null, null, null] as (string | null)[],
 };
+
+export const menuContactLinks = {
+  email: 'hello@uprock.ru',
+  socials: [
+    ['Behance', 'https://www.behance.net/uprockpro'],
+    ['Dribbble', 'https://dribbble.com/uprockpro'],
+    ['Telegram', 'https://t.me/uprockpro'],
+    ['Awwwards', 'https://www.awwwards.com/Uprock/'],
+  ],
+};

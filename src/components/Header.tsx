@@ -1,10 +1,15 @@
 import {useEffect,useRef,useState} from 'react';
 import {createPortal} from 'react-dom';
 import {Button} from './UI';
-import {links} from '../config/links';
+import {menuContactLinks} from '../config/links';
 import {useContact} from './ContactDialog';
 const home=window.location.pathname==='/'?'':'/';
-const navigation=[['Work','/#work'],['Resume','/cv/'],['Process','/#process'],['Contacts','/contacts/']];
+const navigation = [
+ {title:'Work', href:'/#work'},
+ {title:'Process', href:'/#process'},
+ {title:'Resume', href:'/cv/', divider:true},
+ {title:'Contact', href:'/contacts/'},
+];
 export default function Header(){
  const openContact=useContact();
  const [open,setOpen]=useState(false),[time,setTime]=useState('');
@@ -18,7 +23,7 @@ export default function Header(){
   document.body.style.overflow='hidden';
   const background=Array.from(document.body.children).filter((el):el is HTMLElement=>el instanceof HTMLElement&&!el.classList.contains('mobile-menu'));
   const inertStates=background.map(el=>el.inert);background.forEach(el=>{el.inert=true});
-  panel.current?.querySelector<HTMLButtonElement>('button')?.focus();
+  panel.current?.querySelector<HTMLButtonElement>('.mobile-menu-close')?.focus();
   const keydown=(e:KeyboardEvent)=>{
    if(e.key==='Escape'){e.preventDefault();close()}
    if(e.key!=='Tab')return;
@@ -29,5 +34,54 @@ export default function Header(){
   window.addEventListener('keydown',keydown);
   return()=>{document.body.style.overflow=previous;background.forEach((el,i)=>{el.inert=inertStates[i]});window.removeEventListener('keydown',keydown);toggle.current?.focus({preventScroll:true})};
  },[open]);
- return <><header className="header"><div className="header-row"><a className="logo" href={`${home}#top`} aria-label="Mira Smirnova, back to top"><span>M</span><span>Mira Smirnova</span></a><span className="header-status"><span className="dot"/>Available for projects</span><span className="clock">Moscow <strong>{time}</strong> GMT+3</span><nav className="desktop-nav" aria-label="Main navigation">{navigation.map(([title,id])=><Button key={id} variant="navigation" href={id}>{title}</Button>)}</nav><Button onClick={openContact} className="compact header-contact">✦ Get in touch</Button><button ref={toggle} className="menu-toggle" aria-expanded={open} aria-controls="mobile-navigation" aria-label="Open menu" onClick={()=>setOpen(true)}><span/><span/><span/></button></div></header>{createPortal(<div className={`mobile-menu ${open?'is-open':''}`} inert={!open} aria-hidden={!open}><div className="mobile-menu-scrim" onClick={close}/><div ref={panel} className="mobile-menu-panel" id="mobile-navigation" role="dialog" aria-modal={open?true:undefined} aria-label="Mobile navigation"><div className="mobile-menu-top"><button className="mobile-menu-close" onClick={close} aria-label="Close menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 4L20 20M20 4L4 20" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg></button></div><nav className="mobile-menu-links" aria-label="Page sections">{navigation.map(([title,id])=><a key={id} href={id} onClick={close}>{title}</a>)}</nav><div className="mobile-menu-contact"><p>Have a project in mind?<br/>Let’s build it together.</p><Button onClick={()=>{close();openContact()}}>✦ Get in touch</Button><a className="mobile-menu-email" href={links.email?`mailto:${links.email}`:`${home}#contact`} onClick={close}>Email me ↗</a><div className="mobile-menu-socials">{links.telegram&&<a href={links.telegram} onClick={close}>Telegram</a>}{links.behance&&<a href={links.behance} onClick={close}>Behance</a>}</div></div></div></div>,document.body)}</>
+ return <>
+  <header className="header">
+   <div className="header-row">
+    <a className="logo" href={`${home}#top`} aria-label="Mira Smirnova, back to top">
+     <span>M</span><span>Mira Smirnova</span>
+    </a>
+    <span className="header-status"><span className="dot" aria-hidden="true"/>Available for projects</span>
+    <span className="clock">Moscow <strong>{time}</strong> GMT+3</span>
+    <nav className="desktop-nav" aria-label="Main navigation">
+     {navigation.map(({title,href,divider})=><span className="desktop-nav-item" key={href}>
+      {divider && <span className="desktop-nav-divider" aria-hidden="true"/>}
+      <Button variant="navigation" href={href}>{title}</Button>
+     </span>)}
+    </nav>
+    <Button onClick={openContact} className="compact header-contact">✦ Get in touch</Button>
+    <button ref={toggle} className="menu-toggle" aria-expanded={open} aria-controls="mobile-navigation" aria-label="Open menu" onClick={()=>setOpen(true)}>
+     <span/><span/><span/>
+    </button>
+   </div>
+  </header>
+  {createPortal(<div className={`mobile-menu ${open?'is-open':''}`} inert={!open} aria-hidden={!open}>
+   <div className="mobile-menu-scrim" onClick={close}/>
+   <div ref={panel} className="mobile-menu-panel" id="mobile-navigation" role="dialog" aria-modal={open?true:undefined} aria-label="Mobile navigation">
+    <div className="mobile-menu-top">
+     <a className="logo" href={`${home}#top`} onClick={close} aria-label="Mira Smirnova, back to top">
+      <span>M</span><span>Mira Smirnova</span>
+     </a>
+     <button className="mobile-menu-close" onClick={close} aria-label="Close menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+       <path d="M4 4L20 20M20 4L4 20" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+      </svg>
+     </button>
+    </div>
+    <nav className="mobile-menu-links" aria-label="Page sections">
+     {navigation.map(({title,href,divider})=><span className="mobile-menu-link-group" key={href}>
+      {divider && <span className="mobile-menu-divider" aria-hidden="true"/>}
+      <a href={href} onClick={close}>{title}</a>
+     </span>)}
+    </nav>
+    <div className="mobile-menu-contact">
+     <p>Have a project in mind?<br/>Let’s build it together.</p>
+     <Button onClick={()=>{close();openContact()}}>✦ Get in touch</Button>
+     <a className="mobile-menu-email" href={`mailto:${menuContactLinks.email}`} onClick={close}>{menuContactLinks.email} ↗</a>
+     <div className="mobile-menu-socials">
+      {menuContactLinks.socials.map(([name,url])=><a key={name} href={url} target="_blank" rel="noopener noreferrer" onClick={close}>{name}</a>)}
+     </div>
+    </div>
+   </div>
+  </div>,document.body)}
+ </>
 }
