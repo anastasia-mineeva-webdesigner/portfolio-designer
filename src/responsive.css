@@ -223,6 +223,8 @@
 /* One longer pinned scene: Hero fades, the same video rises, About slides below. */
 .intro-scroll{position:relative;height:calc(var(--intro-pin-height,100svh - var(--header-height)) + var(--intro-scroll-distance));background:var(--hero)}
 .intro-pin{position:sticky;top:min(var(--header-height),calc(100svh - var(--intro-pin-height)));height:var(--intro-pin-height,calc(100svh - var(--header-height)));overflow:clip;isolation:isolate;--intro-hero-opacity:1;--intro-hero-y:0px;--intro-about-opacity:0}
+.intro-pin.intro-entrance{animation:intro-entrance 1800ms ease-in-out both}
+@keyframes intro-entrance{from{opacity:0}to{opacity:1}}
 .intro-video-slot{position:absolute;z-index:0;top:var(--intro-media-top,288px);left:50%;width:min(100%,calc(var(--intro-media-height,50vh)*16/9));height:var(--intro-media-height,50vh);transform:translateX(-50%)}
 .intro-video-slot .hero-current-media{inset:0;width:100%;height:100%;transform:none;object-fit:contain;object-position:center bottom}
 .intro-hero.static-hero{position:absolute;inset:0;width:100%;height:100%;overflow:visible;background:transparent;z-index:1;opacity:var(--intro-hero-opacity);transform:translateY(var(--intro-hero-y));pointer-events:none}
