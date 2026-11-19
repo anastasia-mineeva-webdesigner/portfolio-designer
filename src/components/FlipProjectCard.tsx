@@ -45,9 +45,11 @@ export function FlipProjectCard({project}:{project:CaseStudy}){
      <h3 className="project-flip-title section-subheading">{project.title}</h3>
      <p><strong>Goal:</strong> {project.summary}</p>
      <p><strong>Results:</strong> {project.results}</p>
-     <div className="project-flip-tags">{project.tags.map(tag=><span key={tag} className="tag">{tag}</span>)}</div>
     </div>
-    <span className="project-flip-arrow" aria-hidden="true"><span>↗</span></span>
+    <div className="project-flip-footer">
+     <div className="project-flip-tags">{project.tags.map(tag=><span key={tag} className="tag">{tag}</span>)}</div>
+     <span className="project-flip-arrow" aria-hidden="true"><span>↗</span></span>
+    </div>
    </a>
   </div>
  </div>;

@@ -457,7 +457,15 @@
 .project-flip-category { font-size: 14px; line-height: 20px; }
 .project-flip-copy p { font-size: clamp(14px, 1.1vw, 16px); line-height: 1.5; max-width: 36ch; text-wrap: pretty; }
 .project-flip-copy strong { font-weight: 500; }
-.project-flip-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.project-flip-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  margin-top: auto;
+}
+.project-flip-tags { display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; }
 .project-flip-tags .tag { font-size: 12px; line-height: 16px; padding: 6px 10px; background: #fff; }
 .project-flip-arrow {
   display: grid;
@@ -466,11 +474,10 @@
   flex: 0 0 44px;
   width: 44px;
   height: 44px;
-  margin-top: auto;
   font-size: 32px;
 }
 .project-flip-arrow > span { transition: transform 180ms ease; }
-.project-flip-back:is(:hover, :focus-visible) .project-flip-arrow > span { transform: rotate(45deg); }
+:is(.project-flip-arrow:hover, .project-flip-back:focus-visible .project-flip-arrow) > span { transform: rotate(45deg); }
 .project-card--flip.is-flipped .project-flip-inner { transform: rotateY(180deg); }
 .project-card--flip:hover img { transform: none; filter: none; }
 .project-flip-front[inert], .project-flip-back[inert] { pointer-events: none; }
@@ -508,7 +515,7 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .project-flip-inner, .project-card--flip.is-flipped .project-flip-inner,
-  .project-flip-back, .project-flip-back:is(:hover, :focus-visible) .project-flip-arrow > span {
+  .project-flip-back, :is(.project-flip-arrow:hover, .project-flip-back:focus-visible .project-flip-arrow) > span {
     transform: none;
     transition: none;
   }

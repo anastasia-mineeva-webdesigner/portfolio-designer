@@ -5,7 +5,3 @@
 
 .cv-actions>.button{height:48px;min-height:48px}
 .cv-actions>.button--secondary{border:1px solid var(--border)}
-
-
-
-.cv-page .case-index nav{gap:8px}.cv-page .case-index nav a{padding:12px;border-radius:var(--radius);color:var(--muted);transition:background 180ms ease,color 180ms ease}.cv-page .case-index nav a:hover{background:var(--surface);color:var(--ink);text-decoration:none}.cv-page .case-index nav a[aria-current=location]{background:var(--ink);color:#fff}.cv-page .case-index nav a[aria-current=location] span{color:inherit}
