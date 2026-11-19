@@ -1,8 +1,56 @@
+import {useEffect,useRef,useState} from 'react';
 import {ProjectPreview} from './ProjectPreview';
-import {useState} from 'react';
 import type {CaseStudy} from '../data/cases';
 
+const directMedia = '(max-width: 719px), (hover: none)';
+
 export function FlipProjectCard({project}:{project:CaseStudy}){
- const [touchOpen,setTouchOpen]=useState(false);
- return <a className={`project-card project-card--flip ${touchOpen?'is-flipped':''}`} href={`/cases/${project.slug}/`} aria-label={`View ${project.title} — ${project.category}`} onBlur={()=>setTouchOpen(false)} onClick={event=>{if(event.detail>0&&matchMedia('(hover: none)').matches&&!touchOpen){event.preventDefault();setTouchOpen(true)}}}><span className="project-flip-inner"><span className="project-flip-front"><ProjectPreview project={project}/></span><span className="project-flip-back"><span className="project-flip-copy"><span className="tag">{project.category}</span><span className="project-flip-title">{project.title}</span></span><svg className="project-flip-arrow" width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="m8 24 16-16M8 8h16v16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span></span></a>;
+ const [direct,setDirect]=useState(()=>matchMedia(directMedia).matches);
+ const [flipped,setFlipped]=useState(false);
+ const trigger=useRef<HTMLButtonElement>(null);
+ const back=useRef<HTMLAnchorElement>(null);
+ const href=`/cases/${project.slug}/`;
+
+ useEffect(()=>{
+  const query=matchMedia(directMedia);
+  const update=()=>{setDirect(query.matches);setFlipped(false)};
+  query.addEventListener('change',update);
+  return()=>query.removeEventListener('change',update);
+ },[]);
+
+ function unflip(restoreFocus:boolean){
+  setFlipped(false);
+  if(restoreFocus) requestAnimationFrame(()=>trigger.current?.focus({preventScroll:true}));
+ }
+
+ if(direct) return <a className="project-card project-card--direct" href={href} aria-label={`View ${project.title} case`}>
+  <ProjectPreview project={project}/>
+ </a>;
+
+ return <div className={`project-card project-card--flip${flipped?' is-flipped':''}`}
+  onMouseEnter={()=>{if(matchMedia('(hover: hover) and (pointer: fine)').matches)setFlipped(true)}}
+  onMouseLeave={event=>unflip(event.currentTarget.contains(document.activeElement))}
+  onKeyDown={event=>{if(event.key==='Escape'&&flipped){event.preventDefault();unflip(true)}}}>
+  <div className="project-flip-inner">
+   <div className="project-flip-front" aria-hidden={flipped} inert={flipped}>
+    <button ref={trigger} className="project-flip-trigger" type="button" aria-label={`About ${project.title}`} aria-expanded={flipped}
+     onClick={()=>{setFlipped(true);requestAnimationFrame(()=>back.current?.focus({preventScroll:true}))}}>
+     <ProjectPreview project={project}/>
+    </button>
+   </div>
+   <a ref={back} className="project-flip-back" href={href} aria-label={`View ${project.title} case`} aria-hidden={!flipped} inert={!flipped}
+    onBlur={event=>{if(!event.currentTarget.closest('.project-card')?.matches(':hover'))unflip(false)}}>
+    <div className="project-flip-copy">
+     <span className="project-flip-category">{project.category}</span>
+     <h3 className="project-flip-title section-subheading">{project.title}</h3>
+     <p><strong>Goal:</strong> {project.summary}</p>
+     <p><strong>Results:</strong> {project.results}</p>
+    </div>
+    <div className="project-flip-footer">
+     <div className="project-flip-tags">{project.tags.map(tag=><span key={tag} className="tag">{tag}</span>)}</div>
+     <span className="project-flip-arrow" aria-hidden="true"><span>↗</span></span>
+    </div>
+   </a>
+  </div>
+ </div>;
 }

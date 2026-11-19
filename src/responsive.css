@@ -21,18 +21,47 @@
 .about-layer::before{background:linear-gradient(transparent,var(--scene-background,var(--hero)) 35%)}
 .about-copy{gap:40px}.about-copy .lead{max-width:860px}
 .tags{max-width:560px;gap:8px}
+.label.label--plain {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 24px;
+}
+.label--plain .dot { width: 6px; height: 6px; flex-basis: 6px; }
+
 .section{background:var(--canvas)}
 .experience{gap:40px}.experience .statement{width:100%;max-width:1100px}
 .work,.process{gap:32px}.faq{gap:24px}
 .project-grid{gap:24px}.project-card{aspect-ratio:560/880}
 .process .lead{padding-top:0}.process-grid .label--dark{font-size:16px;line-height:24px;padding:16px;border-radius:32px}
 .stage-title span{font-size:14px;line-height:24px}
-.contact-card h2{display:flex;flex-direction:column;gap:8px;width:100%;letter-spacing:0}
+.contact-card h2{display:flex;flex-direction:column;gap:0;width:100%;line-height:1.02;letter-spacing:0}
 .contact-card p{font-size:16px;line-height:24px}
 .contact-card>.button{min-height:39px}
-.footer{font-size:16px;line-height:24px;padding-block:32px;gap:24px}
-.footer>div{gap:8px}.footer nav{max-width:none;gap:16px}
-.footer p:first-child{font-weight:500}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding-block: 24px;
+  background: #fff;
+  color: var(--ink);
+  border-top: 1px solid var(--border);
+}
+.footer-role { color: var(--muted); }
+
+@media (max-width: 599px) {
+  .footer {
+    gap: 8px 12px;
+    padding-block: 20px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
 .experience-award{left:6.6667%;top:152px;width:98px}
 .experience-component{right:6.6667%;top:168px;width:128px}
 .process-wireframe{left:10.139%;top:120px;width:139px}
@@ -68,7 +97,6 @@
  .faq-question{left:6.25%;top:136px;width:56px}.faq-answer{right:5.208%;top:128px;width:64px}
  .project-grid{column-gap:16px}.project-card{aspect-ratio:224/352}
  .contact-card{padding:40px 48px 64px}
- .footer nav{max-width:200px}
 }
 @media(max-width:599px){
  .hero-title{padding-top:40px;font-size:40px;line-height:48px}
@@ -86,13 +114,10 @@
  .process-grid .label--dark{font-size:16px;line-height:24px;padding:16px}
  .stage-title span{font-size:12px;line-height:16px}
  .contact-card{padding:32px 16px 48px;border-bottom-right-radius:24px}
- .contact-card h2{font-size:48px;line-height:56px}.contact-card p{max-width:280px}
+ .contact-card h2{font-size:48px}.contact-card p{max-width:280px}
  .contact-fold{width:24px;height:auto}
- .footer{padding:16px;gap:16px;font-size:16px;line-height:24px}
- .footer>div{gap:0}.footer nav{max-width:none;width:100%;justify-content:space-between;gap:8px}
- .footer>div:last-child{gap:16px}
  .experience-award{top:48px;left:32px;width:39px}.experience-component{top:56px;right:32px;width:48px}
- .process-wireframe{top:62px;left:24px;width:94px}.process-workflow{top:34px;right:10px;width:108px;max-width:27%}
+ .process-wireframe{top:12px;left:24px;width:94px}.process-workflow{display:none}
  .faq-question{top:56px;left:32px;width:37px}.faq-answer{top:48px;right:26px;width:46px}
 }
 @media(max-width:400px){
@@ -127,25 +152,23 @@
 @media(min-width:1700px){
  .section{padding-block:0;margin-block:120px}
  .experience{gap:0}
- .experience>.label,.experience>h2{margin-bottom:16px}
+ .experience>.section-heading{margin-bottom:16px}
  .experience>.lead,.experience>.statement{margin-bottom:24px}
- .experience>h3{font-size:16px;line-height:24px}
- .experience>.awards{gap:0;margin-bottom:24px}
+ .experience .recognition h3{font-size:16px;line-height:24px}
+ .experience>.recognition{margin-bottom:24px}
  .work,.process{gap:24px}
- .work>.project-grid,.process>.process-grid{margin-top:40px}
+ .work>.work-projects,.process>.process-grid{margin-top:40px}
 }
-/* Figma 354:8916: CTA label on its coloured surface, at every breakpoint. */
-.contact-card>.label{background:#fff;color:var(--ink)}
 
 /* Static, light Hero and About: video and scroll pinning are intentionally absent. */
 .static-hero{position:relative;height:var(--hero-height);background:var(--hero);isolation:isolate}
-.static-hero .hero-title{position:relative;z-index:2}
+.static-hero .hero-title{position:relative;z-index:2;line-height:1.02}
 .static-hero .scene-tools{position:absolute;z-index:0}
 .static-hero-image{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:contain;object-position:50% 100%;pointer-events:none}
 .static-hero .tool{aspect-ratio:1;rotate:0deg}
 .static-hero .tool img{width:100%;height:100%;object-fit:contain}
 .static-hero .hero-sticker{background:none}
-.static-hero .hero-title .hero-desktop-lines{display:flex;flex-direction:column;gap:8px}
+.static-hero .hero-title .hero-desktop-lines{display:flex;flex-direction:column}
 .static-hero .hero-title .hero-desktop-lines>span{white-space:nowrap}
 .static-hero .metrics{z-index:1}
 .static-about{position:relative;display:flex;flex-direction:column;align-items:center;gap:40px;padding-block:var(--section-space);text-align:center;background:var(--canvas);scroll-margin-top:var(--header-height)}
@@ -223,6 +246,8 @@
 /* One longer pinned scene: Hero fades, the same video rises, About slides below. */
 .intro-scroll{position:relative;height:calc(var(--intro-pin-height,100svh - var(--header-height)) + var(--intro-scroll-distance));background:var(--hero)}
 .intro-pin{position:sticky;top:min(var(--header-height),calc(100svh - var(--intro-pin-height)));height:var(--intro-pin-height,calc(100svh - var(--header-height)));overflow:clip;isolation:isolate;--intro-hero-opacity:1;--intro-hero-y:0px;--intro-about-opacity:0}
+.intro-pin.intro-entrance{animation:intro-entrance 1800ms ease-in-out both}
+@keyframes intro-entrance{from{opacity:0}to{opacity:1}}
 .intro-video-slot{position:absolute;z-index:0;top:var(--intro-media-top,288px);left:50%;width:min(100%,calc(var(--intro-media-height,50vh)*16/9));height:var(--intro-media-height,50vh);transform:translateX(-50%)}
 .intro-video-slot .hero-current-media{inset:0;width:100%;height:100%;transform:none;object-fit:contain;object-position:center bottom}
 .intro-hero.static-hero{position:absolute;inset:0;width:100%;height:100%;overflow:visible;background:transparent;z-index:1;opacity:var(--intro-hero-opacity);transform:translateY(var(--intro-hero-y));pointer-events:none}
@@ -233,7 +258,8 @@
 .intro-about .about-copy .lead{max-width:800px;width:100%}
 .intro-about .tags{width:100%;max-width:560px}
 .intro-about>.button{width:224px;height:48px;padding-inline:16px}
-.intro-about-anchor{position:absolute;top:calc(var(--intro-scroll-distance)*.88);scroll-margin-top:var(--header-height)}
+@media(min-width:600px){.intro-about>.button{margin-top:8px}}
+.intro-about-anchor{position:absolute;top:calc(var(--intro-timeline-distance)*.88);scroll-margin-top:var(--header-height)}
 .intro-static-about>.label{margin-top:0}
 @media(max-width:599px){
  .intro-pin .metrics.metrics--paired{bottom:24px}
@@ -250,15 +276,15 @@
  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 12%,#000 82%,transparent),linear-gradient(to right,transparent,#000 12%,#000 88%,transparent);
  -webkit-mask-composite:source-in;
 }
-.intro-scroll{padding-bottom:80px;box-sizing:content-box}
 .intro-static-about{padding-bottom:80px}
 @media(max-width:599px){
  .intro-video-slot .hero-current-media{height:100%;aspect-ratio:auto;object-fit:cover}
 }
 /* Real alpha keeps hair and shoulders intact; only soften the source crop at the waist. */
 .hero-current-media,.intro-video-slot .hero-current-media{mask-image:linear-gradient(to bottom,#000 92%,transparent);-webkit-mask-image:linear-gradient(to bottom,#000 92%,transparent)}
-/* A larger opening portrait grows upward into the title area, then settles for About. */
+/* The portrait settles into its About position as the title leaves. */
 .intro-video-slot .hero-current-media{transform:scale(var(--intro-portrait-scale,1.04));transform-origin:center bottom}
+@media(min-width:1200px){.intro-video-slot .hero-current-media{translate:0 calc(clamp(48px,4.6vw,88px)*var(--intro-portrait-offset,1))}}
 @media(max-width:599px){.intro-video-slot .hero-current-media{transform:scale(var(--intro-portrait-scale,1.12))}}
 /* Put the transparent portrait in front of the desktop headline. */
 .intro-hero.static-hero{z-index:0}
@@ -271,22 +297,42 @@
 .menu-toggle span{width:20px;height:2px;flex-shrink:0}
 .menu-toggle[aria-expanded=true] span:first-child,.menu-toggle[aria-expanded=true] span:last-child{transform:none}
 .mobile-menu{position:fixed;inset:0;z-index:150;visibility:hidden;pointer-events:none;transition:visibility 240ms}
-.mobile-menu.is-open{visibility:visible;pointer-events:auto}
+.mobile-menu.is-open{visibility:visible;pointer-events:auto;transition:none}
 .mobile-menu-scrim{position:absolute;inset:0;background:rgb(0 0 0 / .6);opacity:0;transition:opacity 240ms ease}
 .mobile-menu.is-open .mobile-menu-scrim{opacity:1}
 .mobile-menu-panel{position:absolute;right:0;top:0;width:82%;max-width:420px;height:100%;height:100dvh;background:#fff;color:var(--ink);display:flex;flex-direction:column;gap:24px;padding:14px 24px max(28px,env(safe-area-inset-bottom));overflow-y:auto;overscroll-behavior:contain;transform:translateX(100%);transition:transform 240ms ease}
 .mobile-menu.is-open .mobile-menu-panel{transform:translateX(0)}
-.mobile-menu-top{display:flex;justify-content:flex-end;align-items:center;height:44px;flex-shrink:0}
+.mobile-menu-top{display:flex;justify-content:space-between;align-items:center;height:44px;flex-shrink:0}
 .mobile-menu-close{display:grid;place-items:center;width:44px;height:44px;margin-right:-10px;border:0;background:transparent;color:inherit;cursor:pointer}
 .mobile-menu-links{display:flex;flex-direction:column;gap:12px;flex-shrink:0}
 .mobile-menu-links a{font-size:18px;font-weight:500;line-height:28px;min-height:28px;width:fit-content}
 .mobile-menu-contact{margin-top:auto;padding-top:24px;display:flex;flex-direction:column;gap:20px;font-size:16px;line-height:24px;flex-shrink:0}
 .mobile-menu-email{font-weight:500;width:fit-content}
-.mobile-menu-socials{display:flex;gap:20px;font-size:14px;line-height:24px}
+.mobile-menu-socials{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;line-height:24px}
 .mobile-menu-socials:empty{display:none}
 .mobile-menu a:hover{text-decoration:underline;text-underline-offset:4px}
 @media(max-width:599px){.menu-toggle{width:40px;height:40px}}
 @media(prefers-reduced-motion:reduce){.mobile-menu,.mobile-menu-scrim,.mobile-menu-panel{transition:none}}
+
+.desktop-nav-item { display: inline-flex; align-items: center; gap: 24px; }
+.desktop-nav-divider { width: 1px; height: 20px; background: #d4d4d4; }
+.mobile-menu-top .logo { gap: 10px; font-size: 14px; }
+.mobile-menu-top .logo-mark { width: 32px; height: 32px; }
+.mobile-menu-top .logo:hover { text-decoration: none; }
+.mobile-menu-link-group { display: flex; flex-direction: column; gap: 12px; }
+.mobile-menu-divider { width: 100%; height: 1px; margin-block: 8px; background: #d4d4d4; }
+
+.logo-heart { width: 62.5%; height: 62.5%; }
+
+@keyframes logo-heart-pulse {
+  0%, 8%, 100% { transform: scale(1); }
+  4% { transform: scale(1.15); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .header .logo-heart {
+    animation: logo-heart-pulse 5s ease-in-out 2s infinite;
+  }
+}
 
 /* Logo mark and name form one compact lockup at every breakpoint. */
 .logo{gap:4px}
@@ -315,8 +361,6 @@
  .experience .decoration,.process .decoration,.faq .decoration,.contact .decoration{pointer-events:auto;--doodle-x:3px;--doodle-y:-2px;transition:translate 240ms cubic-bezier(.2,.7,.25,1),transform var(--hover-duration,180ms) ease}
  .experience .experience-component,.process .process-workflow,.faq .faq-answer,.contact .contact-plane{--doodle-x:-3px;--doodle-y:2px}
  .experience .decoration:hover,.process .decoration:hover,.faq .decoration:hover,.contact .decoration:hover{translate:var(--doodle-x) var(--doodle-y)}
- .footer nav .text-link{transition:color var(--hover-duration,180ms),translate 220ms ease}
- .footer nav .text-link:is(:hover,:focus-visible){translate:0 -2px}
 }
 
 /* CTA artwork follows the handoff positions and keeps clear of the card edge. */
@@ -350,12 +394,6 @@
  .static-hero>.scene-tools>.hero-current-media{scale:1.2;transform-origin:center bottom}
 }
 
-/* Keep generous separation between Selected work and Process. */
-.work{padding-bottom:0;margin-bottom:0}
-.work+.process{margin-top:0;padding-top:120px}
-@media(max-width:899px){.work+.process{padding-top:96px}}
-@media(max-width:599px){.work+.process{padding-top:80px}}
-
 .highlight-text{color:var(--ink)}
 
 /* Extend only the background; text and the card geometry stay stable. */
@@ -369,18 +407,163 @@
 /* Keep the wide CTA copy on two balanced lines, without a one-word tail. */
 @media(min-width:1700px){.contact-card p{max-width:460px;text-wrap:balance}}
 
-/* First selected-work card: reversible flip, with a readable full-size back. */
-.project-card--flip{perspective:1200px;overflow:visible;border-radius:var(--radius)}
-.project-flip-inner{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;transition:transform 700ms cubic-bezier(.22,.61,.36,1)}
-.project-flip-front,.project-flip-back{position:absolute;inset:0;display:block;border-radius:var(--radius);overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.project-flip-front img{width:100%;height:100%;object-fit:cover}
-.project-flip-back{transform:rotateY(180deg);background:var(--lime);color:#000;display:flex;align-items:flex-end;gap:24px;padding:32px;text-align:left}
-.project-flip-copy{display:flex;flex:1;min-width:0;flex-direction:column;align-items:flex-start;gap:20px}
-.project-flip-title{font-size:clamp(24px,2.5vw,44px);line-height:1.15;letter-spacing:-.035em;font-weight:500}
-.project-flip-back .tag{color:#000;font-size:14px;line-height:20px}
-.project-flip-arrow{flex-shrink:0}
-.project-card--flip.is-flipped .project-flip-inner,.project-card--flip:focus-visible .project-flip-inner{transform:rotateY(180deg)}
-@media(hover:hover) and (pointer:fine){.project-card--flip:hover .project-flip-inner{transform:rotateY(180deg)}}
-.project-card--flip:hover img,.project-card--flip:focus-visible img{transform:none;filter:none}
-@media(max-width:599px){.project-flip-back{padding:16px;gap:8px}.project-flip-copy{gap:12px}.project-flip-title{font-size:24px}.project-flip-back .tag{font-size:12px;line-height:16px;padding:6px 10px}.project-flip-arrow{width:24px;height:24px}}
-@media(prefers-reduced-motion:reduce){.project-flip-inner{transition:none}}
+/* Keep the projected edge above the next section during the flip. */
+.work-projects { position: relative; z-index: 1; width: 100%; min-width: 0; }
+.work-projects > .project-grid { width: 92%; margin-inline: auto; }
+.work-project-controls { display: none; }
+.project-card--flip {
+  position: relative;
+  perspective: 1200px;
+  overflow: visible;
+  border-radius: var(--radius);
+}
+.project-card--flip:is(:hover, :focus-within) { z-index: 1; }
+.project-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 600ms cubic-bezier(.22,.61,.36,1);
+}
+.project-flip-front, .project-flip-back {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.project-flip-trigger {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: inherit;
+  cursor: pointer;
+  overflow: hidden;
+}
+.project-flip-back {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  padding: clamp(20px, 2vw, 32px);
+  background: var(--lime);
+  color: #000;
+  text-align: left;
+  transform: rotateY(180deg);
+}
+.project-flip-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; width: 100%; }
+.project-flip-title { letter-spacing: -.02em; }
+.project-flip-category { font-size: 14px; line-height: 20px; }
+.project-flip-copy p { font-size: clamp(14px, 1.1vw, 16px); line-height: 1.5; max-width: 36ch; text-wrap: pretty; }
+.project-flip-copy strong { font-weight: 500; }
+.project-flip-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  margin-top: auto;
+}
+.project-flip-tags { display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; }
+.project-flip-tags .tag { font-size: 12px; line-height: 16px; padding: 6px 10px; background: #fff; }
+.project-flip-arrow {
+  display: grid;
+  place-items: center;
+  align-self: flex-end;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  font-size: 32px;
+}
+.project-flip-arrow > span { transition: transform 180ms ease; }
+:is(.project-flip-arrow:hover, .project-flip-back:focus-visible .project-flip-arrow) > span { transform: rotate(45deg); }
+.project-card--flip.is-flipped .project-flip-inner { transform: rotateY(180deg); }
+.project-card--flip:hover img { transform: none; filter: none; }
+.project-flip-front[inert], .project-flip-back[inert] { pointer-events: none; }
+
+@media (720px <= width < 1200px) {
+  .work-projects > .project-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (720px <= width < 900px) {
+  .project-flip-back { gap: 12px; }
+  .project-flip-copy { gap: 8px; }
+}
+@media (max-width: 719px) {
+  .work-projects > .project-grid {
+    display: flex;
+    width: 100%;
+    max-width: none;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding: 6px;
+    scroll-padding-inline: 6px;
+    overscroll-behavior-x: contain;
+  }
+  .work-projects > .project-grid::-webkit-scrollbar { display: none; }
+  .work-projects .project-card {
+    flex: 0 0 78%;
+    width: 78%;
+    height: auto;
+    min-width: 0;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  .work-project-controls { display: flex; justify-content: center; margin-top: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-flip-inner, .project-card--flip.is-flipped .project-flip-inner,
+  .project-flip-back, :is(.project-flip-arrow:hover, .project-flip-back:focus-visible .project-flip-arrow) > span {
+    transform: none;
+    transition: none;
+  }
+  .project-flip-front[inert], .project-flip-back[inert] { visibility: hidden; }
+}
+
+
+/* Content sections start one gap after the previous section background. */
+@media screen {
+ .site-shell:not(.is-not-found) #content { padding-block-end: var(--footer-gap); }
+ #content > :is(.experience, .work, .process, .faq, .contact) {
+  margin-block: 0;
+  padding-block: var(--block-gap) 0;
+ }
+ #content > .intro-static-about { padding-block-end: 0; margin-block-end: 0; }
+}
+
+
+.section-heading { display: grid; justify-items: center; gap: 6px; }
+.recognition { display: grid; gap: 6px; }
+.recognition > .awards { gap: 8px; }
+.intro-about > .label--plain { margin-bottom: -10px; }
+.intro-static-about > .label--plain { margin-bottom: -34px; }
+@media (min-width: 1700px), (max-width: 599px) {
+ .intro-static-about > .label--plain { margin-bottom: -18px; }
+}
+@media (min-width: 600px) and (max-width: 1199px) {
+ .experience-award, .experience-component, .faq-question, .faq-answer { top: 24px; }
+ .experience-award, .faq-question { width: clamp(64px, 11vw, 106px); }
+ .experience-component, .faq-answer { width: clamp(72px, 12.5vw, 120px); }
+}
+
+@media (max-width: 599px) {
+ .hero-mobile-lines { white-space: nowrap; }
+ .hero-title:has(.hero-mobile-lines) { font-size: clamp(32px, 10vw, 40px); line-height: 1.08; }
+ #content > :is(.experience, .work, .process, .faq) { row-gap: 24px; }
+ #content > .section > .section-heading + .lead { margin-block-start: -12px; }
+ .intro-about .about-copy, .intro-static-about .about-copy { gap: 12px; }
+ .intro-about > .label--plain { margin-bottom: -6px; }
+ .experience-award, .experience-component { display: none; }
+ #content > .faq { row-gap: 16px; }
+ #content > .faq > .section-heading + .lead { margin-block-start: -4px; }
+ .faq-item { gap: 4px; padding-block-start: 12px; }
+ .faq-divider { margin-top: 8px; }
+ .contact-card { padding: 16px; gap: 16px; }
+ .footer { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+ .footer .text-link { justify-self: end; }
+ .footer-copyright { grid-area: 2 / 1 / 3 / -1; text-align: center; }
+}

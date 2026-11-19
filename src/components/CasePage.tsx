@@ -1,19 +1,61 @@
-import {useEffect} from 'react';
-import {cases,caseChapters} from '../data/cases';
+import {useEffect,useMemo} from 'react';
+import {projectTags} from '../data/cases';
 import type {CaseStudy} from '../data/cases';
-import {Tag} from './UI';
+import {Button,Tag} from './UI';
 import {RelatedProjects} from './RelatedProjects';
+import {CompactSectionNavigation,useSectionNavigation} from './SectionNavigation';
 import '../case.css';
-function ImageHolder({label}:{label:string}){return <div className="case-image-holder" role="img" aria-label={`Image holder: ${label}`}><svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="3" y="5" width="26" height="22" rx="3" stroke="currentColor" strokeWidth="1.5"/><circle cx="11" cy="12" r="2.5" stroke="currentColor" strokeWidth="1.5"/><path d="m4 24 8-8 5 5 5-7 7 9" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/></svg><span>Image holder</span><small>{label}</small></div>}
-export default function CasePage({project}:{project:CaseStudy}) {
- const index=cases.indexOf(project);
- useEffect(()=>{const previous=document.title;document.title=`${project.title} — Mira Smirnova`;return()=>{document.title=previous}},[project]);
+
+const shortChapterTitles=['Overview','Challenge','Direction','Design','Outcome'];
+
+export default function CasePage({project}:{project:CaseStudy}){
+ const {chapters}=project;
+ const sectionLinks=useMemo(()=>chapters.map((chapter,i)=>({
+  id:chapter.id,title:chapter.title,shortTitle:shortChapterTitles[i],
+ })),[chapters]);
+ const {active,showCompact}=useSectionNavigation(sectionLinks);
+ const facts=[
+  ['Project',project.category],
+  ['Scope',project.scope],
+  ['Role','Designer'],
+  ['Timeline',project.timeline],
+  ['Collaboration',project.collaboration],
+ ];
+
+ useEffect(()=>{
+  const previous=document.title;
+  document.title=`${project.title} — Mira Smirnova`;
+  return()=>{document.title=previous};
+ },[project]);
+
  return <article className="case-page container">
-  <header className="case-intro"><div className="case-eyebrow"><span>Case {String(index+1).padStart(2,'0')} / 06</span></div><h1>{project.title}</h1><p>{project.summary}</p><div className="case-tags"><Tag>{project.category}</Tag></div></header>
-  <div className="case-cover">{project.coverImage?<img src={project.coverImage} alt={`${project.title} — cover image`} fetchPriority="high"/>:<ImageHolder label="Cover image · Wide format"/>}</div>
-  <dl className="case-facts">{[['Project',project.category],['Scope','Add project scope'],['Role','Add responsibilities'],['Timeline','To be confirmed']].map(([label,value])=><div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
-  <div className="case-body"><aside className="case-index"><p>Inside the case</p><nav aria-label="Case chapters">{caseChapters.map((chapter,i)=><a key={chapter.id} href={`#${chapter.id}`}><span>0{i+1}</span>{chapter.title}</a>)}</nav><a className="case-back" href="/#work">← All selected work</a></aside>
-  <div className="case-chapters">{caseChapters.map((chapter,i)=><section className="case-chapter" id={chapter.id} key={chapter.id} aria-labelledby={`${chapter.id}-title`}><div className="case-chapter-copy"><span className="case-step">0{i+1} / {chapter.title}</span><h2 id={`${chapter.id}-title`}>{chapter.heading}</h2><p>{chapter.text}</p></div><figure className="case-figure"><div className="case-media-slot"><ImageHolder label={chapter.caption}/></div><figcaption>{chapter.caption} · replace with project photography or screens</figcaption></figure>{chapter.id==='design'&&<div className="case-image-pair">{['Desktop screen','Mobile screen'].map(label=><div key={label} className="case-screen-slot"><ImageHolder label={label}/></div>)}</div>}</section>)}</div></div>
+  {showCompact&&<CompactSectionNavigation links={sectionLinks} active={active} label="Case chapters"/>}
+  <header className="case-intro">
+   <h1>{project.title}</h1>
+   <p>{project.summary}</p>
+   <div className="case-tags">{projectTags(project).map(tag=><Tag key={tag}>{tag}</Tag>)}</div>
+  </header>
+  <div className="case-cover"><img src={project.coverImage} alt={`${project.title} — cover image`} fetchPriority="high"/></div>
+  <dl className="case-facts">{facts.map(([label,value])=><div key={label}>
+   <dt>{label}</dt><dd>{label==='Collaboration'?<a className="case-collaboration-link" href={project.behance} target="_blank" rel="noopener noreferrer">{value}</a>:value}</dd>
+  </div>)}</dl>
+  <div className="case-body">
+   <aside className="case-index">
+    <p>Inside the case</p>
+    <nav aria-label="Case chapters">{chapters.map((chapter,i)=><a key={chapter.id} href={`#${chapter.id}`} aria-current={active===chapter.id?'location':undefined}>
+     <span>{String(i+1).padStart(2,'0')}</span>{chapter.title}
+    </a>)}</nav>
+   </aside>
+   <div className="case-chapters">{chapters.map((chapter,i)=><section className="case-chapter" id={chapter.id} key={chapter.id} aria-labelledby={`${chapter.id}-title`}>
+    <div className="case-chapter-copy"><span className="case-step">{String(i+1).padStart(2,'0')} / {chapter.title}</span>
+     <h2 id={`${chapter.id}-title`}>{chapter.heading}</h2><p>{chapter.text}</p>
+    </div>
+    {chapter.images.map(image=><figure className="case-figure case-figure--project" key={image.src}>
+     <img src={image.src} alt={image.alt} width={image.width} height={image.height} loading="lazy" decoding="async"/>
+    </figure>)}
+   </section>)}</div>
+  </div>
+  <div className="case-behance-action"><Button href={project.behance}>↗ View project on Behance</Button></div>
   <RelatedProjects current={project.slug}/>
- </article>
+ </article>;
 }

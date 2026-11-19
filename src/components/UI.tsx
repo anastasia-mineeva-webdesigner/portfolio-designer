@@ -35,6 +35,9 @@ export function Button({children, href, download, variant='primary', onClick, di
   const cls=`button button--${variant} ${className}`;
   return href && !disabled && !loading ? <a ref={ref} className={cls} href={href} download={download} onClick={onClick}>{content}</a> : <button ref={ref} className={cls} type="button" onClick={onClick} disabled={disabled||loading} aria-busy={loading||undefined}>{loading&&<span className="spinner"/>}{content}</button>;
 }
-export function Label({children,dark=false}:{children:ReactNode;dark?:boolean}){return <span className={`label ${dark?'label--dark':''}`}><span className="dot"/>{children}</span>}
+export function Label({children,dark=false,plain=false}:{children:ReactNode;dark?:boolean;plain?:boolean}){
+ const className=plain?'label label--plain':dark?'label label--dark':'label';
+ return <span className={className}><span className="dot" aria-hidden="true"/>{children}</span>;
+}
 export function Tag({children}:{children:ReactNode}){return <span className="tag">{children}</span>}
 export function Decoration({name,className='',style}:{name:string;className?:string;style?:CSSProperties}){return <img className={`decoration ${className}`} style={style} src={`/assets/${name}.svg`} alt="" aria-hidden="true" loading="lazy"/>}

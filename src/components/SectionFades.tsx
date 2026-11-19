@@ -4,7 +4,7 @@ import {contentFade} from '../motion-math.mjs';
 export function SectionFades(){
  useLayoutEffect(()=>{
   const preference=matchMedia('(prefers-reduced-motion: reduce)');
-  const elements=Array.from(document.querySelectorAll<HTMLElement>('.section > .label, .section > h2, .section > h1, .section > .lead, .section > .statement, .section > .section-subheading, .section > .awards, .section > .button, .section > .project-grid'));
+  const elements=Array.from(document.querySelectorAll<HTMLElement>('.section > .section-heading > :is(.label,h2), .section > .recognition > :is(h3,.awards), .section > .label, .section > h2, .section > h1, .section > .lead, .section > .statement, .section > .section-subheading, .section > .awards, .section > .button, .section > .work-projects'));
   let frame=0;
   const render=()=>{frame=0;for(const el of elements){
    const opacity=preference.matches?1:contentFade(el.getBoundingClientRect().top,innerHeight);

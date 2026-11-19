@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {introScene,introCues,introSceneProgress} from '../src/config/intro-scene.mjs';
+import {introScene,introCues,introSceneProgress,introVideoProgress,introAboutGroups} from '../src/config/intro-scene.mjs';
 test('the unified scene has a bounded pin distance and a reading interval',()=>{
  assert.ok(introScene.desktopScrollScreens>=1.5 && introScene.desktopScrollScreens<=2.5);
  assert.ok(introScene.mobileScrollScreens>=1.5 && introScene.mobileScrollScreens<=2.5);
@@ -20,4 +20,22 @@ test('scene progress starts on first scroll, is reversible and clamps outside th
  const midpoint=introSceneProgress(80-distance/2,80,distance);assert.equal(midpoint,.5);
  const forward=introCues(midpoint);introCues(1);assert.deepEqual(introCues(midpoint),forward);
  assert.equal(introSceneProgress(500,80,distance),0);assert.equal(introSceneProgress(-99999,80,distance),1);
+});
+test('the sticky scene releases as the last About group finishes',()=>{
+ assert.ok(introScene.releaseAt>introScene.aboutIn[1]);
+ assert.ok(introScene.releaseAt<1);
+ assert.deepEqual(introAboutGroups(introScene.releaseAt),[1,1,1,1,1]);
+ assert.deepEqual(introCues(introScene.releaseAt),{hero:0,lift:1,about:1,video:1});
+ for(const height of [768,900,1080]){
+  const timelineDistance=height*introScene.desktopScrollScreens;
+  const scrollDistance=timelineDistance*introScene.releaseAt;
+  assert.ok(Math.abs(introSceneProgress(80-scrollDistance,80,timelineDistance)-introScene.releaseAt)<1e-12);
+ }
+});
+
+test('video advances during the lead-in on a short viewport and still finishes with About',()=>{
+ const header=80,pinTop=12,distance=1200;
+ assert.equal(introVideoProgress(header,header,pinTop,distance),0);
+ assert.ok(introVideoProgress(header-24,header,pinTop,distance)>0);
+ assert.equal(introVideoProgress(pinTop-distance*introScene.videoRange[1],header,pinTop,distance),1);
 });

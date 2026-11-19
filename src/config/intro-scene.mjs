@@ -2,12 +2,17 @@
 export const introScene={
  desktopScrollScreens:2.1,mobileScrollScreens:1.9,
  heroOut:[.02,.3],mediaLift:[.12,.6],aboutIn:[.4,.82],videoRange:[0,.82],
+ releaseAt:.96,
  aboutTravelPx:0,heroTravelPx:0,
 };
 const clamp=n=>Math.max(0,Math.min(1,n));
 const range=(p,[start,end])=>clamp((p-start)/Math.max(.0001,end-start));
 const smooth=n=>n*n*(3-2*n);
 export function introSceneProgress(top,header,distance){return clamp((header-top)/Math.max(1,distance));}
+export function introVideoProgress(top,header,pinTop,distance,[start,end]=introScene.videoRange){
+ const leadIn=Math.max(0,header-pinTop);
+ return range(header-top,[distance*start,leadIn+distance*end]);
+}
 export function introCues(progress,settings=introScene){
  return {hero:1-smooth(range(progress,settings.heroOut)),lift:smooth(range(progress,settings.mediaLift)),about:smooth(range(progress,settings.aboutIn)),video:range(progress,settings.videoRange)};
 }
