@@ -1,4 +1,5 @@
 import {useEffect,useMemo} from 'react';
+import {projectTags} from '../data/cases';
 import type {CaseStudy} from '../data/cases';
 import {Button,Tag} from './UI';
 import {RelatedProjects} from './RelatedProjects';
@@ -30,7 +31,9 @@ export default function CasePage({project}:{project:CaseStudy}){
  return <article className="case-page container">
   {showCompact&&<CompactSectionNavigation links={sectionLinks} active={active} label="Case chapters"/>}
   <header className="case-intro">
-   <h1>{project.title}</h1><p>{project.summary}</p><div className="case-tags"><Tag>{project.category}</Tag></div>
+   <h1>{project.title}</h1>
+   <p>{project.summary}</p>
+   <div className="case-tags">{projectTags(project).map(tag=><Tag key={tag}>{tag}</Tag>)}</div>
   </header>
   <div className="case-cover"><img src={project.coverImage} alt={`${project.title} — cover image`} fetchPriority="high"/></div>
   <dl className="case-facts">{facts.map(([label,value])=><div key={label}>

@@ -31,11 +31,8 @@
  grid-template-columns: repeat(4, minmax(0, 1fr));
  gap: 28px clamp(12px, 1.4vw, 28px);
 }
-.contacts-profile { min-width: 0; }
+.contacts-profile { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 .contacts-profile-heading {
- margin-bottom: 28px;
- padding-bottom: 20px;
- border-bottom: 1px solid var(--border);
  font-size: clamp(22px, 2.65vw, 48px);
  line-height: 1.05;
  letter-spacing: -.05em;
@@ -56,7 +53,8 @@
 .contacts-profile-link:focus-visible span,
 .contacts-profile:has(.contacts-project:focus-visible) .contacts-profile-link span { background-color: var(--lime); }
 
-.contacts-project { display: block; }
+.contacts-profile-description { color: var(--muted); font-size: 14px; line-height: 20px; }
+.contacts-project { display: block; margin-block-start: auto; }
 .contacts-project-image {
  aspect-ratio: 1;
  overflow: hidden;
@@ -72,7 +70,6 @@
  transition: transform 300ms ease;
 }
 .contacts-project-image--round img { object-position: center; }
-.contacts-project p { margin-top: 12px; }
 
 @media (hover: hover) and (pointer: fine) {
  .contacts-profile-link:hover,
@@ -85,8 +82,8 @@
  .contacts-page { padding-block-start: 40px; }
  .contacts-intro p { margin-top: 24px; font-size: 16px; }
  .contacts-showcase { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 16px; }
- .contacts-profile-heading { margin-bottom: 16px; padding-bottom: 12px; font-size: clamp(24px, 5.5vw, 40px); }
- .contacts-project p { margin-top: 10px; font-size: 14px; line-height: 20px; }
+ .contacts-profile-heading { font-size: clamp(24px, 5.5vw, 40px); }
+ .contacts-profile-description { font-size: 13px; }
 }
 @media (prefers-reduced-motion: reduce) {
  .contacts-profile-link, .contacts-profile-link span, .contacts-project-image img { transition: none; }

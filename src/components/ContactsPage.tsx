@@ -8,7 +8,7 @@ import '../contacts.css';
 const showcase = [
  {profile:'Behance',title:'Selected case studies',slug:'vireon'},
  {profile:'Dribbble',title:'Design explorations',slug:'art-scale'},
- {profile:'Telegram',title:'A little behind the scenes',slug:'epoch'},
+ {profile:'Telegram',title:'Behind the scenes',slug:'epoch'},
  {profile:'Awwwards',title:'Awards & recognition',slug:'veya'},
 ] as const;
 
@@ -30,11 +30,11 @@ export default function ContactsPage(){
      <h2 className="contacts-profile-heading">
       <a className="contacts-profile-link" href={profileUrl} target="_blank" rel="noopener noreferrer"><span>{profile}</span></a>
      </h2>
+     <p className="contacts-profile-description">{title}</p>
      <a className="contacts-project" href={cardUrl} target="_blank" rel="noopener noreferrer" aria-label={profile==='Behance'?`View ${project.title} on Behance`:`${title} on ${profile}`}>
       <div className={`contacts-project-image${profile==='Telegram'?' contacts-project-image--round':''}`}>
        <ProjectPreview project={project}/>
       </div>
-      <p>{title}</p>
      </a>
     </section>;
    })}
