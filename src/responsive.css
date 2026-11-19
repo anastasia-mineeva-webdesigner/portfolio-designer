@@ -30,9 +30,28 @@
 .contact-card h2{display:flex;flex-direction:column;gap:8px;width:100%;letter-spacing:0}
 .contact-card p{font-size:16px;line-height:24px}
 .contact-card>.button{min-height:39px}
-.footer{font-size:16px;line-height:24px;padding-block:32px;gap:24px}
-.footer>div{gap:8px}.footer nav{max-width:none;gap:16px}
-.footer p:first-child{font-weight:500}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding-block: 24px;
+  background: #fff;
+  color: var(--ink);
+  border-top: 1px solid var(--border);
+}
+.footer-role { color: var(--muted); }
+
+@media (max-width: 599px) {
+  .footer {
+    gap: 8px 12px;
+    padding-block: 20px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
 .experience-award{left:6.6667%;top:152px;width:98px}
 .experience-component{right:6.6667%;top:168px;width:128px}
 .process-wireframe{left:10.139%;top:120px;width:139px}
@@ -68,7 +87,6 @@
  .faq-question{left:6.25%;top:136px;width:56px}.faq-answer{right:5.208%;top:128px;width:64px}
  .project-grid{column-gap:16px}.project-card{aspect-ratio:224/352}
  .contact-card{padding:40px 48px 64px}
- .footer nav{max-width:200px}
 }
 @media(max-width:599px){
  .hero-title{padding-top:40px;font-size:40px;line-height:48px}
@@ -88,9 +106,6 @@
  .contact-card{padding:32px 16px 48px;border-bottom-right-radius:24px}
  .contact-card h2{font-size:48px;line-height:56px}.contact-card p{max-width:280px}
  .contact-fold{width:24px;height:auto}
- .footer{padding:16px;gap:16px;font-size:16px;line-height:24px}
- .footer>div{gap:0}.footer nav{max-width:none;width:100%;justify-content:space-between;gap:8px}
- .footer>div:last-child{gap:16px}
  .experience-award{top:48px;left:32px;width:39px}.experience-component{top:56px;right:32px;width:48px}
  .process-wireframe{top:62px;left:24px;width:94px}.process-workflow{top:34px;right:10px;width:108px;max-width:27%}
  .faq-question{top:56px;left:32px;width:37px}.faq-answer{top:48px;right:26px;width:46px}
@@ -325,8 +340,6 @@
  .experience .decoration,.process .decoration,.faq .decoration,.contact .decoration{pointer-events:auto;--doodle-x:3px;--doodle-y:-2px;transition:translate 240ms cubic-bezier(.2,.7,.25,1),transform var(--hover-duration,180ms) ease}
  .experience .experience-component,.process .process-workflow,.faq .faq-answer,.contact .contact-plane{--doodle-x:-3px;--doodle-y:2px}
  .experience .decoration:hover,.process .decoration:hover,.faq .decoration:hover,.contact .decoration:hover{translate:var(--doodle-x) var(--doodle-y)}
- .footer nav .text-link{transition:color var(--hover-duration,180ms),translate 220ms ease}
- .footer nav .text-link:is(:hover,:focus-visible){translate:0 -2px}
 }
 
 /* CTA artwork follows the handoff positions and keeps clear of the card edge. */
