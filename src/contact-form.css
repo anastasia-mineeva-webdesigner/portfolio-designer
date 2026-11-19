@@ -72,6 +72,14 @@
 
 .enquiry-close svg { translate: 0 1px; }
 
+.enquiry-consent { padding-block-start: 12px; font-size: 14px; line-height: 20px; }
+.enquiry-consent-line { display: flex; align-items: center; flex-wrap: wrap; gap: 0 4px; }
+.enquiry-consent input { inline-size: 16px; block-size: 16px; margin: 0 4px 0 0; accent-color: var(--ink); cursor: pointer; }
+.enquiry-consent label, .enquiry-consent button { display: inline-flex; align-items: center; min-height: 32px; cursor: pointer; }
+.enquiry-consent button { border: 0; padding: 0; background: transparent; color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.enquiry-consent input:focus-visible, .enquiry-consent button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.enquiry-consent p { margin-block-start: 4px; color: var(--muted); }
+
 @media (min-width: 1200px) {
  .enquiry-dialog:not(.enquiry-dialog--success) {
   width: min(1120px, calc(100% - 96px));
@@ -117,7 +125,8 @@
  .enquiry-selection, .enquiry-details { min-width: 0; }
  .enquiry-selection { display: grid; gap: clamp(12px, 2.2dvh, 24px); }
  .enquiry-details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: start; gap: 20px 16px; }
- .enquiry-details > :last-child { grid-column: 1 / -1; }
+ .enquiry-details > :is(.enquiry-row:has(textarea), .enquiry-consent) { grid-column: 1 / -1; }
+ .enquiry-consent { padding-block-start: 0; }
  .enquiry-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 0; border: 0; }
  .enquiry-row > legend { float: none; width: auto; margin-bottom: 8px; }
  .enquiry-row > legend + .enquiry-choices { margin-left: 0; }

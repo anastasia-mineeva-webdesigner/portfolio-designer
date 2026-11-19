@@ -8,6 +8,7 @@ export const useContact=()=>useContext(ContactContext);
 export function ContactProvider({children}:{children:ReactNode}) {
  const [open,setOpen]=useState(false);
  const [submitted,setSubmitted]=useState(false);
+ const [showPrivacy,setShowPrivacy]=useState(false);
  const dialog=useRef<HTMLDialogElement>(null);
  const trigger=useRef<HTMLElement|null>(null);
  const successTitle=useRef<HTMLHeadingElement>(null);
@@ -37,6 +38,7 @@ export function ContactProvider({children}:{children:ReactNode}) {
 
  function submit(event:FormEvent<HTMLFormElement>){
   event.preventDefault();
+  setShowPrivacy(false);
   setSubmitted(true);
  }
 
@@ -84,6 +86,15 @@ export function ContactProvider({children}:{children:ReactNode}) {
      <div className="enquiry-row"><label htmlFor="enquiry-company"><span>06.</span> Company</label><input id="enquiry-company" name="company" autoComplete="organization" placeholder="Company or brand name" maxLength={160}/></div>
      <div className="enquiry-row"><label htmlFor="enquiry-timeline"><span>07.</span> Timeline</label><input id="enquiry-timeline" name="timeline" placeholder="Start date and deadline" maxLength={200}/></div>
      <div className="enquiry-row"><label htmlFor="enquiry-note"><span>08.</span> Your project</label><textarea id="enquiry-note" name="note" placeholder="A few words about your idea, goals or a link to your current website" rows={4} maxLength={2000}/></div>
+     <div className="enquiry-consent">
+      <div className="enquiry-consent-line">
+       <input id="enquiry-consent" type="checkbox" name="privacyConsent" required aria-labelledby="enquiry-consent-label enquiry-privacy-toggle"/>
+       <label id="enquiry-consent-label" htmlFor="enquiry-consent">I agree to the</label>
+       <button id="enquiry-privacy-toggle" type="button" aria-expanded={showPrivacy} aria-controls="enquiry-privacy" onClick={()=>setShowPrivacy(value=>!value)}>Privacy Policy</button>
+       <span aria-hidden="true">*</span>
+      </div>
+      <p id="enquiry-privacy" hidden={!showPrivacy}>This demo form keeps your entries in the current page. It does not send them or save them after you leave or reload the page.</p>
+     </div>
      </div>
      <div className="enquiry-submit"><button className="enquiry-send" type="submit">Send <span aria-hidden="true">↗</span></button></div>
     </form>
