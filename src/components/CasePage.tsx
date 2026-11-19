@@ -1,5 +1,4 @@
 import {useEffect,useRef,useState} from 'react';
-import {cases} from '../data/cases';
 import type {CaseStudy} from '../data/cases';
 import {Button,Tag} from './UI';
 import {RelatedProjects} from './RelatedProjects';
@@ -12,7 +11,6 @@ export default function CasePage({project}:{project:CaseStudy}){
  const [active,setActive]=useState(chapters[0].id);
  const [showMobileIndex,setShowMobileIndex]=useState(false);
  const mobileIndex=useRef<HTMLDetailsElement>(null);
- const index=cases.indexOf(project);
  const activeIndex=Math.max(0,chapters.findIndex(chapter=>chapter.id===active));
  const facts=[
   ['Project',project.category],
@@ -49,6 +47,7 @@ export default function CasePage({project}:{project:CaseStudy}){
   sections.forEach(section=>observer.observe(section));
   window.addEventListener('scroll',schedule,{passive:true});
   window.addEventListener('resize',schedule);
+  window.addEventListener('hashchange',schedule);
   narrow.addEventListener('change',schedule);
   update();
   return()=>{
@@ -56,6 +55,7 @@ export default function CasePage({project}:{project:CaseStudy}){
    observer.disconnect();
    window.removeEventListener('scroll',schedule);
    window.removeEventListener('resize',schedule);
+   window.removeEventListener('hashchange',schedule);
    narrow.removeEventListener('change',schedule);
   };
  },[chapters]);
@@ -76,7 +76,6 @@ export default function CasePage({project}:{project:CaseStudy}){
    </nav>
   </details>}
   <header className="case-intro">
-   <div className="case-eyebrow"><span>Case {String(index+1).padStart(2,'0')} / {String(cases.length).padStart(2,'0')}</span></div>
    <h1>{project.title}</h1><p>{project.summary}</p><div className="case-tags"><Tag>{project.category}</Tag></div>
   </header>
   <div className="case-cover"><img src={project.coverImage} alt={`${project.title} — cover image`} fetchPriority="high"/></div>
@@ -89,7 +88,6 @@ export default function CasePage({project}:{project:CaseStudy}){
     <nav aria-label="Case chapters">{chapters.map((chapter,i)=><a key={chapter.id} href={`#${chapter.id}`} aria-current={active===chapter.id?'location':undefined}>
      <span>{String(i+1).padStart(2,'0')}</span>{chapter.title}
     </a>)}</nav>
-    <a className="case-back" href="/#work">← All selected work</a>
    </aside>
    <div className="case-chapters">{chapters.map((chapter,i)=><section className="case-chapter" id={chapter.id} key={chapter.id} aria-labelledby={`${chapter.id}-title`}>
     <div className="case-chapter-copy"><span className="case-step">{String(i+1).padStart(2,'0')} / {chapter.title}</span>

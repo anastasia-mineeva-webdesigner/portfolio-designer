@@ -10,6 +10,17 @@ const navigation = [
  {title:'Resume', href:'/cv/', divider:true},
  {title:'Contact', href:'/contacts/'},
 ];
+function Logo({onClick}:{onClick?:()=>void}){
+ return <a className="logo" href={`${home}#top`} onClick={onClick} aria-label="Mira Smirnova, back to top">
+  <span className="logo-mark" aria-hidden="true">
+   <svg className="logo-heart" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 21 3.8 13A5.4 5.4 0 0 1 12 6.2 5.4 5.4 0 0 1 20.2 13L12 21Z"/>
+   </svg>
+  </span>
+  <span>Mira Smirnova</span>
+ </a>;
+}
+
 export default function Header(){
  const openContact=useContact();
  const [open,setOpen]=useState(false),[time,setTime]=useState('');
@@ -37,9 +48,7 @@ export default function Header(){
  return <>
   <header className="header">
    <div className="header-row">
-    <a className="logo" href={`${home}#top`} aria-label="Mira Smirnova, back to top">
-     <span>M</span><span>Mira Smirnova</span>
-    </a>
+    <Logo/>
     <span className="header-status"><span className="dot" aria-hidden="true"/>Available for projects</span>
     <span className="clock">Moscow <strong>{time}</strong> GMT+3</span>
     <nav className="desktop-nav" aria-label="Main navigation">
@@ -58,9 +67,7 @@ export default function Header(){
    <div className="mobile-menu-scrim" onClick={close}/>
    <div ref={panel} className="mobile-menu-panel" id="mobile-navigation" role="dialog" aria-modal={open?true:undefined} aria-label="Mobile navigation">
     <div className="mobile-menu-top">
-     <a className="logo" href={`${home}#top`} onClick={close} aria-label="Mira Smirnova, back to top">
-      <span>M</span><span>Mira Smirnova</span>
-     </a>
+     <Logo onClick={close}/>
      <button className="mobile-menu-close" onClick={close} aria-label="Close menu">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
        <path d="M4 4L20 20M20 4L4 20" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>

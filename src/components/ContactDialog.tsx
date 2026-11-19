@@ -43,12 +43,17 @@ export function ContactProvider({children}:{children:ReactNode}) {
    aria-labelledby="enquiry-title" aria-describedby={submitted?'enquiry-success-note':undefined}
    onCancel={event=>{event.preventDefault();closeContact()}}>
    {submitted?<div className="enquiry-success">
+    <button className="enquiry-success-close" type="button" aria-label="Close" onClick={closeContact}>
+     <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="m5 5 10 10M15 5 5 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+     </svg>
+    </button>
     <span className="enquiry-success-mark" aria-hidden="true">
      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
     </span>
-    <h2 ref={successTitle} id="enquiry-title" tabIndex={-1}>Your request was submitted</h2>
-    <p id="enquiry-success-note">Test mode. No email was sent.</p>
-    <Button onClick={closeContact}>Done</Button>
+    <h2 ref={successTitle} id="enquiry-title" tabIndex={-1}>Thank you!</h2>
+    <p id="enquiry-success-note">Your request was submitted.</p>
+    <Button onClick={closeContact}>Okay</Button>
    </div>:<div className="enquiry-shell">
     <div className="enquiry-toolbar">
      <button type="button" className="enquiry-close" onClick={closeContact} autoFocus>

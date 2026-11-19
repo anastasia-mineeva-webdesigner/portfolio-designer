@@ -1,7 +1,12 @@
 import {useEffect,useRef,useState} from 'react';
 import {cases} from '../data/cases';
 import {FlipProjectCard} from './FlipProjectCard';
-import {ProjectArrow} from './RelatedProjects';
+
+function ProjectArrow({direction}:{direction:'left'|'right'}){
+ return <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" style={{transform:direction==='left'?'rotate(180deg)':undefined}}>
+  <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
+ </svg>;
+}
 
 export function WorkProjects(){
  const track=useRef<HTMLDivElement>(null);
