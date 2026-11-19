@@ -3,15 +3,14 @@ import {readFile,writeFile,mkdir} from 'node:fs/promises';
 // Change this origin when moving to a custom domain; never use a preview origin.
 const origin='https://mira-portfolio-preview.swoonywallaby64.chatgpt.site';
 const base=await readFile('dist/index.html','utf8');
-const source=await readFile('src/data/cases.ts','utf8');
-const projects=[...source.matchAll(/slug:'([^']+)',title:'([^']+)'/g)].map(([,slug,title])=>({slug,title}));
+const projects=JSON.parse(await readFile('src/data/cases.json','utf8'));
 const homeTitle='Mira Smirnova — AI Full Stack Designer';
 const homeDescription='Portfolio of Mira Smirnova, AI Full Stack Designer. Explore web design, UX/UI, 3D and motion, with websites built from first brief to launch.';
 const routes=[
  {path:'/',title:homeTitle,description:homeDescription,index:true},
  {path:'/contacts/',title:'Contacts — Mira Smirnova',description:'Get in touch with Mira Smirnova to discuss a website, design project or collaboration.',index:true},
  {path:'/cv/',title:'CV — Mira Smirnova, AI Full Stack Designer',description:'Explore Mira Smirnova’s experience, approach and toolkit across UX/UI, web design, AI, 3D, motion and frontend implementation.',index:true},
- ...projects.map(p=>({path:`/cases/${p.slug}/`,title:`${p.title} — Mira Smirnova`,description:`${p.title}: a draft portfolio case study by Mira Smirnova, AI Full Stack Designer. Project content is being prepared.`,index:false})),
+ ...projects.map(p=>({path:`/cases/${p.slug}/`,title:`${p.title} — Mira Smirnova`,description:p.summary,index:true})),
  {path:'/404.html',title:'404 — Page not found · Mira Smirnova',description:'This page could not be found. Return to Mira Smirnova’s portfolio.',index:false},
 ];
 const escape=value=>value.replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;');
@@ -32,4 +31,4 @@ for(const route of routes){
 }
 await writeFile('dist/robots.txt',`User-agent: *\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\n`);
 await writeFile('dist/sitemap.xml',`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${routes.filter(r=>r.index).map(r=>`\n  <url><loc>${origin+r.path}</loc></url>`).join('')}\n</urlset>\n`);
-console.log(`SEO: generated metadata for ${routes.length} pages, robots.txt and sitemap.xml. Draft cases remain noindex.`);
+console.log(`SEO: generated metadata for ${routes.length} pages, robots.txt and sitemap.xml.`);

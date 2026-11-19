@@ -147,7 +147,7 @@
  .experience>h3{font-size:16px;line-height:24px}
  .experience>.awards{gap:0;margin-bottom:24px}
  .work,.process{gap:24px}
- .work>.project-grid,.process>.process-grid{margin-top:40px}
+ .work>.work-projects,.process>.process-grid{margin-top:40px}
 }
 /* Figma 354:8916: CTA label on its coloured surface, at every breakpoint. */
 .contact-card>.label{background:#fff;color:var(--ink)}
@@ -392,18 +392,112 @@
 /* Keep the wide CTA copy on two balanced lines, without a one-word tail. */
 @media(min-width:1700px){.contact-card p{max-width:460px;text-wrap:balance}}
 
-/* First selected-work card: reversible flip, with a readable full-size back. */
-.project-card--flip{perspective:1200px;overflow:visible;border-radius:var(--radius)}
-.project-flip-inner{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;transition:transform 700ms cubic-bezier(.22,.61,.36,1)}
-.project-flip-front,.project-flip-back{position:absolute;inset:0;display:block;border-radius:var(--radius);overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.project-flip-front img{width:100%;height:100%;object-fit:cover}
-.project-flip-back{transform:rotateY(180deg);background:var(--lime);color:#000;display:flex;align-items:flex-end;gap:24px;padding:32px;text-align:left}
-.project-flip-copy{display:flex;flex:1;min-width:0;flex-direction:column;align-items:flex-start;gap:20px}
-.project-flip-title{font-size:clamp(24px,2.5vw,44px);line-height:1.15;letter-spacing:-.035em;font-weight:500}
-.project-flip-back .tag{color:#000;font-size:14px;line-height:20px}
-.project-flip-arrow{flex-shrink:0}
-.project-card--flip.is-flipped .project-flip-inner,.project-card--flip:focus-visible .project-flip-inner{transform:rotateY(180deg)}
-@media(hover:hover) and (pointer:fine){.project-card--flip:hover .project-flip-inner{transform:rotateY(180deg)}}
-.project-card--flip:hover img,.project-card--flip:focus-visible img{transform:none;filter:none}
-@media(max-width:599px){.project-flip-back{padding:16px;gap:8px}.project-flip-copy{gap:12px}.project-flip-title{font-size:24px}.project-flip-back .tag{font-size:12px;line-height:16px;padding:6px 10px}.project-flip-arrow{width:24px;height:24px}}
-@media(prefers-reduced-motion:reduce){.project-flip-inner{transition:none}}
+/* Keep the projected edge above the next section during the flip. */
+.work-projects { position: relative; z-index: 1; width: 100%; min-width: 0; }
+.work-projects > .project-grid { width: 92%; margin-inline: auto; }
+.work-project-controls { display: none; }
+.project-card--flip {
+  position: relative;
+  perspective: 1200px;
+  overflow: visible;
+  border-radius: var(--radius);
+}
+.project-card--flip:is(:hover, :focus-within) { z-index: 1; }
+.project-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 600ms cubic-bezier(.22,.61,.36,1);
+}
+.project-flip-front, .project-flip-back {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.project-flip-trigger {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: inherit;
+  cursor: pointer;
+  overflow: hidden;
+}
+.project-flip-back {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  padding: clamp(20px, 2vw, 32px);
+  background: var(--lime);
+  color: #000;
+  text-align: left;
+  transform: rotateY(180deg);
+}
+.project-flip-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; width: 100%; }
+.project-flip-title { letter-spacing: -.02em; }
+.project-flip-category { font-size: 14px; line-height: 20px; }
+.project-flip-copy p { font-size: clamp(14px, 1.1vw, 16px); line-height: 1.5; max-width: 36ch; text-wrap: pretty; }
+.project-flip-copy strong { font-weight: 500; }
+.project-flip-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.project-flip-tags .tag { font-size: 12px; line-height: 16px; padding: 6px 10px; background: #fff; }
+.project-flip-arrow {
+  display: grid;
+  place-items: center;
+  align-self: flex-end;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  margin-top: auto;
+  font-size: 32px;
+}
+.project-flip-arrow > span { transition: transform 180ms ease; }
+.project-flip-back:is(:hover, :focus-visible) .project-flip-arrow > span { transform: rotate(45deg); }
+.project-card--flip.is-flipped .project-flip-inner { transform: rotateY(180deg); }
+.project-card--flip:hover img { transform: none; filter: none; }
+.project-flip-front[inert], .project-flip-back[inert] { pointer-events: none; }
+
+@media (720px <= width < 1200px) {
+  .work-projects > .project-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (720px <= width < 900px) {
+  .project-flip-back { gap: 12px; }
+  .project-flip-copy { gap: 8px; }
+}
+@media (max-width: 719px) {
+  .work-projects > .project-grid {
+    display: flex;
+    width: 100%;
+    max-width: none;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding: 6px;
+    scroll-padding-inline: 6px;
+    overscroll-behavior-x: contain;
+  }
+  .work-projects > .project-grid::-webkit-scrollbar { display: none; }
+  .work-projects .project-card {
+    flex: 0 0 78%;
+    width: 78%;
+    height: auto;
+    min-width: 0;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  .work-project-controls { display: flex; justify-content: center; margin-top: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-flip-inner, .project-card--flip.is-flipped .project-flip-inner,
+  .project-flip-back, .project-flip-back:is(:hover, :focus-visible) .project-flip-arrow > span {
+    transform: none;
+    transition: none;
+  }
+  .project-flip-front[inert], .project-flip-back[inert] { visibility: hidden; }
+}

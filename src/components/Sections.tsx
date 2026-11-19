@@ -1,17 +1,15 @@
-import {ProjectPreview} from './ProjectPreview';
 import {useContact} from './ContactDialog';
 import {Button,Decoration,Label} from './UI';
 import {HighlightText} from './AnimationEffects';
 import {Reveal} from './Reveal';
 import {ProcessLabel} from './ProcessLabel';
-import {FlipProjectCard} from './FlipProjectCard';
-import {cases} from '../data/cases';
+import {WorkProjects} from './WorkProjects';
 import {animation} from '../config/animation';
 import {menuContactLinks} from '../config/links';
 import type {CSSProperties} from 'react';
 const intro='AI Full Stack designer. 7 years in studios and agencies — now I run projects end to end with AI agents, from structure to 3D, video and launch.';
 export function Experience(){const openContact=useContact();return <section id="experience" className="section container experience"><Label>Experience</Label><h2>Experience</h2><p className="lead">{intro}</p><div className="statement"><HighlightText numbers={['7','2024']} text="7 years in studios and agencies. Since 2024 I run projects end to end — with AI agents, from structure to launch. Fintech, e-commerce, beauty brands, sound studios."/></div><h3 className="section-subheading">Recognition</h3><ul className="awards">{['Awwwards Honorable Mention (2026)','CSS Design Awards — Website of the Day (2026)','Behance Featured in Web Design (2025)','Tagline shortlist — Best small business website (2024)'].map(x=><li key={x}>{x}</li>)}</ul><Button className="compact" onClick={openContact}>✦ Get in touch</Button><Decoration name="award" className="experience-award"/><Decoration name="component-set" className="experience-component"/></section>}
-export function Work(){return <section id="work" className="section container work"><Label>Selected work</Label><h2>Selected work</h2><p className="lead">Selected projects, from structure to launch.</p><div className="project-grid">{cases.map((project,index)=>index===0?<FlipProjectCard key={project.slug} project={project}/>:<a key={project.slug} className="project-card" href={`/cases/${project.slug}/`} aria-label={`View ${project.title}`}><ProjectPreview project={project}/></a>)}</div></section>}
+export function Work(){return <section id="work" className="section container work"><Label>Selected work</Label><h2>Selected work</h2><p className="lead">Selected projects, from structure to launch.</p><WorkProjects/></section>}
 const stages = [
  {title:'Brief', term:'2–3 days', description:'Goals, audience, sitemap and user flow.'},
  {title:'Design Concept', term:'5–7 days', description:'Visual system and key screens.'},

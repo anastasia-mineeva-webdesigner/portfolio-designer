@@ -31,3 +31,55 @@
 .related-card:hover .related-card-arrow{transform:translate(2px,-2px)}
 .related-track:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
 @media(max-width:599px){.related-heading{align-items:end;gap:12px}.related-heading h2{font-size:32px}.related-controls{gap:6px}.related-control{width:40px;height:40px}.related-card{flex-basis:85%}.related-card>img{height:280px}.related-track{gap:16px}}
+
+.case-cover:has(> img) {
+ height: auto;
+ min-height: 0;
+ max-height: none;
+ aspect-ratio: 24 / 11;
+ padding: 0;
+ background: #252525;
+}
+.case-cover:has(> img) > img {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ object-position: center top;
+ border-radius: 0;
+}
+.case-facts { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.case-facts dd { overflow-wrap: anywhere; }
+.case-collaboration-link { text-decoration: underline; text-underline-offset: 4px; }
+.case-index [aria-current="location"] { font-weight: 600; }
+.case-figure--project img { display: block; width: 100%; height: auto; border-radius: 12px; }
+.case-figure--project + .case-figure--project { margin-top: 24px; }
+.case-behance-action { margin: 0 0 80px max(274px, calc((100% - 64px) / 4 + 64px)); }
+
+.case-mobile-index {
+ position: fixed;
+ z-index: 90;
+ inset: auto auto calc(16px + env(safe-area-inset-bottom, 0px)) 50%;
+ translate: -50% 0;
+ width: max-content;
+ max-width: calc(100vw - 32px);
+ color: #fff;
+ font-size: 14px;
+}
+.case-mobile-index summary, .case-mobile-index nav {
+ padding: 10px 16px;
+ border-radius: 8px;
+ background: #000;
+}
+.case-mobile-index summary { cursor: pointer; list-style: none; text-align: center; }
+.case-mobile-index summary::-webkit-details-marker { display: none; }
+.case-mobile-index summary span { margin-inline-start: 8px; }
+.case-mobile-index nav { position: absolute; inset: auto 50% calc(100% + 8px) auto; translate: 50% 0; min-width: 180px; }
+.case-mobile-index nav a { display: flex; gap: 12px; padding: 6px 8px; border-radius: 4px; }
+.case-mobile-index nav [aria-current="location"] { background: #303030; }
+.case-mobile-index :focus-visible { outline-color: var(--lime); }
+body:has(.enquiry-dialog[open]) .case-mobile-index { visibility: hidden; }
+@media (max-width: 899px) {
+ .case-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+ .case-behance-action { margin: 0 0 48px; }
+}
+@media print { .case-mobile-index { display: none; } }
