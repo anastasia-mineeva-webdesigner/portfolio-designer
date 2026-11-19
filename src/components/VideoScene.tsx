@@ -61,7 +61,7 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
    // Keep the icon stage stable while the tablet portrait grows independently.
    const decorMediaHeight=tablet?(height-heroReserve-decorTop)/1.24:initialHeight;
    const decorHeight=Math.max(100,decorMediaHeight-(mobile?0:metricHeight+88));
-   el.style.setProperty('--intro-pin-height',`${height}px`);el.style.setProperty('--intro-scroll-distance',`${distance}px`);
+   el.style.setProperty('--intro-pin-height',`${height}px`);el.style.setProperty('--intro-timeline-distance',`${distance}px`);el.style.setProperty('--intro-scroll-distance',`${distance*settings.releaseAt}px`);
    box.style.setProperty('--intro-decor-top',`${decorTop}px`);box.style.setProperty('--intro-decor-height',`${decorHeight}px`);
    box.style.setProperty('--intro-tool-scale',String(Math.min(1,decorHeight/layout.artHeight)*(tablet?1.2:1)));
    render();
@@ -74,7 +74,8 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
  },[layout.width,reduced,demo]);
  const tools=['utopia','figma','vscode','chatgpt','claude'];
  const itemStyle=(item:number[],fluid:boolean)=>({left:`${item[0]/layout.width*100}%`,top:fluid?`${item[1]/layout.artHeight*100}%`:`${item[1]}px`,width:fluid?`calc(${item[2]}px * var(--intro-tool-scale,1))`:`${item[2]}px`});
- const sceneStyle={'--hero-height':`${layout.height}px`,'--hero-art-top':`${layout.top}px`,'--hero-art-height':`${layout.artHeight}px`,'--hero-metrics-top':`${layout.metricsTop}px`,'--intro-scroll-distance':`${innerHeight*(layout.width<600?animation.introScene.mobileScrollScreens:animation.introScene.desktopScrollScreens)}px`} as CSSProperties;
+ const timelineDistance=innerHeight*(layout.width<600?animation.introScene.mobileScrollScreens:animation.introScene.desktopScrollScreens);
+ const sceneStyle={'--hero-height':`${layout.height}px`,'--hero-art-top':`${layout.top}px`,'--hero-art-height':`${layout.artHeight}px`,'--hero-metrics-top':`${layout.metricsTop}px`,'--intro-timeline-distance':`${timelineDistance}px`,'--intro-scroll-distance':`${timelineDistance*animation.introScene.releaseAt}px`} as CSSProperties;
  const title=<h1 ref={heading} className="hero-title"><span className="hero-wide-lines">I design and build websites<br/>with <span className="accent">AI agents</span></span><span className="hero-desktop-lines"><span>I design and build</span><span>websites with <span className="accent">AI agents</span></span></span><span className="hero-mobile-lines">I design and<br/>build websites<br/>with<br/><span className="accent">AI agents</span></span></h1>;
  const decorations=(fluid:boolean)=><>{tools.map((name,i)=><div key={name} className={`tool tool-${i}`} style={itemStyle(layout.tools[i],fluid)}><img src={`/assets/tool-${name}.svg`} alt=""/></div>)}{['ui','ai','motion'].map((name,i)=>layout.stickers[i]&&<div key={name} className={`hero-sticker sticker-${name}`} style={itemStyle(layout.stickers[i]!,fluid)}><img src={`/assets/sticker-${name}.svg`} alt=""/></div>)}</>;
  const aboutContent=<><Label>About</Label><div className="about-copy"><h2 id="intro-about-title">Hi, I'm <span className="accent highlight">Mira</span></h2><p className="lead">AI Full Stack designer. 7 years in studios and agencies — now I run projects end to end with AI agents, from structure to 3D, video and launch.</p></div><div className="tags">{['Veter agency · 4 years','UPROCK · AI Fullstack Designer','Utopia AI','Teaching web design','Figma','Claude Code','Codex','Blender','Spline'].map(tag=><Tag key={tag}>{tag}</Tag>)}</div><Button variant="secondary" href="/cv/">Читать подробнее</Button></>;

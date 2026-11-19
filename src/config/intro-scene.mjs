@@ -2,6 +2,7 @@
 export const introScene={
  desktopScrollScreens:2.1,mobileScrollScreens:1.9,
  heroOut:[.02,.3],mediaLift:[.12,.6],aboutIn:[.4,.82],videoRange:[0,.82],
+ releaseAt:.96,
  aboutTravelPx:0,heroTravelPx:0,
 };
 const clamp=n=>Math.max(0,Math.min(1,n));

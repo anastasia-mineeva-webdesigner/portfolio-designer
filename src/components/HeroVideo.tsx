@@ -18,7 +18,7 @@ export function HeroVideo(){
    const hero=v.closest('section');if(!hero)return;
    const header=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
    const shared=v.closest<HTMLElement>('.intro-scroll');
-   const progress=shared?introCues(introSceneProgress(shared.getBoundingClientRect().top,Math.min(header,innerHeight-(shared.querySelector<HTMLElement>('.intro-pin')?.offsetHeight??innerHeight-header)),parseFloat(getComputedStyle(shared).getPropertyValue('--intro-scroll-distance'))),animation.introScene).video:heroVideoProgress(hero.getBoundingClientRect().top,hero.offsetHeight,innerHeight,header);
+   const progress=shared?introCues(introSceneProgress(shared.getBoundingClientRect().top,Math.min(header,innerHeight-(shared.querySelector<HTMLElement>('.intro-pin')?.offsetHeight??innerHeight-header)),parseFloat(getComputedStyle(shared).getPropertyValue('--intro-timeline-distance'))),animation.introScene).video:heroVideoProgress(hero.getBoundingClientRect().top,hero.offsetHeight,innerHeight,header);
    target=demoTime(progress,v.duration);
    if(!v.seeking&&Math.abs(v.currentTime-target)>.025)v.currentTime=target;
   };
