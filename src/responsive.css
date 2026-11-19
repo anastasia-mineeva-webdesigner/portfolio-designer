@@ -545,7 +545,10 @@
  .intro-static-about > .label--plain { margin-bottom: -18px; }
 }
 @media (min-width: 600px) and (max-width: 1199px) {
- .experience-award, .experience-component, .faq-question, .faq-answer { top: 24px; }
+ .experience-award, .experience-component { top: 24px; }
+ .process-wireframe { left: 5%; width: clamp(86px, 12vw, 124px); }
+ .process-workflow { display: none; }
+ .faq-question, .faq-answer { top: calc(var(--block-gap) + 88px); }
  .experience-award, .faq-question { width: clamp(64px, 11vw, 106px); }
  .experience-component, .faq-answer { width: clamp(72px, 12.5vw, 120px); }
 }
