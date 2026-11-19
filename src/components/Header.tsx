@@ -1,7 +1,7 @@
 import {useEffect,useRef,useState} from 'react';
 import {createPortal} from 'react-dom';
 import {Button} from './UI';
-import {menuContactLinks} from '../config/links';
+import {contactLinks} from '../config/links';
 import {useContact} from './ContactDialog';
 const home=window.location.pathname==='/'?'':'/';
 const navigation = [
@@ -83,9 +83,9 @@ export default function Header(){
     <div className="mobile-menu-contact">
      <p>Have a project in mind?<br/>Let’s build it together.</p>
      <Button onClick={()=>{close();openContact()}}>✦ Get in touch</Button>
-     <a className="mobile-menu-email" href={`mailto:${menuContactLinks.email}`} onClick={close}>{menuContactLinks.email} ↗</a>
+     <a className="mobile-menu-email" href={`mailto:${contactLinks.email}`} onClick={close}>{contactLinks.email} ↗</a>
      <div className="mobile-menu-socials">
-      {menuContactLinks.socials.map(([name,url])=><a key={name} href={url} target="_blank" rel="noopener noreferrer" onClick={close}>{name}</a>)}
+      {Object.entries(contactLinks.socials).map(([name,url])=><a key={name} href={url} target="_blank" rel="noopener noreferrer" onClick={close}>{name}</a>)}
      </div>
     </div>
    </div>

@@ -1,30 +1,101 @@
-.contacts-page{padding-block:64px 96px}.contacts-intro{max-width:1100px;padding-bottom:64px}.contacts-intro h1{font-size:clamp(56px,7vw,112px);line-height:1.02;letter-spacing:-.045em;margin-block:32px}.contacts-intro h1 .accent{background:linear-gradient(transparent 65%,var(--lime) 65%,var(--lime) 95%,transparent 95%);padding-right:8px}.contacts-intro-copy>p{max-width:480px;color:var(--muted);font-size:20px;line-height:1.5}.contacts-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:80px;border-top:1px solid var(--border);padding-top:48px}.contacts-details{align-self:start}.contacts-email{padding:32px;background:var(--hero);border-radius:var(--radius)}.contacts-email>span{font-size:14px;color:var(--muted)}.contacts-email>a{display:block;font-size:clamp(18px,2vw,28px);line-height:1.4;overflow-wrap:anywhere;margin-block:16px 32px}.contacts-email>p{font-size:14px;color:var(--muted)}.contacts-socials{display:grid;margin-top:24px}.contacts-socials>a,.contacts-social-pending{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 0;border-bottom:1px solid var(--border)}.contacts-socials>a:hover{color:var(--muted)}.contacts-social-pending{color:var(--muted)}.contacts-social-pending small{font-size:12px}.contacts-message h2{font-size:40px;line-height:1.2;letter-spacing:-.03em}.contacts-message>p{color:var(--muted);margin-block:16px 32px}.contacts-field{display:grid;gap:12px;margin-bottom:28px}.contacts-field label{font-size:14px}.contacts-field input,.contacts-field textarea{width:100%;min-width:0;border:0;border-bottom:1px solid #aaa;border-radius:0;padding:8px 0 16px;background:transparent;font:inherit;color:var(--ink)}.contacts-field textarea{resize:vertical;min-height:120px}.contacts-field input:focus,.contacts-field textarea:focus{outline:none}.contacts-submit{display:flex;align-items:center;gap:24px}.contacts-submit p{font-size:12px;line-height:1.6;color:var(--muted)}.contacts-form-status{font-size:14px;color:var(--muted);margin-top:20px}.contacts-form-status:empty{margin:0}@media(max-width:899px){.contacts-layout{gap:40px;grid-template-columns:1fr}.contacts-intro{padding-bottom:40px}.contacts-details{display:grid;grid-template-columns:1fr 1fr;gap:24px}.contacts-socials{margin-top:0}}@media(max-width:599px){.contacts-page{padding-block:40px 64px}.contacts-intro h1{font-size:52px;margin-block:24px}.contacts-intro-copy>p{font-size:16px}.contacts-details{display:block}.contacts-email{padding:24px}.contacts-socials{margin-top:16px}.contacts-submit{align-items:start;flex-direction:column;gap:16px}.contacts-message h2{font-size:32px}}
+.contacts-page {
+ padding-block: 64px 96px;
+}
+.contacts-intro {
+ max-width: 1100px;
+ margin-inline: auto;
+ padding-bottom: 64px;
+ text-align: center;
+}
+.contacts-intro h1 {
+ font-size: clamp(44px, 6.1vw, 104px);
+ line-height: 1.04;
+ letter-spacing: -.045em;
+}
+.contacts-intro .accent {
+ padding-inline-end: 8px;
+ background: linear-gradient(transparent 65%, var(--lime) 65%, var(--lime) 95%, transparent 95%);
+}
+.contacts-intro p {
+ max-width: 600px;
+ margin: 28px auto 0;
+ color: var(--muted);
+ font-size: 20px;
+ line-height: 1.5;
+ text-wrap: balance;
+}
+.contacts-primary-action { margin-top: 24px; }
 
-.contacts-intro{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:56px;max-width:none;align-items:start}.contacts-intro h1{font-size:clamp(52px,5.5vw,104px);margin-top:0}.contacts-portrait{background:var(--hero);border-radius:var(--radius);overflow:hidden;aspect-ratio:1/1.08;display:flex;align-items:end}.contacts-portrait img{width:100%;height:100%;object-fit:cover;object-position:center bottom}.contacts-socials>a{padding:20px 16px;color:var(--ink);transition:background 180ms ease,color 180ms ease}.contacts-socials>a:hover,.contacts-socials>a:focus-visible{background:var(--lime);color:#000}.contacts-socials svg{flex-shrink:0}.contacts-field input:focus,.contacts-field textarea:focus{outline:none}.contacts-field input:focus-visible,.contacts-field textarea:focus-visible{outline:none}@media(max-width:899px){.contacts-intro{grid-template-columns:1fr;gap:32px}.contacts-portrait{max-width:480px;width:100%;aspect-ratio:1.2}}
+.contacts-showcase {
+ display: grid;
+ grid-template-columns: repeat(4, minmax(0, 1fr));
+ gap: 28px clamp(12px, 1.4vw, 28px);
+}
+.contacts-profile { min-width: 0; }
+.contacts-profile-heading {
+ margin-bottom: 28px;
+ padding-bottom: 20px;
+ border-bottom: 1px solid var(--border);
+ font-size: clamp(22px, 2.65vw, 48px);
+ line-height: 1.05;
+ letter-spacing: -.05em;
+}
+.contacts-profile-link {
+ display: inline-block;
+ color: var(--muted);
+ transition: color 180ms ease;
+}
+.contacts-profile-link span {
+ position: relative;
+ display: inline-block;
+}
+.contacts-profile-link span::after {
+ content: '';
+ position: absolute;
+ inset: auto 0 -4px;
+ height: 2px;
+ background: currentColor;
+ transform: scaleX(0);
+ transform-origin: left;
+ transition: transform 200ms ease;
+}
+.contacts-profile-link:focus-visible,
+.contacts-profile:has(.contacts-project:focus-visible) .contacts-profile-link { color: var(--ink); }
+.contacts-profile-link:focus-visible span::after,
+.contacts-profile:has(.contacts-project:focus-visible) .contacts-profile-link span::after { transform: scaleX(1); }
 
-/* Contact channels sit beside the portrait; the form keeps its column width. */
-.contacts-intro-copy .contacts-details{display:block;margin-top:28px;max-width:520px}
-.contacts-intro-copy .contacts-email{padding:0;background:transparent;border-radius:0}
-.contacts-intro-copy .contacts-email>span,.contacts-intro-copy .contacts-email>p{display:none}
-.contacts-intro-copy .contacts-email>a{margin:0;padding:16px;border-bottom:1px solid var(--border);font-size:18px;transition:background 180ms ease,color 180ms ease}
-.contacts-intro-copy .contacts-email>a:hover{background:var(--lime);color:#000}
-.contacts-intro-copy .contacts-socials{margin-top:0}
-.contacts-intro-copy .contacts-socials>a{padding:14px 16px}
-.contacts-layout{display:block}
-.contacts-message{width:calc((100% - 80px)*.583333)}
-@media(max-width:899px){.contacts-message{width:100%}.contacts-intro-copy .contacts-details{max-width:none}}
+.contacts-project { display: block; }
+.contacts-project-image {
+ aspect-ratio: 1;
+ overflow: hidden;
+ border-radius: var(--radius);
+ background: var(--hero);
+}
+.contacts-project-image--round { border-radius: 50%; }
+.contacts-project-image img {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ transition: transform 300ms ease;
+}
+.contacts-project p { margin-top: 12px; }
 
-/* Compact full-width enquiry row, with controls aligned on one baseline. */
-.contacts-message{width:100%}
-.contacts-message h2,.contacts-message>p{text-align:center}
-.contacts-message>p{max-width:560px;margin-inline:auto;margin-bottom:40px}
-.contacts-message form{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.4fr) 190px;gap:24px;align-items:end;padding-bottom:48px}
-.contacts-field{margin-bottom:0;min-width:0}
-.contacts-field textarea{height:49px;min-height:49px;max-height:200px;resize:vertical}
-.contacts-submit{position:relative;display:block;align-self:end}
-.contacts-submit>.button{width:100%;height:49px}
-.contacts-submit>p{position:absolute;top:calc(100% + 8px);left:0;right:0;font-size:12px;line-height:1.5}
-.contacts-form-status{grid-column:1/-1;margin-top:16px}
-.contacts-form-status:empty{display:none}
-@media(max-width:899px){.contacts-message form{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}}
-@media(max-width:599px){.contacts-message form{grid-template-columns:1fr;gap:24px}.contacts-message>p{margin-bottom:32px}}
+@media (hover: hover) and (pointer: fine) {
+ .contacts-profile-link:hover,
+ .contacts-profile:has(.contacts-project:hover) .contacts-profile-link { color: var(--ink); }
+ .contacts-profile-link:hover span::after,
+ .contacts-profile:has(.contacts-project:hover) .contacts-profile-link span::after { transform: scaleX(1); }
+ .contacts-project:hover img { transform: scale(1.025); }
+}
+@media (max-width: 719px) {
+ .contacts-page { padding-block: 40px 64px; }
+ .contacts-intro { padding-bottom: 40px; }
+ .contacts-intro p { margin-top: 24px; font-size: 16px; }
+ .contacts-showcase { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 16px; }
+ .contacts-profile-heading { margin-bottom: 16px; padding-bottom: 12px; font-size: clamp(24px, 5.5vw, 40px); }
+ .contacts-project p { margin-top: 10px; font-size: 14px; line-height: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+ .contacts-profile-link, .contacts-profile-link span::after, .contacts-project-image img { transition: none; }
+ .contacts-project:hover img { transform: none; }
+}

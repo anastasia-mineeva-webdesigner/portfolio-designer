@@ -5,7 +5,7 @@ import {Reveal} from './Reveal';
 import {ProcessLabel} from './ProcessLabel';
 import {WorkProjects} from './WorkProjects';
 import {animation} from '../config/animation';
-import {menuContactLinks} from '../config/links';
+import {contactLinks} from '../config/links';
 import type {CSSProperties} from 'react';
 const intro='AI Full Stack designer. 7 years in studios and agencies — now I run projects end to end with AI agents, from structure to 3D, video and launch.';
 export function Experience(){const openContact=useContact();return <section id="experience" className="section container experience"><Label plain>Experience</Label><h2>Design in Practice</h2><p className="lead">{intro}</p><div className="statement"><HighlightText numbers={['7','2024']} text="7 years in studios and agencies. Since 2024 I run projects end to end — with AI agents, from structure to launch. Fintech, e-commerce, beauty brands, sound studios."/></div><h3 className="section-subheading">Recognition</h3><ul className="awards">{['Awwwards Honorable Mention (2026)','CSS Design Awards — Website of the Day (2026)','Behance Featured in Web Design (2025)','Tagline shortlist — Best small business website (2024)'].map(x=><li key={x}>{x}</li>)}</ul><Button className="compact" onClick={openContact}>✦ Get in touch</Button><Decoration name="award" className="experience-award"/><Decoration name="component-set" className="experience-component"/></section>}
@@ -21,7 +21,7 @@ const faq=[['Built with AI — is it a template?','No. I design the structure an
 export function FAQ(){return <section id="faq" className="section container faq"><Label plain>FAQ</Label><h2>Before We Start</h2><p className="lead">Briefly about timing, pricing and working with AI.</p><div className="faq-list">{faq.map(([q,a],i)=><Reveal key={q} kind="faq" index={i}><article className="faq-item"><h3 className="section-subheading">{q}</h3><p>{a}</p><div className="faq-divider"/></article></Reveal>)}</div><Decoration name="question" className="faq-question"/><Decoration name="answer" className="faq-answer"/></section>}
 export function Contact({showAvailability=true}:{showAvailability?:boolean}){const openContact=useContact();return <section id="contact" className="contact container"><div className={`contact-card ${animation.enabled.plane?'plane-motion':''}`} style={{'--plane-x':`${animation.plane.xPx}px`,'--plane-y':`${animation.plane.yPx}px`,'--plane-rotation':`${animation.plane.rotationDeg}deg`} as CSSProperties}>{showAvailability&&<Label>Available for projects</Label>}<h2><span>Have a project?</span><span>Let's <span className="accent">talk</span></span></h2><p>Tell me about your task — I'll reply within a day with a format and timeline.</p><Button className="compact" onClick={openContact}>↗ Let’s talk</Button><Decoration name="envelope" className="contact-envelope"/><Decoration name="plane" className="contact-plane"/><img className="contact-fold" src="/assets/fold.svg" width="104" height="103" alt=""/></div></section>}
 export function Footer(){
- const {email}=menuContactLinks;
+ const {email}=contactLinks;
  return <footer id="footer" className="footer container">
   <p>© 2026 Mira Smirnova</p>
   <p className="footer-role">AI Full Stack Designer</p>
