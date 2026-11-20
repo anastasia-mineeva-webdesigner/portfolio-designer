@@ -47,12 +47,13 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
   const schedule=()=>{if(active&&!disposed&&!raf&&!document.hidden)raf=requestAnimationFrame(render)};
   const measure=()=>{
    if(disposed)return;
-   const mobile=innerWidth<600,tablet=innerWidth>=600&&innerWidth<900,header=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
+   const mobile=innerWidth<600,tablet=!mobile&&innerWidth<1200;
+   const header=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
    const gap=mobile?16:24,minMedia=mobile?180:220;
    const bottom=parseFloat(getComputedStyle(el).getPropertyValue('--intro-end-space'));
    const titleHeight=title.offsetHeight,aboutHeight=about.offsetHeight,metricHeight=metrics.offsetHeight;
-   portraitScale=innerWidth>=1700?1.3:mobile?1.16:tablet?1.66:1.25;
-   const heroReserve=mobile?metricHeight+48:0;
+   portraitScale=innerWidth>=1700?1.3:mobile?1.16:1.25;
+   const heroReserve=mobile?metricHeight+48:tablet?metricHeight+40:0;
    const height=Math.max(innerHeight-header,aboutHeight+minMedia+finalTop+gap+bottom,titleHeight+24+heroReserve+220);
    const decorTop=titleHeight+24;
    // On narrow screens compensate for the upward growth from bottom-anchored scaling.
@@ -60,9 +61,8 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
    initialHeight=height-initialTop-heroReserve;
    finalHeight=height-aboutHeight-finalTop-gap-bottom;aboutTop=finalTop+finalHeight+gap;
    distance=innerHeight*(mobile?settings.mobileScrollScreens:settings.desktopScrollScreens);
-   // Keep the icon stage stable while the tablet portrait grows independently.
    const decorMediaHeight=tablet?(height-heroReserve-decorTop)/1.24:initialHeight;
-   const decorHeight=Math.max(100,decorMediaHeight-(mobile?0:metricHeight+88));
+   const decorHeight=Math.max(100,decorMediaHeight-(mobile||tablet?0:metricHeight+88));
    el.style.setProperty('--intro-pin-height',`${height}px`);el.style.setProperty('--intro-timeline-distance',`${distance}px`);el.style.setProperty('--intro-scroll-distance',`${distance*settings.releaseAt}px`);
    box.style.setProperty('--intro-decor-top',`${decorTop}px`);box.style.setProperty('--intro-decor-height',`${decorHeight}px`);
    box.style.setProperty('--intro-tool-scale',String(Math.min(1,decorHeight/layout.artHeight)*(tablet?1.2:1)));

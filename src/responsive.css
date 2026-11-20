@@ -393,6 +393,26 @@
  .static-hero>.scene-tools>.hero-current-media{scale:1.2;transform-origin:center bottom}
 }
 
+@media (600px <= width < 1200px) {
+ .static-hero .metrics.metrics--paired {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:16px;
+ }
+ .static-hero .metrics--paired > .metrics-group { display:contents; }
+ .intro-pin .metrics.metrics--paired { bottom:24px; }
+ .intro-video-slot .hero-current-media { height:100%; aspect-ratio:auto; object-fit:cover; }
+ .static-hero:not(.intro-hero) { height:auto; padding-block-end:24px; }
+ .static-hero:not(.intro-hero) > .scene-tools {
+  position:relative;
+  inset:auto;
+  height:clamp(280px,55vw,540px);
+  margin-block:24px 16px;
+ }
+ .static-hero:not(.intro-hero) > .scene-tools > .hero-current-media { scale:1; }
+ .static-hero:not(.intro-hero) > .metrics { position:relative; inset:auto; }
+}
+
 .highlight-text{color:var(--ink)}
 
 /* Extend only the background; text and the card geometry stay stable. */
