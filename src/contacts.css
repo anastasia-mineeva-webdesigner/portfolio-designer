@@ -1,5 +1,5 @@
 .contacts-page {
- padding-block: 64px max(0px, calc(var(--block-gap) - var(--footer-gap)));
+ padding-block: 64px 0;
 }
 .contacts-intro {
  max-width: 1100px;

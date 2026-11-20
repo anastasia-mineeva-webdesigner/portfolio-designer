@@ -8,7 +8,7 @@ export function RelatedProjects({current}:{current:string}){
  return <section className="related-projects" aria-labelledby="related-title">
   <h2 id="related-title">Explore more projects</h2>
   <div className="related-grid">
-   {related.map(project=><a key={project.slug} className="related-card" href={`/cases/${project.slug}/`} aria-label={`View ${project.title} case`}>
+   {related.map((project,index)=><a key={project.slug} className={`related-card${index===0?' related-card--shrink':''}`} href={`/cases/${project.slug}/`} aria-label={`View ${project.title} case`}>
     <div className="project-card"><ProjectPreview project={project}/></div>
     <div className="related-card-info">
      <h3>{project.title}</h3>

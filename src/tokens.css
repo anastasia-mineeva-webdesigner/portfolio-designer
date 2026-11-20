@@ -7,10 +7,10 @@
 @media(max-width:400px){:root{--gutter:16px}}
 
 
-:root { --block-gap: 120px; --footer-gap: 24px; --intro-end-space: 80px; }
+:root { --block-gap: 120px; --footer-gap: 30px; --intro-end-space: 80px; }
 @media (max-width: 1199px) {
  :root { --block-gap: 80px; --intro-end-space: 64px; }
 }
 @media (max-width: 599px) {
- :root { --block-gap: 60px; --footer-gap: var(--block-gap); --intro-end-space: 40px; }
+ :root { --block-gap: 60px; --footer-gap: 30px; --intro-end-space: 40px; }
 }
