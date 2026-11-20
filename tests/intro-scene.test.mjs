@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {introScene,mobileIntroScene,introCues,introSceneProgress,introVideoProgress,introAboutGroups} from '../src/config/intro-scene.mjs';
+import {introScene,mobileIntroScene,tabletIntroScene,compactPortrait,introCues,introSceneProgress,introVideoProgress,introAboutGroups} from '../src/config/intro-scene.mjs';
 test('the unified scene has a bounded pin distance and a reading interval',()=>{
  assert.ok(introScene.desktopScrollScreens>=1.5 && introScene.desktopScrollScreens<=2.5);
  assert.ok(introScene.mobileScrollScreens>=1.5 && introScene.mobileScrollScreens<=2.5);
@@ -47,4 +47,24 @@ test('mobile shows the full About panel before the pinned scene releases',()=>{
  assert.deepEqual(introAboutGroups(aboutIn[1],true),[1,1,1,1,1]);
  assert.equal(introCues(aboutIn[1],mobileIntroScene).lift,1);
  assert.ok(aboutIn[1]<releaseAt);
+});
+
+test('the compact scene starts with a fixed portrait and only scales down later',()=>{
+ for(const [settings, timeline, original] of [
+  [mobileIntroScene,mobileIntroScene.mobileScrollScreens,introScene.mobileScrollScreens],
+  [tabletIntroScene,tabletIntroScene.desktopScrollScreens,introScene.desktopScrollScreens],
+ ]){
+  assert.ok(timeline<original);
+  assert.ok(introCues(.1,settings).video>0);
+  let lastScale=1;
+  for(let step=0;step<=100;step++){
+   const progress=step/100;
+   const portrait=compactPortrait(160,480,24,introCues(progress,settings).lift);
+   assert.equal(portrait.height,480);
+   assert.ok(portrait.scale<=lastScale);
+   if(progress<=settings.mediaLift[0])assert.deepEqual(portrait,{top:160,height:480,scale:1});
+   lastScale=portrait.scale;
+  }
+  assert.deepEqual(compactPortrait(160,480,24,introCues(1,settings).lift),{top:24,height:480,scale:.88});
+ }
 });

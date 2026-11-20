@@ -264,7 +264,6 @@
 @media(max-width:599px){
  .intro-pin .metrics.metrics--paired{bottom:24px}
  .intro-pin{top:var(--header-height);overflow:visible}
- .intro-mobile-viewport{position:absolute;width:0;height:100svh;visibility:hidden;pointer-events:none}
  .static-hero .metrics.metrics--paired{display:none}
  .static-hero:not(.intro-hero){height:calc(var(--hero-art-top) + var(--hero-art-height) + 24px)}
  .intro-about{gap:8px}
@@ -274,7 +273,6 @@
  .intro-about .tag{font-size:12px;line-height:16px;padding:4px 8px}
  .intro-about>.button{height:44px;min-height:44px}
 }
-@media(max-width:599px){.intro-video-slot .hero-current-media{object-fit:cover}}
 @media(max-width:340px){.intro-about .tag{padding-inline:6px}}
 /* Fade the actual 16:9 frame on every edge, including its moving lower edge. */
 .intro-video-slot .hero-current-media{
@@ -285,15 +283,11 @@
  -webkit-mask-composite:source-in;
 }
 .intro-static-about{padding-bottom:80px}
-@media(max-width:599px){
- .intro-video-slot .hero-current-media{height:100%;aspect-ratio:auto;object-fit:cover}
-}
 /* Real alpha keeps hair and shoulders intact; only soften the source crop at the waist. */
 .hero-current-media,.intro-video-slot .hero-current-media{mask-image:linear-gradient(to bottom,#000 92%,transparent);-webkit-mask-image:linear-gradient(to bottom,#000 92%,transparent)}
 /* The portrait settles into its About position as the title leaves. */
 .intro-video-slot .hero-current-media{transform:scale(var(--intro-portrait-scale,1.04));transform-origin:center bottom}
 @media(min-width:1200px){.intro-video-slot .hero-current-media{translate:0 calc(clamp(48px,4.6vw,88px)*var(--intro-portrait-offset,1))}}
-@media(max-width:599px){.intro-video-slot .hero-current-media{transform:scale(var(--intro-portrait-scale,1.12))}}
 /* Put the transparent portrait in front of the desktop headline. */
 .intro-hero.static-hero{z-index:0}
 .intro-video-slot{z-index:1;pointer-events:none}
@@ -410,7 +404,6 @@
  }
  .static-hero .metrics--paired > .metrics-group { display:contents; }
  .intro-pin .metrics.metrics--paired { bottom:24px; }
- .intro-video-slot .hero-current-media { height:100%; aspect-ratio:auto; object-fit:cover; }
  .static-hero:not(.intro-hero) { height:auto; padding-block-end:24px; }
  .static-hero:not(.intro-hero) > .scene-tools {
   position:relative;
@@ -610,4 +603,34 @@
  .footer { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
  .footer .text-link { justify-self: end; }
  .footer-role { display: none; }
+}
+
+
+@media (width < 1200px) {
+ .intro-pin .intro-compact-viewport {
+  position:absolute;
+  width:0;
+  height:100svh;
+  visibility:hidden;
+  pointer-events:none;
+ }
+ .intro-pin .intro-video-slot {
+  inset:0;
+  width:100%;
+  height:100%;
+  transform:none;
+  overflow:clip;
+ }
+ .intro-video-slot .hero-current-media {
+  inset:0 auto auto 50%;
+  width:calc(var(--intro-frame-height, 50svh) * 16 / 9);
+  height:var(--intro-frame-height, 50svh);
+  max-width:none;
+  aspect-ratio:16 / 9;
+  object-fit:contain;
+  object-position:center;
+  transform-origin:center top;
+  transform:translate(-50%, var(--intro-frame-top, 155px)) scale(var(--intro-frame-scale, 1));
+ }
+ .intro-pin .metrics.metrics--paired { bottom:calc(24px + var(--intro-metric-offset, 0px)); }
 }

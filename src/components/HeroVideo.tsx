@@ -2,7 +2,7 @@ import {useEffect,useRef,useState} from 'react';
 import {createVideoPrimer} from '../config/video-primer.mjs';
 import {animation} from '../config/animation';
 import {media} from '../config/media';
-import {introVideoProgress,mobileIntroScene} from '../config/intro-scene.mjs';
+import {introVideoProgress,mobileIntroScene,tabletIntroScene} from '../config/intro-scene.mjs';
 import {demoTime,heroVideoProgress} from '../config/demo-motion.mjs';
 
 // Static hosting may return the whole file to a byte-range request. Loading it
@@ -22,7 +22,7 @@ export function HeroVideo(){
  const ref=useRef<HTMLVideoElement>(null);
  // Safari can decode VP9 without its alpha plane; use the same matte on our exact page colour.
  const appleWebKit=/Apple/.test(navigator.vendor)||/iPad|iPhone|iPod/.test(navigator.userAgent);
- const [source,setSource]=useState(()=>appleWebKit||matchMedia('(pointer: coarse), (max-width: 899px)').matches?media.mobileVideoSrc:media.videoSrc);
+ const [source,setSource]=useState(()=>appleWebKit||matchMedia('(pointer: coarse), (width < 1200px)').matches?media.mobileVideoSrc:media.videoSrc);
  const [clip,setClip]=useState<{source:string,url:string}|null>(null);
  const [failed,setFailed]=useState(false),[reduced,setReduced]=useState(()=>matchMedia('(prefers-reduced-motion: reduce)').matches);
  const activeSource=clip?.source===source?clip.url:null;
@@ -51,10 +51,11 @@ export function HeroVideo(){
    const header=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
    const shared=v.closest<HTMLElement>('.intro-scroll');
    const pin=shared?.querySelector<HTMLElement>('.intro-pin');
+   const settings=innerWidth<600?mobileIntroScene:innerWidth<1200?tabletIntroScene:animation.introScene;
    const progress=shared?introVideoProgress(
     shared.getBoundingClientRect().top,header,
-    innerWidth<600?header:Math.min(header,innerHeight-(pin?.offsetHeight??innerHeight-header)),
-    parseFloat(getComputedStyle(shared).getPropertyValue('--intro-timeline-distance')),innerWidth<600?mobileIntroScene.videoRange:animation.introScene.videoRange,
+    pin&&innerWidth<1200?parseFloat(getComputedStyle(pin).top):Math.min(header,innerHeight-(pin?.offsetHeight??innerHeight-header)),
+    parseFloat(getComputedStyle(shared).getPropertyValue('--intro-timeline-distance')),settings.videoRange,
    ):heroVideoProgress(hero.getBoundingClientRect().top,hero.offsetHeight,innerHeight,header);
    target=demoTime(progress,v.duration);
    if(!v.seeking&&Math.abs(v.currentTime-target)>.025)v.currentTime=target;

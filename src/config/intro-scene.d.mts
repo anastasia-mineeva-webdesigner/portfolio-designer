@@ -1,7 +1,9 @@
 export type IntroSettings={desktopScrollScreens:number;mobileScrollScreens:number;heroOut:number[];mediaLift:number[];aboutIn:number[];videoRange:number[];releaseAt:number;aboutTravelPx:number;heroTravelPx:number};
 export const introScene:IntroSettings;
+export const tabletIntroScene:IntroSettings;
 export const mobileIntroScene:IntroSettings;
 export function introSceneProgress(top:number,header:number,distance:number):number;
 export function introVideoProgress(top:number,header:number,pinTop:number,distance:number,videoRange?:number[]):number;
 export function introCues(progress:number,settings?:IntroSettings):{hero:number;lift:number;about:number;video:number};
 export function introAboutGroups(progress:number,mobile?:boolean):number[];
+export function compactPortrait(initialTop:number,initialHeight:number,finalTop:number,lift:number):{top:number;scale:number;height:number};

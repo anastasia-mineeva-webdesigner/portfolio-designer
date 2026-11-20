@@ -5,11 +5,20 @@ export const introScene={
  releaseAt:.96,
  aboutTravelPx:0,heroTravelPx:0,
 };
+export const tabletIntroScene={
+ ...introScene,
+ desktopScrollScreens:1.2,
+ heroOut:[.04,.3],mediaLift:[.18,.6],videoRange:[0,.72],
+};
 export const mobileIntroScene={
  ...introScene,
- heroOut:[.02,.26],mediaLift:[.1,.43],aboutIn:[.36,.65],videoRange:[0,.65],
- releaseAt:.84,
+ mobileScrollScreens:1.05,
+ heroOut:[.04,.26],mediaLift:[.18,.49],aboutIn:[.36,.65],videoRange:[0,.65],
+ releaseAt:.74,
 };
+export function compactPortrait(initialTop,initialHeight,finalTop,lift){
+ return {top:initialTop+(finalTop-initialTop)*lift,scale:1-.12*lift,height:initialHeight};
+}
 const clamp=n=>Math.max(0,Math.min(1,n));
 const range=(p,[start,end])=>clamp((p-start)/Math.max(.0001,end-start));
 const smooth=n=>n*n*(3-2*n);
