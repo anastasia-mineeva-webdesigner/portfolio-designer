@@ -1,9 +1,8 @@
-const responseTime = 85;
+const responseTime = 170;
 const lineHeight = 16;
 
 export function installSmoothScroll() {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const finePointer = window.matchMedia('(any-pointer: fine)');
   let frame = 0;
   let target = 0;
   let position = 0;
@@ -63,7 +62,9 @@ export function installSmoothScroll() {
     const root = document.scrollingElement!;
     const delta = event.deltaY * (mode === 1 ? lineHeight : mode === 2 ? root.clientHeight : 1);
     const isAnimating = frame !== 0 && Math.abs(current - lastWritten) <= 1;
-    const start = isAnimating ? target : current;
+    // Reverse immediately instead of consuming the remaining travel in the old direction.
+    const continuesInSameDirection = isAnimating && Math.sign(target - position) === Math.sign(delta);
+    const start = continuesInSameDirection ? target : current;
     const next = Math.max(0, Math.min(start + delta, maxScroll()));
     if (!isAnimating && next === current) {
       stop();
@@ -83,20 +84,18 @@ export function installSmoothScroll() {
   function syncPreference() {
     window.removeEventListener('wheel', handleWheel);
     stop();
-    if (!reducedMotion.matches && finePointer.matches) {
+    if (!reducedMotion.matches) {
       window.addEventListener('wheel', handleWheel, { passive: false });
     }
   }
 
   syncPreference();
   reducedMotion.addEventListener('change', syncPreference);
-  finePointer.addEventListener('change', syncPreference);
   const interruptEvents = ['pointerdown', 'keydown', 'resize', 'pagehide'];
   for (const event of interruptEvents) window.addEventListener(event, stop, { passive: true });
 
   return () => {
     reducedMotion.removeEventListener('change', syncPreference);
-    finePointer.removeEventListener('change', syncPreference);
     window.removeEventListener('wheel', handleWheel);
     for (const event of interruptEvents) window.removeEventListener(event, stop);
     stop();
