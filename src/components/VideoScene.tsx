@@ -61,7 +61,8 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
    if(mobile&&mobileViewport){
     const viewportHeight=mobileViewport.offsetHeight;
     const availableHeight=viewportHeight-header;
-    const gap=12,bottom=16,portraitInset=24;
+    const gap=12,portraitInset=24;
+    const bottom=parseFloat(getComputedStyle(el).getPropertyValue('--intro-mobile-rhythm'));
     const textSpace=portraitInset+gap+aboutHeight+bottom;
     const aboutPortraitHeight=Math.max(128,Math.min(innerWidth*.92,availableHeight-textSpace));
     portraitScale=1;
@@ -112,7 +113,10 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
  const aboutText=layout.width<600
   ? 'AI Full Stack designer with 7 years in web design, 40+ projects launched and 12 awards and features. I take projects from structure to launch with AI agents.'
   : 'AI Full Stack designer. 7 years in studios and agencies — now I run projects end to end with AI agents, from structure to 3D, video and launch.';
- const aboutContent=<><Label plain>About</Label><div className="about-copy"><h2 id="intro-about-title">Hi, I'm <span className="accent highlight">Mira</span></h2><p className="lead">{aboutText}</p></div><div className="tags">{['Veter agency · 4 years','UPROCK · AI Fullstack Designer','Utopia AI','Teaching web design','Figma','Claude Code','Codex','Blender','Spline'].map(tag=><Tag key={tag}>{tag}</Tag>)}</div><Button variant="secondary" href="/cv/">Read more</Button></>;
+ const aboutTags=layout.width<600
+  ? ['UPROCK','Utopia AI','Figma','Claude Code','Teaching','Codex','Blender','Spline']
+  : ['UPROCK · AI Fullstack Designer','Utopia AI','Teaching web design','Figma','Claude Code','Codex','Blender','Spline'];
+ const aboutContent=<><Label plain>About</Label><div className="about-copy"><h2 id="intro-about-title">Hi, I'm <span className="accent highlight">Mira</span></h2><p className="lead">{aboutText}</p></div><div className="tags">{aboutTags.map(tag=><Tag key={tag}>{tag}</Tag>)}</div><Button variant="secondary" href="/cv/">Read more</Button></>;
  if(demo)return <DesktopMotionDemo missing={missing}/>;
  if(reduced)return <><section className="static-hero" style={sceneStyle} aria-label="Introduction">{title}<div className="scene-tools" aria-hidden="true"><HeroVideo/>{decorations(false)}</div><HeroMetrics/></section><section id="about" className="static-about intro-static-about container" aria-labelledby="intro-about-title">{aboutContent}</section></>;
  return <section ref={root} className="intro-scroll" style={sceneStyle} aria-label="Introduction and About"><span id="about" className="intro-about-anchor" aria-hidden="true"/><div ref={pin} className="intro-pin intro-entrance">

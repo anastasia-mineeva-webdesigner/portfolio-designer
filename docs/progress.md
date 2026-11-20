@@ -89,7 +89,7 @@ H1 занимает три строки, фраза with AI agents целико�
 
 ## Печатная версия Resume
 
-В опыте указаны Independent designer — 2024 — Present и Veter Agency — 2020 — 2024. Для курса AI Full Stack Designer в UPROCK указана длительность 4.5 months. Creative technology остаётся ongoing practice. Отдельный блок Expertise заменён тегами в Tools & languages.
+В опыте указаны Independent designer — 2024 — Present и Design studios and agencies — 2020 — 2024. Для курса AI Full Stack Designer в UPROCK указана длительность 4.5 months. Creative technology остаётся ongoing practice. Отдельный блок Expertise заменён тегами в Tools & languages.
 
 Download CV отдаёт A4 PDF, созданный из страницы Resume с тем же стилем печати, что у Print CV. Для обновления файла после правок собрать сайт, открыть локальный предпросмотр и запустить `node scripts/build-cv-pdf.mjs http://127.0.0.1:4173/cv/ http://127.0.0.1:9222`. Второй адрес — локальный Chromium с включённой удалённой отладкой. Скрипт записывает файл в public и dist.
 

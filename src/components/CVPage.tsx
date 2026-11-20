@@ -12,7 +12,7 @@ const cvSections=[
 ];
 const experience=[
  {period:'2024 — Present',title:'Independent designer',role:'AI Full Stack Designer',text:'I lead websites from the first brief to launch, combining UX, visual direction and development with AI agents.',items:['Structure, user journeys and interactive prototypes.','Responsive websites, design systems and production-ready interfaces.','AI-generated imagery, 3D and motion as part of a coherent visual direction.']},
- {period:'2020 — 2024',title:'Veter Agency',role:'Web & digital design',text:'Agency experience across fintech, e-commerce, beauty brands and sound studios. Working with developers and project teams shaped the way I connect visual decisions to business goals.',items:['Landing pages, multi-page websites and digital experiences.','Collaboration with marketing, development and project management.','Design reviews, clear handoffs and attention to responsive details.']},
+ {period:'2020 — 2024',title:'Design studios and agencies',role:'Web & digital design',text:'Agency experience across fintech, e-commerce, beauty brands and sound studios. Working with developers and project teams shaped the way I connect visual decisions to business goals.',items:['Landing pages, multi-page websites and digital experiences.','Collaboration with marketing, development and project management.','Design reviews, clear handoffs and attention to responsive details.']},
  {period:'Alongside project work',title:'Teaching & mentoring',role:'Web design',text:'Sharing design practice, reviewing work and helping designers turn an idea into a clear, considered interface.',items:[]},
 ];
 function CVActions(){
