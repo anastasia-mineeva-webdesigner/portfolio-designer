@@ -580,12 +580,18 @@
  .experience-component, .faq-answer { width: clamp(72px, 12.5vw, 120px); }
 }
 
+@media (width < 1200px) {
+ .intro-about .highlight, .intro-static-about .highlight { display: inline-block; }
+ :is(.intro-about, .intro-static-about) .highlight::before { inset: 2px -4px; }
+}
+
 @media (max-width: 599px) {
- :root { --intro-mobile-rhythm: 24px; }
- #content > .intro-static-about { padding-block-end: var(--intro-mobile-rhythm); }
- #content > :is(.intro-scroll, .intro-static-about) + .experience {
-  padding-block-start: var(--intro-mobile-rhythm);
+ :root { --intro-mobile-rhythm: 24px; --intro-mobile-end-gap: 72px; }
+ .intro-scroll {
+  box-sizing: content-box;
+  padding-block-end: calc(var(--intro-mobile-end-gap) - var(--intro-mobile-rhythm));
  }
+ #content > .intro-static-about { padding-block-end: var(--intro-mobile-end-gap); }
  .intro-about > .button { margin-block-start: calc(var(--intro-mobile-rhythm) - 8px); }
  .hero-mobile-lines { white-space: nowrap; }
  .hero-title:has(.hero-mobile-lines) { font-size: clamp(32px, 10vw, 40px); line-height: 1.08; }
