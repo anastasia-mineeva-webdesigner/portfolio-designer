@@ -67,7 +67,7 @@
  height: 100%;
  object-fit: cover;
  object-position: center top;
- transition: transform 300ms ease;
+ transition: transform 260ms cubic-bezier(.2,.7,.25,1);
 }
 .contacts-project-image--round img { object-position: center; }
 
@@ -76,7 +76,10 @@
  .contacts-profile:has(.contacts-project:hover) .contacts-profile-link { color: var(--ink); }
  .contacts-profile-link:hover span,
  .contacts-profile:has(.contacts-project:hover) .contacts-profile-link span { background-color: var(--lime); }
- .contacts-project:hover img { transform: scale(1.025); }
+ .contacts-project:hover img { transform: scale(.96); }
+}
+@media (prefers-reduced-motion: no-preference) {
+ .contacts-project:focus-visible img { transform: scale(.96); }
 }
 @media (max-width: 1199px) {
  .contacts-showcase { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px clamp(16px, 3vw, 32px); }
