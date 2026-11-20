@@ -607,6 +607,7 @@
 
 
 @media (width < 1200px) {
+ .intro-pin { top:var(--header-height); }
  .intro-pin .intro-compact-viewport {
   position:absolute;
   width:0;

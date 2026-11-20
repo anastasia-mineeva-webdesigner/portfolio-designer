@@ -27,3 +27,10 @@
  }
  .site-shell > footer { margin-block-start: auto; }
 }
+
+/* Touch and scripted focus should not paint a rectangular focus ring. */
+html { -webkit-tap-highlight-color: transparent; }
+:root:not(.keyboard-navigation) :is(a, button, summary, input, textarea, select):focus-visible {
+ outline: none;
+ box-shadow: none;
+}

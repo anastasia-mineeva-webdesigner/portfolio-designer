@@ -88,7 +88,7 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
     const gap=24,bottom=parseFloat(getComputedStyle(el).getPropertyValue('--intro-end-space'));
     const metricHeight=metrics?.offsetHeight??0,heroReserve=tablet?metricHeight+40:0;
     portraitScale=innerWidth>=1700?1.3:1.25;
-    finalTop=16;
+    finalTop=tablet?24:16;
     const viewportHeight=tablet&&compactViewport?compactViewport.offsetHeight:innerHeight;
     height=Math.max(viewportHeight-header,aboutHeight+220+finalTop+gap+bottom,decorTop+heroReserve+220);
     initialTop=innerWidth<1200?(decorTop+(portraitScale-1)*(height-heroReserve))/portraitScale:decorTop;
