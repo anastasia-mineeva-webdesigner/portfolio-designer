@@ -47,7 +47,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 8px 24px;
-  padding-block: 30px;
+  padding-block: var(--footer-gap);
   background: #fff;
   color: var(--ink);
   border-top: 0;
@@ -57,7 +57,6 @@
 @media (max-width: 599px) {
   .footer {
     gap: 8px 12px;
-    padding-block: 30px;
     font-size: 12px;
     line-height: 18px;
   }
@@ -527,7 +526,6 @@
 
 /* Content sections start one gap after the previous section background. */
 @media screen {
- .site-shell:not(.is-not-found) #content { padding-block-end: var(--footer-gap); }
  #content > :is(.experience, .work, .process, .faq, .contact) {
   margin-block: 0;
   padding-block: var(--block-gap) 0;
