@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {introScene,introCues,introSceneProgress,introVideoProgress,introAboutGroups} from '../src/config/intro-scene.mjs';
+import {introScene,mobileIntroScene,introCues,introSceneProgress,introVideoProgress,introAboutGroups} from '../src/config/intro-scene.mjs';
 test('the unified scene has a bounded pin distance and a reading interval',()=>{
  assert.ok(introScene.desktopScrollScreens>=1.5 && introScene.desktopScrollScreens<=2.5);
  assert.ok(introScene.mobileScrollScreens>=1.5 && introScene.mobileScrollScreens<=2.5);
@@ -38,4 +38,13 @@ test('video advances during the lead-in on a short viewport and still finishes w
  assert.equal(introVideoProgress(header,header,pinTop,distance),0);
  assert.ok(introVideoProgress(header-24,header,pinTop,distance)>0);
  assert.equal(introVideoProgress(pinTop-distance*introScene.videoRange[1],header,pinTop,distance),1);
+});
+
+test('mobile shows the full About panel before the pinned scene releases',()=>{
+ const {aboutIn,releaseAt}=mobileIntroScene;
+ assert.equal(introCues(aboutIn[0],mobileIntroScene).hero,0);
+ assert.ok(introAboutGroups(.52,true)[4]>0);
+ assert.deepEqual(introAboutGroups(aboutIn[1],true),[1,1,1,1,1]);
+ assert.equal(introCues(aboutIn[1],mobileIntroScene).lift,1);
+ assert.ok(aboutIn[1]<releaseAt);
 });

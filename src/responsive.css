@@ -258,13 +258,18 @@
 .intro-about .tags{width:100%;max-width:560px}
 .intro-about>.button{width:224px;height:48px;padding-inline:16px}
 @media(min-width:600px){.intro-about>.button{margin-top:8px}}
-.intro-about-anchor{position:absolute;top:calc(var(--intro-timeline-distance)*.88);scroll-margin-top:var(--header-height)}
+.intro-about-anchor{position:absolute;top:calc(var(--intro-timeline-distance)*var(--intro-about-stop,.88));scroll-margin-top:0}
+@media(min-width:600px){.intro-about-anchor{scroll-margin-top:var(--header-height)}}
 .intro-static-about>.label{margin-top:0}
 @media(max-width:599px){
  .intro-pin .metrics.metrics--paired{bottom:24px}
- .intro-about{gap:12px}.intro-about .about-copy{gap:16px}
- .intro-about .about-copy h2{font-size:32px;line-height:40px}
- .intro-about .about-copy .lead{font-size:16px;line-height:24px}
+ .intro-pin{top:min(var(--header-height),calc(100dvh - var(--intro-pin-height)))}
+ .intro-about{gap:8px}
+ .intro-about .about-copy h2{font-size:30px;line-height:36px}
+ .intro-about .about-copy .lead{font-size:14px;line-height:20px}
+ .intro-about .tags{gap:4px}
+ .intro-about .tag{font-size:12px;line-height:16px;padding:4px 8px}
+ .intro-about>.button{height:44px;min-height:44px}
 }
 @media(max-width:599px){.intro-video-slot .hero-current-media{object-fit:cover}}
 /* Fade the actual 16:9 frame on every edge, including its moving lower edge. */
@@ -576,7 +581,8 @@
  .hero-title:has(.hero-mobile-lines) { font-size: clamp(32px, 10vw, 40px); line-height: 1.08; }
  #content > :is(.experience, .work, .process, .faq) { row-gap: 24px; }
  #content > .section > .section-heading + .lead { margin-block-start: -12px; }
- .intro-about .about-copy, .intro-static-about .about-copy { gap: 12px; }
+ .intro-about .about-copy { gap: 8px; }
+ .intro-static-about .about-copy { gap: 12px; }
  .intro-about > .label--plain { margin-bottom: -6px; }
  .experience-award, .experience-component { display: none; }
  #content > .faq { row-gap: 16px; }

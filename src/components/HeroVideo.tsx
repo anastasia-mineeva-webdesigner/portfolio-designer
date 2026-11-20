@@ -2,7 +2,7 @@ import {useEffect,useRef,useState} from 'react';
 import {createVideoPrimer} from '../config/video-primer.mjs';
 import {animation} from '../config/animation';
 import {media} from '../config/media';
-import {introVideoProgress} from '../config/intro-scene.mjs';
+import {introVideoProgress,mobileIntroScene} from '../config/intro-scene.mjs';
 import {demoTime,heroVideoProgress} from '../config/demo-motion.mjs';
 
 // Static hosting may return the whole file to a byte-range request. Loading it
@@ -53,7 +53,7 @@ export function HeroVideo(){
    const progress=shared?introVideoProgress(
     shared.getBoundingClientRect().top,header,
     Math.min(header,innerHeight-(shared.querySelector<HTMLElement>('.intro-pin')?.offsetHeight??innerHeight-header)),
-    parseFloat(getComputedStyle(shared).getPropertyValue('--intro-timeline-distance')),animation.introScene.videoRange,
+    parseFloat(getComputedStyle(shared).getPropertyValue('--intro-timeline-distance')),innerWidth<600?mobileIntroScene.videoRange:animation.introScene.videoRange,
    ):heroVideoProgress(hero.getBoundingClientRect().top,hero.offsetHeight,innerHeight,header);
    target=demoTime(progress,v.duration);
    if(!v.seeking&&Math.abs(v.currentTime-target)>.025)v.currentTime=target;

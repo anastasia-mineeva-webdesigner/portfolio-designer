@@ -2,7 +2,7 @@ import {useEffect,useLayoutEffect,useRef,useState} from 'react';
 import type {CSSProperties} from 'react';
 import {animation} from '../config/animation';
 import {staticHeroLayout} from '../config/hero-layout.mjs';
-import {introCues,introSceneProgress,introAboutGroups} from '../config/intro-scene.mjs';
+import {introCues,introSceneProgress,introAboutGroups,mobileIntroScene} from '../config/intro-scene.mjs';
 
 import {HeroVideo} from './HeroVideo';
 import {HeroMetrics} from './HeroMetrics';
@@ -22,7 +22,8 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
  },[]);
  useLayoutEffect(()=>{
   if(reduced||demo||!root.current||!pin.current||!panel.current||!heading.current)return;
-  const el=root.current,box=pin.current,title=heading.current,about=panel.current,settings=animation.introScene;
+  const el=root.current,box=pin.current,title=heading.current,about=panel.current;
+  const mobile=layout.width<600,settings=mobile?mobileIntroScene:animation.introScene;
   const metrics=box.querySelector<HTMLElement>('.metrics')!;
   const aboutGroups=Array.from(about.querySelectorAll<HTMLElement>(':scope > .label, .about-copy > h2, .about-copy > .lead, :scope > .tags, :scope > .button'));
   let raf=0,disposed=false,initialTop=0,initialHeight=0,finalTop=16,finalHeight=0,aboutTop=0,distance=1,portraitScale=1.04;
@@ -31,7 +32,7 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
    const header=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
    const progress=introSceneProgress(el.getBoundingClientRect().top,Math.min(header,innerHeight-box.offsetHeight),distance);
    const c=introCues(progress,settings);
-   const opacities=introAboutGroups(progress);
+   const opacities=introAboutGroups(progress,mobile);
    aboutGroups.forEach((group,index)=>{group.style.opacity=String(opacities[index]);group.inert=opacities[index]===0});
    box.style.setProperty('--intro-hero-opacity',String(c.hero));box.style.setProperty('--intro-hero-y',`${(1-c.hero)*-settings.heroTravelPx}px`);
    box.style.setProperty('--intro-portrait-offset',String(1-c.lift));
@@ -47,19 +48,25 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
   const schedule=()=>{if(active&&!disposed&&!raf&&!document.hidden)raf=requestAnimationFrame(render)};
   const measure=()=>{
    if(disposed)return;
-   const mobile=innerWidth<600,tablet=!mobile&&innerWidth<1200;
+   const tablet=!mobile&&innerWidth<1200;
    const header=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
-   const gap=mobile?16:24,minMedia=mobile?180:220;
-   const bottom=parseFloat(getComputedStyle(el).getPropertyValue('--intro-end-space'));
+   const gap=mobile?12:24,minMedia=mobile?144:220;
+   const bottom=mobile?16:parseFloat(getComputedStyle(el).getPropertyValue('--intro-end-space'));
    const titleHeight=title.offsetHeight,aboutHeight=about.offsetHeight,metricHeight=metrics.offsetHeight;
    portraitScale=innerWidth>=1700?1.3:mobile?1.16:1.25;
    const heroReserve=mobile?metricHeight+48:tablet?metricHeight+40:0;
-   const height=Math.max(innerHeight-header,aboutHeight+minMedia+finalTop+gap+bottom,titleHeight+24+heroReserve+220);
+   const availableHeight=innerHeight-header;
+   const openingMediaMin=mobile?Math.max(144,Math.min(220,availableHeight-titleHeight-24-heroReserve)):220;
+   const portraitInset=mobile?24:16;
+   const height=Math.max(availableHeight,aboutHeight+minMedia+portraitInset+gap+bottom,titleHeight+24+heroReserve+openingMediaMin);
+   finalTop=portraitInset+(mobile?Math.max(0,height-availableHeight):0);
    const decorTop=titleHeight+24;
    // On narrow screens compensate for the upward growth from bottom-anchored scaling.
    initialTop=innerWidth<1200?(decorTop+(portraitScale-1)*(height-heroReserve))/portraitScale:decorTop;
    initialHeight=height-initialTop-heroReserve;
-   finalHeight=height-aboutHeight-finalTop-gap-bottom;aboutTop=finalTop+finalHeight+gap;
+   const aboutMediaHeight=height-aboutHeight-finalTop-gap-bottom;
+   finalHeight=mobile?Math.max(96,Math.min(340,aboutMediaHeight)):aboutMediaHeight;
+   aboutTop=finalTop+finalHeight+gap;
    distance=innerHeight*(mobile?settings.mobileScrollScreens:settings.desktopScrollScreens);
    const decorMediaHeight=tablet?(height-heroReserve-decorTop)/1.24:initialHeight;
    const decorHeight=Math.max(100,decorMediaHeight-(mobile||tablet?0:metricHeight+88));
@@ -76,8 +83,9 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
  },[layout.width,reduced,demo]);
  const tools=['utopia','figma','vscode','chatgpt','claude'];
  const itemStyle=(item:number[],fluid:boolean)=>({left:`${item[0]/layout.width*100}%`,top:fluid?`${item[1]/layout.artHeight*100}%`:`${item[1]}px`,width:fluid?`calc(${item[2]}px * var(--intro-tool-scale,1))`:`${item[2]}px`});
- const timelineDistance=innerHeight*(layout.width<600?animation.introScene.mobileScrollScreens:animation.introScene.desktopScrollScreens);
- const sceneStyle={'--hero-height':`${layout.height}px`,'--hero-art-top':`${layout.top}px`,'--hero-art-height':`${layout.artHeight}px`,'--hero-metrics-top':`${layout.metricsTop}px`,'--intro-timeline-distance':`${timelineDistance}px`,'--intro-scroll-distance':`${timelineDistance*animation.introScene.releaseAt}px`} as CSSProperties;
+ const settings=layout.width<600?mobileIntroScene:animation.introScene;
+ const timelineDistance=innerHeight*(layout.width<600?settings.mobileScrollScreens:settings.desktopScrollScreens);
+ const sceneStyle={'--hero-height':`${layout.height}px`,'--hero-art-top':`${layout.top}px`,'--hero-art-height':`${layout.artHeight}px`,'--hero-metrics-top':`${layout.metricsTop}px`,'--intro-timeline-distance':`${timelineDistance}px`,'--intro-scroll-distance':`${timelineDistance*settings.releaseAt}px`,'--intro-about-stop':layout.width<600?.69:.88} as CSSProperties;
  const title=<h1 ref={heading} className="hero-title"><span className="hero-wide-lines">I design and build websites<br/>with <span className="accent">AI agents</span></span><span className="hero-desktop-lines"><span>I design and build</span><span>websites with <span className="accent">AI agents</span></span></span><span className="hero-mobile-lines">I design and<br/>build websites<br/>with <span className="accent">AI agents</span></span></h1>;
  const decorations=(fluid:boolean)=><>{tools.map((name,i)=><div key={name} className={`tool tool-${i}`} style={itemStyle(layout.tools[i],fluid)}><img src={`/assets/tool-${name}.svg`} alt=""/></div>)}{['ui','ai','motion'].map((name,i)=>layout.stickers[i]&&<div key={name} className={`hero-sticker sticker-${name}`} style={itemStyle(layout.stickers[i]!,fluid)}><img src={`/assets/sticker-${name}.svg`} alt=""/></div>)}</>;
  const aboutContent=<><Label plain>About</Label><div className="about-copy"><h2 id="intro-about-title">Hi, I'm <span className="accent highlight">Mira</span></h2><p className="lead">AI Full Stack designer. 7 years in studios and agencies — now I run projects end to end with AI agents, from structure to 3D, video and launch.</p></div><div className="tags">{['Veter agency · 4 years','UPROCK · AI Fullstack Designer','Utopia AI','Teaching web design','Figma','Claude Code','Codex','Blender','Spline'].map(tag=><Tag key={tag}>{tag}</Tag>)}</div><Button variant="secondary" href="/cv/">Read more</Button></>;
