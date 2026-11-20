@@ -63,16 +63,17 @@ export default function VideoScene({missing}:{missing:(label:string)=>void}){
     const availableHeight=viewportHeight-header;
     const gap=12,bottom=16,portraitInset=24;
     const textSpace=portraitInset+gap+aboutHeight+bottom;
-    const portraitHeight=Math.max(128,Math.min(innerWidth*.92,availableHeight-Math.max(textSpace,decorTop)));
+    const aboutPortraitHeight=Math.max(128,Math.min(innerWidth*.92,availableHeight-textSpace));
     portraitScale=1;
     initialTop=decorTop;
-    initialHeight=finalHeight=portraitHeight;
-    height=Math.max(initialTop+portraitHeight,textSpace+portraitHeight);
+    finalHeight=aboutPortraitHeight;
+    height=textSpace+finalHeight;
+    initialHeight=Math.max(finalHeight,availableHeight-initialTop);
     finalTop=portraitInset;
-    aboutTop=finalTop+portraitHeight+gap;
+    aboutTop=finalTop+finalHeight+gap;
     distance=viewportHeight*settings.mobileScrollScreens;
-    decorHeight=portraitHeight;
-    toolScale=Math.max(.82,Math.min(1,portraitHeight/320));
+    decorHeight=initialHeight;
+    toolScale=Math.max(.82,Math.min(1,initialHeight/320));
    }else{
     const gap=24,bottom=parseFloat(getComputedStyle(el).getPropertyValue('--intro-end-space'));
     const metricHeight=metrics?.offsetHeight??0,heroReserve=tablet?metricHeight+40:0;

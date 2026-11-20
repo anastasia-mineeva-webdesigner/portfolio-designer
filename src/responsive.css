@@ -263,7 +263,7 @@
 .intro-static-about>.label{margin-top:0}
 @media(max-width:599px){
  .intro-pin .metrics.metrics--paired{bottom:24px}
- .intro-pin{top:var(--header-height)}
+ .intro-pin{top:var(--header-height);overflow:visible}
  .intro-mobile-viewport{position:absolute;width:0;height:100svh;visibility:hidden;pointer-events:none}
  .static-hero .metrics.metrics--paired{display:none}
  .static-hero:not(.intro-hero){height:calc(var(--hero-art-top) + var(--hero-art-height) + 24px)}
