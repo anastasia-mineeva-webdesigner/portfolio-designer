@@ -263,7 +263,10 @@
 .intro-static-about>.label{margin-top:0}
 @media(max-width:599px){
  .intro-pin .metrics.metrics--paired{bottom:24px}
- .intro-pin{top:min(var(--header-height),calc(100dvh - var(--intro-pin-height)))}
+ .intro-pin{top:var(--header-height)}
+ .intro-mobile-viewport{position:absolute;width:0;height:100svh;visibility:hidden;pointer-events:none}
+ .static-hero .metrics.metrics--paired{display:none}
+ .static-hero:not(.intro-hero){height:calc(var(--hero-art-top) + var(--hero-art-height) + 24px)}
  .intro-about{gap:8px}
  .intro-about .about-copy h2{font-size:30px;line-height:36px}
  .intro-about .about-copy .lead{font-size:14px;line-height:20px}

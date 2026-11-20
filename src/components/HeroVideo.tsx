@@ -50,9 +50,10 @@ export function HeroVideo(){
    const hero=v.closest('section');if(!hero)return;
    const header=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
    const shared=v.closest<HTMLElement>('.intro-scroll');
+   const pin=shared?.querySelector<HTMLElement>('.intro-pin');
    const progress=shared?introVideoProgress(
     shared.getBoundingClientRect().top,header,
-    Math.min(header,innerHeight-(shared.querySelector<HTMLElement>('.intro-pin')?.offsetHeight??innerHeight-header)),
+    innerWidth<600?header:Math.min(header,innerHeight-(pin?.offsetHeight??innerHeight-header)),
     parseFloat(getComputedStyle(shared).getPropertyValue('--intro-timeline-distance')),innerWidth<600?mobileIntroScene.videoRange:animation.introScene.videoRange,
    ):heroVideoProgress(hero.getBoundingClientRect().top,hero.offsetHeight,innerHeight,header);
    target=demoTime(progress,v.duration);
