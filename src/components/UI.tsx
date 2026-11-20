@@ -2,7 +2,7 @@ import {useEffect,useRef} from 'react';
 import type { CSSProperties, ReactNode } from 'react';
 import {animation} from '../config/animation';
 const underlinePaths=['M2 10 Q24 3 49 9 T98 7','M2 11 Q50 0 98 10','M2 7 Q45 10 98 5 M6 12 Q51 7 94 12','M2 10 L24 6 L46 11 L70 5 L98 9','M2 8 C20 1 30 14 49 8 S80 2 98 9','M2 11 C32 11 66 3 98 6'];
-export function Button({children, href, download, variant='primary', onClick, disabled=false, loading=false, className=''}:{children:ReactNode;href?:string;download?:string;variant?:'primary'|'secondary'|'navigation';onClick?:()=>void;disabled?:boolean;loading?:boolean;className?:string}) {
+export function Button({children, href, download, variant='primary', onClick, disabled=false, loading=false, className='', type='button'}:{children:ReactNode;type?:'button'|'submit';href?:string;download?:string;variant?:'primary'|'secondary'|'navigation';onClick?:()=>void;disabled?:boolean;loading?:boolean;className?:string}) {
   const ref=useRef<HTMLAnchorElement & HTMLButtonElement>(null);
   useEffect(()=>{
     const el=ref.current!,reduced=matchMedia('(prefers-reduced-motion: reduce)'),mouse=matchMedia('(hover: hover) and (pointer: fine)');
@@ -33,7 +33,7 @@ export function Button({children, href, download, variant='primary', onClick, di
   }
   if(variant==='navigation')content=<>{children}<svg className="menu-underline" viewBox="0 0 100 16" preserveAspectRatio="none" aria-hidden="true" style={{color:animation.underline.color,strokeWidth:animation.underline.width, bottom:`-${animation.underline.offsetPx+12}px`, '--underline-fade':`${animation.underline.fadeMs}ms`} as CSSProperties}><path d={underlinePaths[0]} pathLength="1"/></svg></>;
   const cls=`button button--${variant} ${className}`;
-  return href && !disabled && !loading ? <a ref={ref} className={cls} href={href} download={download} onClick={onClick}>{content}</a> : <button ref={ref} className={cls} type="button" onClick={onClick} disabled={disabled||loading} aria-busy={loading||undefined}>{loading&&<span className="spinner"/>}{content}</button>;
+  return href && !disabled && !loading ? <a ref={ref} className={cls} href={href} download={download} onClick={onClick}>{content}</a> : <button ref={ref} className={cls} type={type} onClick={onClick} disabled={disabled||loading} aria-busy={loading||undefined}>{loading&&<span className="spinner"/>}{content}</button>;
 }
 export function Label({children,dark=false,plain=false}:{children:ReactNode;dark?:boolean;plain?:boolean}){
  const className=plain?'label label--plain':dark?'label label--dark':'label';

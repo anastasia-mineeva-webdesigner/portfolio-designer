@@ -1,8 +1,8 @@
 import {createContext,useContext,useEffect,useRef,useState} from 'react';
 import type {FormEvent,ReactNode} from 'react';
-import {Button} from './UI';
-import {scopeOptions,formatOptions,budgetOptions} from '../contact-enquiry.mjs';
+import {Button,Tag} from './UI';
 import '../contact-form.css';
+const projectTypes=['Website','Mobile app','E-commerce','Other'];
 const ContactContext=createContext<()=>void>(()=>{});
 export const useContact=()=>useContext(ContactContext);
 export function ContactProvider({children}:{children:ReactNode}) {
@@ -18,6 +18,7 @@ export function ContactProvider({children}:{children:ReactNode}) {
   const active=document.activeElement as HTMLElement;
   trigger.current=active.closest('.mobile-nav,.mobile-menu')?document.querySelector<HTMLElement>('.menu-toggle'):active;
   setSubmitted(false);
+  setShowPrivacy(false);
   setOpen(true);
  };
  const closeContact=()=>setOpen(false);
@@ -27,7 +28,6 @@ export function ContactProvider({children}:{children:ReactNode}) {
   const el=dialog.current!,previousOverflow=document.body.style.overflow;
   el.showModal();
   el.scrollTop=0;
-  el.querySelector('.enquiry-shell')?.scrollTo({top:0});
   document.body.style.overflow='hidden';
   return()=>{el.close();document.body.style.overflow=previousOverflow;trigger.current?.focus({preventScroll:true})};
  },[open]);
@@ -61,10 +61,14 @@ export function ContactProvider({children}:{children:ReactNode}) {
      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
     </span>
     <h2 ref={successTitle} id="enquiry-title" tabIndex={-1}>Thank you!</h2>
-    <p id="enquiry-success-note">Your request was submitted.</p>
+    <p id="enquiry-success-note">This demo does not send or save your entries.</p>
     <Button onClick={closeContact}>Okay</Button>
    </div>:<div className="enquiry-shell">
     <div className="enquiry-toolbar">
+     <div className="enquiry-tab">
+      <img src="/assets/tool-figma.svg" width="24" height="24" alt=""/>
+      <span>contact.fig</span>
+     </div>
      <button type="button" className="enquiry-close" onClick={closeContact} autoFocus>
       <span className="enquiry-close-label">Close</span>
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -72,20 +76,33 @@ export function ContactProvider({children}:{children:ReactNode}) {
       </svg>
      </button>
     </div>
-   <div className="enquiry-intro"><h2 id="enquiry-title">Let's build<br/>{' '}<span className="accent">together.</span></h2><div><p>Tell me what you have in mind.<br/>{' '}I'll help shape the next step.</p><span>Websites · Digital design · AI visuals</span></div></div>
-   <div className="enquiry-layout"><aside><p>From a first idea<br/>{' '}to a website that works.</p><span>A few details are enough to start.<br/>{' '}Fields marked * are required.</span></aside>
     <form onSubmit={submit} className="enquiry-form">
-     <div className="enquiry-selection">
-     <fieldset className="enquiry-row"><legend><span>01.</span> Scope</legend><div className="enquiry-choices">{scopeOptions.map(value=><label key={value}><input type="checkbox" name="scope" value={value}/><span>{value}</span></label>)}</div></fieldset>
-     <fieldset className="enquiry-row"><legend><span>02.</span> Format</legend><div className="enquiry-choices">{formatOptions.map(value=><label key={value}><input type="radio" name="format" value={value}/><span>{value}</span></label>)}</div></fieldset>
-     <fieldset className="enquiry-row"><legend><span>03.</span> Budget</legend><div className="enquiry-choices">{budgetOptions.map(value=><label key={value}><input type="radio" name="budget" value={value}/><span>{value}</span></label>)}</div></fieldset>
+     <h2 id="enquiry-title">Your project</h2>
+     <div className="enquiry-row">
+      <label htmlFor="enquiry-name">Name *</label>
+      <input id="enquiry-name" name="name" autoComplete="name" placeholder="Your name" required maxLength={100} pattern=".*\S.*"/>
      </div>
-     <div className="enquiry-details">
-     <div className="enquiry-row"><label htmlFor="enquiry-name"><span>04.</span> Name *</label><input id="enquiry-name" name="name" autoComplete="name" placeholder="Your name" required maxLength={100} pattern=".*\S.*"/></div>
-     <div className="enquiry-row"><label htmlFor="enquiry-email"><span>05.</span> Email *</label><input id="enquiry-email" type="email" name="email" autoComplete="email" placeholder="you@company.com" required maxLength={254}/></div>
-     <div className="enquiry-row"><label htmlFor="enquiry-company"><span>06.</span> Company</label><input id="enquiry-company" name="company" autoComplete="organization" placeholder="Company or brand name" maxLength={160}/></div>
-     <div className="enquiry-row"><label htmlFor="enquiry-timeline"><span>07.</span> Timeline</label><input id="enquiry-timeline" name="timeline" placeholder="Start date and deadline" maxLength={200}/></div>
-     <div className="enquiry-row"><label htmlFor="enquiry-note"><span>08.</span> Your project</label><textarea id="enquiry-note" name="note" placeholder="A few words about your idea, goals or a link to your current website" rows={4} maxLength={2000}/></div>
+     <div className="enquiry-row">
+      <label htmlFor="enquiry-email">Email *</label>
+      <input id="enquiry-email" type="email" name="email" autoComplete="email" placeholder="you@company.com" required maxLength={254}/>
+     </div>
+     <fieldset className="enquiry-row enquiry-project-type">
+      <legend>Project type</legend>
+      <div className="enquiry-choices">
+       {projectTypes.map(value=><label key={value}>
+        <input className="sr-only" type="checkbox" name="scope" value={value}/>
+        <Tag>{value}</Tag>
+       </label>)}
+      </div>
+     </fieldset>
+     <div className="enquiry-row">
+      <label htmlFor="enquiry-note">Subject</label>
+      <textarea id="enquiry-note" name="note" placeholder="Tell me about your project" rows={1} maxLength={2000}/>
+     </div>
+     <div className="enquiry-row">
+      <label htmlFor="enquiry-timeline">Timeline</label>
+      <input id="enquiry-timeline" name="timeline" placeholder="When would you like to launch?" maxLength={200}/>
+     </div>
      <div className="enquiry-consent">
       <div className="enquiry-consent-line">
        <input id="enquiry-consent" type="checkbox" name="privacyConsent" required aria-labelledby="enquiry-consent-label enquiry-privacy-toggle"/>
@@ -95,10 +112,8 @@ export function ContactProvider({children}:{children:ReactNode}) {
       </div>
       <p id="enquiry-privacy" hidden={!showPrivacy}>This demo form keeps your entries in the current page. It does not send them or save them after you leave or reload the page.</p>
      </div>
-     </div>
-     <div className="enquiry-submit"><button className="enquiry-send" type="submit">Send <span aria-hidden="true">↗</span></button></div>
+     <Button type="submit" className="enquiry-send">✦ Send message</Button>
     </form>
-   </div>
    </div>}
   </dialog>
  </ContactContext.Provider>
