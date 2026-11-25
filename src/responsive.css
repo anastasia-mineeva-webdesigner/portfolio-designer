@@ -1,6 +1,4 @@
-/* Layout corrections against «Макет в разработку».
-   Hero slots are independent of viewport height: short windows scroll to the
-   bottom of the composition before the shared video scene becomes sticky. */
+/* On short viewports, the Hero can scroll into view before the video scene pins. */
 .video-scene{height:calc(var(--hero-height) + var(--scene-scroll));background:var(--scene-background,var(--hero))}
 .scene-stage{height:var(--hero-height);min-height:0;top:min(var(--header-height),calc(100svh - var(--hero-height)))}
 .about-anchor{top:calc(var(--scene-lead-in,0px) + var(--scene-scroll)*.63)}
@@ -159,7 +157,7 @@
  .work>.work-projects,.process>.process-grid{margin-top:40px}
 }
 
-/* Static, light Hero and About: video and scroll pinning are intentionally absent. */
+/* Base layout for the static Hero and About fallback. */
 .static-hero{position:relative;height:var(--hero-height);background:var(--hero);isolation:isolate}
 .static-hero .hero-title{position:relative;z-index:2;line-height:1.02}
 .static-hero .scene-tools{position:absolute;z-index:0}
@@ -234,10 +232,10 @@
  .metrics.metrics--paired{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr) minmax(0,1fr)}
  .metrics--paired .metric>strong{font-size:clamp(48px,3.125vw,60px)}
 }
-/* Approved Tool Icon components: original coloured tiles and original glyphs. */
+/* Tool icon assets include their coloured tiles. */
 .static-hero .tool-0{rotate:-16deg}.static-hero .tool-1{rotate:11deg}.static-hero .tool-2{rotate:-12deg}.static-hero .tool-3{rotate:16deg}.static-hero .tool-4{rotate:-9deg}
 .hero-current-media{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:contain;object-position:center bottom;pointer-events:none;
- /* Blend only the empty perimeter of the supplied clip into the light Hero. */
+ /* Blend the perimeter of the fallback video with the Hero background. */
  mask-image:linear-gradient(to bottom,transparent,#000 24px),linear-gradient(to right,transparent,#000 24px,#000 calc(100% - 24px),transparent);mask-composite:intersect}
 @media(max-width:599px){.hero-current-media{object-fit:cover;mask-image:linear-gradient(to bottom,transparent,#000 16px),linear-gradient(to right,transparent,#000 12px,#000 calc(100% - 12px),transparent)}}
 @media(min-width:600px){.hero-current-media{left:50%;right:auto;width:min(100%,calc((var(--hero-height) - var(--hero-art-top))*16/9));transform:translateX(-50%)}}
@@ -283,7 +281,7 @@
  -webkit-mask-composite:source-in;
 }
 .intro-static-about{padding-bottom:80px}
-/* Real alpha keeps hair and shoulders intact; only soften the source crop at the waist. */
+/* Preserve the transparent silhouette and soften the lower edge of the video crop. */
 .hero-current-media,.intro-video-slot .hero-current-media{mask-image:linear-gradient(to bottom,#000 92%,transparent);-webkit-mask-image:linear-gradient(to bottom,#000 92%,transparent)}
 /* The portrait settles into its About position as the title leaves. */
 .intro-video-slot .hero-current-media{transform:scale(var(--intro-portrait-scale,1.04));transform-origin:center bottom}
@@ -294,7 +292,7 @@
 /* Keep the heading legible on tablets and phones, above the lower portrait. */
 @media(max-width:1199px){.intro-hero.static-hero{z-index:1}.intro-video-slot{z-index:0}}
 
-/* Mobile drawer, matching the editable 414/390/360px Figma views. */
+/* Mobile navigation drawer and backdrop. */
 .menu-toggle{gap:2px;flex-shrink:0}
 .menu-toggle span{width:20px;height:2px;flex-shrink:0}
 .menu-toggle[aria-expanded=true] span:first-child,.menu-toggle[aria-expanded=true] span:last-child{transform:none}
@@ -339,7 +337,7 @@
 /* Logo mark and name form one compact lockup at every breakpoint. */
 .logo{gap:4px}
 
-/* Tablet opening frame: match the larger portrait and tool icons in the live scene. */
+/* Tablet sizing for the portrait and tool icons. */
 @media(min-width:600px) and (max-width:899px){
  .static-hero>.scene-tools>.hero-current-media{scale:1.2;transform-origin:center bottom}
  .static-hero>.scene-tools>.tool{scale:1.2;transform-origin:top left}
@@ -365,7 +363,7 @@
  .experience .decoration:hover,.process .decoration:hover,.faq .decoration:hover,.contact .decoration:hover{translate:var(--doodle-x) var(--doodle-y)}
 }
 
-/* CTA artwork follows the handoff positions and keeps clear of the card edge. */
+/* Position CTA artwork within the card at each breakpoint. */
 @media(min-width:1700px){
  .contact-envelope{width:176px;left:6.03%;top:48.6%}
  .contact-plane{width:246px;right:12.5%;top:26%}
@@ -380,7 +378,7 @@
 }
 @media(max-width:1199px){.contact-envelope,.contact-plane{display:none}}
 
-/* Match the lighter stage pills and enlarged mid-desktop composition. */
+/* Process labels and composition at intermediate desktop widths. */
 @media(max-width:1699px){.process-grid .label--dark{padding:8px 16px}}
 @media(min-width:1400px) and (max-width:1699px){
  .static-hero .hero-title .hero-wide-lines{display:block}
@@ -391,7 +389,7 @@
 }
 @media(min-width:600px) and (max-width:899px){.static-hero>.scene-tools>.hero-current-media{scale:1.3;transform-origin:center bottom}}
 
-/* Keep the compact desktop portrait as prominent as the 1440 layout. */
+/* Portrait scaling for compact desktop layouts. */
 @media(min-width:900px) and (max-width:1399px){
  .static-hero>.scene-tools>.hero-current-media{scale:1.2;transform-origin:center bottom}
 }

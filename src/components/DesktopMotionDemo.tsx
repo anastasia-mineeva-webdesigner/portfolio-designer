@@ -3,7 +3,7 @@ import {Button,Label} from './UI';
 import {HeroMetrics} from './HeroMetrics';
 import {demoProgress,demoTime} from '../config/demo-motion.mjs';
 
-// An explicitly selected montage demo; the main portfolio stays static.
+// The optional desktop demo uses a separate video and scroll timeline.
 export function DesktopMotionDemo({missing}:{missing:(label:string)=>void}){
  const root=useRef<HTMLElement>(null),stage=useRef<HTMLDivElement>(null),video=useRef<HTMLVideoElement>(null);
  const [about,setAbout]=useState(false),[failed,setFailed]=useState(false);
