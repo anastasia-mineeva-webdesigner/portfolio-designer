@@ -1,41 +1,56 @@
 # Портфолио Миры Смирновой
 
-Англоязычное портфолио AI Full Stack Designer на React 19, TypeScript, Vite и CSS. В проекте есть главная страница с работами и описанием процесса, шесть дизайн-кейсов, резюме с версией для печати и PDF, а также страница контактов.
+Демонстрационный сайт-портфолио AI Full Stack Designer на React 19, TypeScript, Vite и CSS. В проекте есть главная с видеосценой Hero → About, шесть дизайн-кейсов, резюме с печатной версией и PDF, контакты и страница 404.
 
-[Открыть опубликованное портфолио](https://mira-portfolio-review.idealforum1.chatgpt.site/)
+[Открыть сайт](https://mira-portfolio-review.idealforum1.chatgpt.site/)
 
 ## Локальный запуск
 
-Требуется Node.js 22.12 или новее. Откройте в VS Code папку с `package.json` и выполните в терминале:
+Требуется Node.js 22.12 или новее.
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Откройте адрес из строки `Local` в терминале.
+Откройте адрес, указанный Vite в терминале.
 
 | Команда | Назначение |
 | --- | --- |
-| `npm test` | Запускает тесты через встроенный раннер Node.js. |
-| `npm run build` | Проверяет TypeScript, собирает сайт и генерирует HTML с метаданными для каждого маршрута. |
-| `npm run preview` | Открывает локальный предпросмотр сборки из `dist/`. Выполните после сборки. |
+| `npm test` | Тесты адаптивной геометрии, скролл-анимации и вспомогательной логики. |
+| `npm run build` | Проверка TypeScript и статическая сборка в `dist/`. |
+| `npm run preview` | Предпросмотр `dist/` после сборки. |
 
-GitHub Actions устанавливает зависимости по lock-файлу, запускает тесты и проверяет сборку при push и pull request.
+GitHub Actions запускает тесты и сборку при push и pull request.
 
-## Где менять контент и поведение
+## Страницы
 
-| Что обновить | Где смотреть |
+| Адрес | Содержимое |
 | --- | --- |
-| Тексты главной, контакты и резюме | [Секции главной](src/components/Sections.tsx), [Contacts](src/components/ContactsPage.tsx), [CV](src/components/CVPage.tsx), [контактные ссылки](src/config/links.ts). |
-| Названия, описания, порядок и изображения кейсов | [Данные кейсов](src/data/cases.json), [изображения](public/projects/), [шаблон кейса](src/components/CasePage.tsx). Поле `slug` задаёт адрес `/cases/<slug>/` и используется при сборке SEO. |
-| Отступы и адаптивная сетка | [CSS-переменные](src/tokens.css), [адаптивные правила](src/responsive.css) и стили соответствующей страницы. |
-| Видео на первом экране и переход к About | [Конфигурация медиа](src/config/media.ts), [расчёт прогресса сцены](src/config/intro-scene.mjs), [компонент сцены](src/components/VideoScene.tsx). В режиме reduced motion показывается статичный вариант. |
-| Форма Get in touch | [Диалог и валидация](src/components/ContactDialog.tsx). Форма демонстрационная, введённые данные остаются в открытой странице. |
-| Печатное резюме | [Стили печати](src/cv.css), [генератор PDF](scripts/build-cv-pdf.mjs), [готовый PDF](public/downloads/mira-smirnova-cv.pdf). После правок текста CV обновите PDF отдельно. |
+| `/` | Главная. Selected work и Process доступны по якорям `#work` и `#process`. |
+| `/cases/<slug>/` | Общий шаблон кейса. Шесть проектов описаны в [данных кейсов](src/data/cases.json). |
+| `/cv/` | Резюме с действиями Print CV и Download CV. |
+| `/contacts/` | Контакты, внешние профили и форма Get in touch. |
+| `/404.html` | Шаблон для неизвестных адресов. |
 
-## Сборка и публикация
+Форма Get in touch проверяет поля и показывает подтверждение в браузере. В демонстрационной версии заявки не отправляются и не сохраняются.
 
-`npm run build` создаёт статический каталог `dist/`. [Генератор SEO](scripts/build-seo.mjs) добавляет метаданные для главной, контактов, резюме и кейсов, а также создаёт `sitemap.xml`, `robots.txt` и `404.html`. Контент страниц отрисовывается React в браузере. При переносе на другой домен задайте `SITE_ORIGIN` во время сборки, чтобы обновить canonical, адреса превью и карту сайта.
+## Структура проекта
 
-[Конфигурация GPT Sites](.openai/hosting.json) задаёт проект и каталог публикации. Для обновления сайта соберите `dist/` из нужной ревизии, сохраните версию в GPT Sites и опубликуйте её. Push в GitHub запускает проверки, публикация выполняется в GPT Sites.
+Маршруты определяются в [App.tsx](src/App.tsx). Интерфейс отрисовывается в браузере, метаданные страниц генерируются при сборке.
+
+| Задача | Файлы |
+| --- | --- |
+| Тексты и контакты | [Главная](src/components/Sections.tsx), [контакты](src/components/ContactsPage.tsx), [резюме](src/components/CVPage.tsx), [ссылки](src/config/links.ts) |
+| Кейсы | [Данные](src/data/cases.json), [шаблон](src/components/CasePage.tsx), [медиа](public/projects/) |
+| Адаптивная компоновка | [CSS-переменные](src/tokens.css), [адаптивные правила](src/responsive.css), [геометрия Hero](src/config/hero-layout.mjs) |
+| Видео и переход Hero → About | [Медиа](src/config/media.ts), [таймлайн](src/config/intro-scene.mjs), [сцена](src/components/VideoScene.tsx) |
+| Get in touch | [Форма и валидация](src/components/ContactDialog.tsx) |
+| Печатное резюме | [Стили печати](src/cv.css), [генератор](scripts/build-cv-pdf.mjs), [PDF](public/downloads/mira-smirnova-cv.pdf) |
+
+## Публикация и сопровождение
+
+На хостинг передаётся содержимое `dist/`. Текущий адрес обслуживает ChatGPT Sites. Параметры проекта указаны в [конфигурации публикации](.openai/hosting.json). Публикация версии сайта выполняется в ChatGPT Sites отдельно от проверок GitHub Actions.
+
+- [Сборка, SEO и обновление PDF](docs/seo-checklist.md)
+- [Проверка перед показом или публикацией](docs/verification.md)

@@ -1,4 +1,4 @@
-// Figma: «Макет в разработку», the eight supplied widths.
+// Hero geometry is defined at eight reference widths.
 // Tool tuples are x, y and width inside the media area, in design pixels.
 const layout=(min,width,height,top,artHeight,metricsTop,tools,stickers)=>({min,width,height,top,artHeight,metricsTop,tools,stickers});
 export const heroLayouts=[
@@ -29,7 +29,7 @@ export function sceneProgress(rootTop,stageHeight,viewportHeight,headerHeight,sc
  return Math.max(0,Math.min(1,(pinnedTop-rootTop)/Math.max(1,scrollDistance)));
 }
 
-// Static two-line desktop heading: remove the former third line and its gap.
+// Adjust reserved space for the two-line desktop heading.
 export function staticHeroLayout(width){
  const l=heroLayout(width),removed=width>=1700||width<600?0:width>=1400?104:width>=1200?88:width>=900?80:72;
  const height=l.height-removed;

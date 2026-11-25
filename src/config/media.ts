@@ -1,5 +1,5 @@
 export const media = {
-  // User upload: generation_QYPP8_1iERK.mp4, 1920×1080 / 24 fps / 4.04 s.
+  // WebM preserves transparency. MP4 variants are composited on the Hero background.
   videoSrc: '/media/hero-transparent.webm',
   mobileVideoSrc: '/media/hero-scroll-mobile.mp4',
   fallbackVideoSrc: '/media/hero-background-matched.mp4',
